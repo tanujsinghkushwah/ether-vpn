@@ -1,5 +1,7 @@
 package com.example.ethervpn;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,52 +19,56 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileActivity extends AppCompatActivity {
-    // Initialize variable
+
     ImageView ivImage;
+
     TextView tvName;
+
     Button btLogout;
+
     FirebaseAuth firebaseAuth;
+
     GoogleSignInClient googleSignInClient;
+
+    SharedPreferences sharedPreferences;
+
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // Assign variable
+        sharedPreferences = getSharedPreferences("appPreferences",MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         ivImage = findViewById(R.id.iv_image);
         tvName = findViewById(R.id.tv_name);
         btLogout = findViewById(R.id.bt_logout);
 
-        // Initialize firebase auth
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // Initialize firebase user
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-        // Check condition
         if (firebaseUser != null) {
-            // When firebase user is not equal to null set image on image view
             Glide.with(ProfileActivity.this).load(firebaseUser.getPhotoUrl()).into(ivImage);
-            // set name on text view
             tvName.setText(firebaseUser.getDisplayName());
         }
 
-        // Initialize sign in client
         googleSignInClient = GoogleSignIn.getClient(ProfileActivity.this, GoogleSignInOptions.DEFAULT_SIGN_IN);
 
         btLogout.setOnClickListener(view -> {
-            // Sign out from google
             googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    // Check condition
                     if (task.isSuccessful()) {
-                        // When task is successful sign out from firebase
                         firebaseAuth.signOut();
-                        // Display Toast
                         Toast.makeText(getApplicationContext(), "Logout successful", Toast.LENGTH_SHORT).show();
-                        // Finish activity
+
+                        editor.putBoolean("isLoggedIn", false);
+                        editor.apply();
+
+                        startActivity(new Intent(ProfileActivity.this, OAuthService.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         finish();
                     }
                 }

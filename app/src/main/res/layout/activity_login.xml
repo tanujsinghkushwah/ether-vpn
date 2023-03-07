@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".OAuthService">
 
 
     <com.google.android.gms.common.SignInButton
