@@ -27,4 +27,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Logout" />
+
+    <Button
+        android:id="@+id/vpnlaunch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go Anonymous!!!"
+        android:layout_marginTop="32dp"/>
+
 </LinearLayout>

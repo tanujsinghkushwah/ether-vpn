@@ -4,6 +4,11 @@ plugins {
 }
 
 android {
+    sourceSets {
+        main {
+            aidl.srcDirs = ['src']
+        }
+    }
     signingConfigs {
         debug {
             storeFile file('C:\\Users\\tanuj\\OneDrive\\Desktop\\my_projects\\debug.keystore')
