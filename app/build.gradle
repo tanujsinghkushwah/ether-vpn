@@ -6,7 +6,7 @@ plugins {
 android {
     sourceSets {
         main {
-            aidl.srcDirs = ['src']
+            aidl.srcDirs = ['src/main/aidl']
         }
     }
     signingConfigs {
@@ -17,7 +17,7 @@ android {
             storePassword 'android'
         }
     }
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.ethervpn"

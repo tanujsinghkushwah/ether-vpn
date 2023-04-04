@@ -1,9 +1,11 @@
 /*
- * Copyright (c) 2012-2015 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Copyright (c) 2012-2016 Arne Schwabe
+ * This file is used for implementing the external API and this file like the AIDL and is exempted
+ * from the GPLv2. 
+ *
  */
 
-package com.example.ethervpn.api;
+package de.blinkt.openvpn.api;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -45,8 +47,8 @@ public class APIVpnProfile implements Parcelable {
         //dest.writeString(mProfileCreator);
     }
 
-    public static final Creator<APIVpnProfile> CREATOR
-            = new Creator<APIVpnProfile>() {
+    public static final Parcelable.Creator<APIVpnProfile> CREATOR
+            = new Parcelable.Creator<APIVpnProfile>() {
         public APIVpnProfile createFromParcel(Parcel in) {
             return new APIVpnProfile(in);
         }
