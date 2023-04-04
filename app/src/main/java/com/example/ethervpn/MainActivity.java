@@ -3,39 +3,31 @@ package com.example.ethervpn;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView connectionSpeed;
-    private Button createConnection;
-    private Boolean connectionStatus = false;
+    SharedPreferences sharedpreferences;
+
+    public static final String mypreference = "appPreferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        connectionSpeed = findViewById(R.id.connectionSpeed);
-        createConnection = findViewById(R.id.createConnection);
+        sharedpreferences = getSharedPreferences(mypreference, MODE_PRIVATE);
 
-        createConnection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startVPNService();
-            }
-        });
-    }
+        boolean isLoggedIn = sharedpreferences.getBoolean("isLoggedIn", false);
 
-    private void startVPNService() {
-        if (!connectionStatus) {
-            Intent intent = new Intent(getApplicationContext(), VpnService.class);
-            startService(intent);
-            Toast.makeText(this, "VPN service started", Toast.LENGTH_SHORT).show();
+        Intent intent;
+        if (isLoggedIn) {
+            intent = new Intent(this, ProfileActivity.class);
+        } else {
+            intent = new Intent(this, OAuthService.class);
         }
+        startActivity(intent);
+        finish();
     }
+
 }

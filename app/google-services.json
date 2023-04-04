@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1094407803885",
+    "project_id": "ether-cc1ac",
+    "storage_bucket": "ether-cc1ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094407803885:android:49813cd70f246fced84de4",
+        "android_client_info": {
+          "package_name": "com.example.ethervpn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094407803885-9v9lvmt13hvo8ffbi89uitaiumnal76r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ethervpn",
+            "certificate_hash": "b99a22f478a1a8107ceb93d88ae33f4353e2e073"
+          }
+        },
+        {
+          "client_id": "1094407803885-qkd55tebfmknaihgnldfl4cifm7lr5jk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADbgVbboYrbi_rV_GNr75ieDNiGboOM4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094407803885-qkd55tebfmknaihgnldfl4cifm7lr5jk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
