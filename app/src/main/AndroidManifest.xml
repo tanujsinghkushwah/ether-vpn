@@ -31,6 +31,10 @@
             android:name=".OAuthService"
             android:label="Login Activity">
         </activity>
+        <activity
+            android:name=".VpnDock"
+            android:label="VPN Dock Activity">
+        </activity>
     </application>
 
 </manifest>
