@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2012-2019 Arne Schwabe
+  ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="de.blinkt.openvpn" >
+
+    <uses-sdk android:minSdkVersion="21" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!--
+ Used to show all apps in the allowed Apps selection,
+         this app needs the list the app in the allow/deny apps over the VPN
+    -->
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <application
+        android:name="de.blinkt.openvpn.core.ICSOpenVPNApplication"
+        android:allowBackup="true"
+        android:appCategory="productivity"
+        android:extractNativeLibs="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/blinkt"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute" >
+        <activity
+            android:name="de.blinkt.openvpn.activities.NotImplemented"
+            android:exported="true"
+            tools:ignore="ExportedActivity" />
+
+        <activity-alias
+            android:name="de.blinkt.openvpn.activities.Req"
+            android:exported="true"
+            android:targetActivity="de.blinkt.openvpn.activities.NotImplemented" />
+        <activity-alias
+            android:name="de.blinkt.openvpn.activities.LogWindow"
+            android:exported="true"
+            android:targetActivity="de.blinkt.openvpn.activities.NotImplemented" />
+
+        <meta-data
+            android:name="android.content.APP_RESTRICTIONS"
+            android:resource="@xml/app_restrictions" />
+
+        <activity
+            android:name="de.blinkt.openvpn.activities.DisconnectVPN"
+            android:autoRemoveFromRecents="true"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=".DisconnectVPN"
+            android:theme="@style/blinkt.dialog" />
+
+        <service
+            android:name="de.blinkt.openvpn.core.OpenVPNService"
+            android:exported="true"
+            android:foregroundServiceType="connectedDevice"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:process=":openvpn" >
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="de.blinkt.openvpn.api.ExternalOpenVPNService"
+            android:exported="true"
+            android:process=":openvpn"
+            tools:ignore="ExportedService" >
+            <intent-filter>
+                <action android:name="de.blinkt.openvpn.api.IOpenVPNAPIService" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="de.blinkt.openvpn.core.OpenVPNStatusService"
+            android:exported="false"
+            android:process=":openvpn" />
+
+        <activity
+            android:name="de.blinkt.openvpn.api.GrantPermissionsActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="de.blinkt.openvpn.api.ConfirmDialog"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name="de.blinkt.openvpn.OnBootReceiver"
+            android:exported="true" >
+            <intent-filter android:priority="999" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="de.blinkt.openvpn.LaunchVPN"
+            android:autoRemoveFromRecents="true"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:label="@string/vpn_launch_title"
+            android:taskAffinity=".LaunchVPN"
+            android:theme="@style/blinkt.dialog" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--
+        <receiver android:name="core.GetRestrictionReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.GET_RESTRICTION_ENTRIES" />
+            </intent-filter>
+        </receiver>
+        -->
+        <activity android:name="de.blinkt.openvpn.api.RemoteAction" />
+
+        <activity-alias
+            android:name="de.blinkt.openvpn.api.ResumeVPN"
+            android:exported="true"
+            android:targetActivity="de.blinkt.openvpn.api.RemoteAction" />
+        <activity-alias
+            android:name="de.blinkt.openvpn.api.PauseVPN"
+            android:exported="true"
+            android:targetActivity="de.blinkt.openvpn.api.RemoteAction" />
+        <activity-alias
+            android:name="de.blinkt.openvpn.api.DisconnectVPN"
+            android:exported="true"
+            android:targetActivity="de.blinkt.openvpn.api.RemoteAction" />
+        <activity-alias
+            android:name="de.blinkt.openvpn.api.ConnectVPN"
+            android:exported="true"
+            android:targetActivity="de.blinkt.openvpn.api.RemoteAction" />
+    </application>
+
+</manifest>

@@ -1,0 +1,269 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:2:1-140:12
+INJECTED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:2:1-140:12
+MERGED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:2:1-140:12
+INJECTED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml:6:1-29:12
+	package
+		INJECTED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:2:1-140:12
+		INJECTED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml
+	xmlns:tools
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:3:5-51
+	xmlns:android
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:5:5-67
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:5:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:6:5-79
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:6:22-76
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:7:5-81
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:7:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:8:5-80
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:8:22-77
+uses-permission#android.permission.FOREGROUND_SERVICE
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:9:5-77
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:9:22-74
+uses-permission#android.permission.POST_NOTIFICATIONS
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:10:5-77
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:10:22-74
+uses-permission#android.permission.QUERY_ALL_PACKAGES
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:14:5-15:57
+	tools:ignore
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:15:13-54
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:14:22-74
+application
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:27:5-138:19
+MERGED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:27:5-138:19
+MERGED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:27:5-138:19
+	android:extractNativeLibs
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:31:9-41
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:31:9-41
+	android:supportsRtl
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:35:9-35
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:35:9-35
+	android:label
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:34:9-36
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:34:9-36
+	android:appCategory
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:30:9-43
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:30:9-43
+	tools:ignore
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:37:9-39
+	android:roundIcon
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:33:9-54
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:33:9-54
+	android:icon
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:32:9-43
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:32:9-43
+	android:allowBackup
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:29:9-35
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:29:9-35
+	android:theme
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:36:9-38
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:36:9-38
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:28:9-51
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:28:9-51
+meta-data#android.content.APP_RESTRICTIONS
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:38:9-40:56
+	android:resource
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:40:13-53
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:39:13-60
+activity#de.blinkt.openvpn.activities.DisconnectVPN
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:42:9-48:52
+	android:excludeFromRecents
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:45:13-46
+	android:autoRemoveFromRecents
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:44:13-49
+	android:noHistory
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:46:13-37
+	android:theme
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:48:13-49
+	android:taskAffinity
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:47:13-50
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:43:13-53
+service#de.blinkt.openvpn.core.OpenVPNService
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:51:9-60:19
+	android:process
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:56:13-39
+	android:exported
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:53:13-36
+	android:permission
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:54:13-69
+	android:foregroundServiceType
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:55:13-60
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:52:13-48
+intent-filter#action:name:android.net.VpnService
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:57:13-59:29
+action#android.net.VpnService
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:58:17-65
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:58:25-62
+service#de.blinkt.openvpn.api.ExternalOpenVPNService
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:61:9-69:19
+	android:process
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:63:13-39
+	android:exported
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:64:13-36
+	tools:ignore
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:65:17-47
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:62:13-55
+intent-filter#action:name:de.blinkt.openvpn.api.IOpenVPNAPIService
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:66:13-68:29
+action#de.blinkt.openvpn.api.IOpenVPNAPIService
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:67:17-83
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:67:25-80
+service#de.blinkt.openvpn.core.OpenVPNStatusService
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:70:9-73:42
+	android:process
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:73:13-39
+	android:exported
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:72:13-37
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:71:13-54
+activity#de.blinkt.openvpn.api.GrantPermissionsActivity
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:75:9-80:20
+	android:exported
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:76:17-40
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:75:19-63
+intent-filter#action:name:android.intent.action.MAIN
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:77:13-79:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:78:17-69
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:78:25-66
+activity#de.blinkt.openvpn.api.ConfirmDialog
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:81:9-86:20
+	android:exported
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:82:17-40
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:81:19-52
+receiver#de.blinkt.openvpn.OnBootReceiver
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:88:9-94:20
+	android:exported
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:89:17-40
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:88:19-49
+intent-filter#action:name:android.intent.action.BOOT_COMPLETED+action:name:android.intent.action.MY_PACKAGE_REPLACED
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:90:13-93:29
+	android:priority
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:90:28-50
+action#android.intent.action.BOOT_COMPLETED
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:91:17-79
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:91:25-76
+action#android.intent.action.MY_PACKAGE_REPLACED
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:92:17-84
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:92:25-81
+activity#de.blinkt.openvpn.LaunchVPN
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:97:9-111:20
+	android:label
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:101:13-53
+	android:excludeFromRecents
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:100:13-46
+	android:autoRemoveFromRecents
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:99:13-49
+	android:exported
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:104:13-36
+	android:theme
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:103:13-49
+	android:taskAffinity
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:102:13-46
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:98:13-38
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.DEFAULT
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:106:13-110:29
+category#android.intent.category.DEFAULT
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:109:17-76
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:109:27-73
+activity#de.blinkt.openvpn.api.RemoteAction
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:119:9-54
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:119:19-51
+activity-alias#de.blinkt.openvpn.api.ConnectVPN
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:121:9-124:58
+	android:exported
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:123:13-36
+	android:targetActivity
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:124:13-55
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:122:13-43
+activity-alias#de.blinkt.openvpn.api.DisconnectVPN
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:125:9-128:58
+	android:exported
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:127:13-36
+	android:targetActivity
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:128:13-55
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:126:13-46
+activity-alias#de.blinkt.openvpn.api.PauseVPN
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:129:9-132:62
+	android:exported
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:131:17-40
+	android:targetActivity
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:132:17-59
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:130:17-45
+activity-alias#de.blinkt.openvpn.api.ResumeVPN
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:133:9-136:62
+	android:exported
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:135:17-40
+	android:targetActivity
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:136:17-59
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml:134:17-46
+uses-sdk
+INJECTED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml
+INJECTED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml
+INJECTED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml
+INJECTED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml
+activity#de.blinkt.openvpn.activities.NotImplemented
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml:10:9-13:47
+	android:exported
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml:11:17-40
+	tools:ignore
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml:13:13-44
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml:12:13-54
+activity-alias#de.blinkt.openvpn.activities.LogWindow
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml:15:9-19:15
+	android:exported
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml:16:17-40
+	android:targetActivity
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml:18:17-68
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml:17:17-53
+activity-alias#de.blinkt.openvpn.activities.Req
+ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml:21:9-25:19
+	android:exported
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml:22:17-40
+	android:targetActivity
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml:24:17-68
+	android:name
+		ADDED from C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\src\skeleton\AndroidManifest.xml:23:17-47

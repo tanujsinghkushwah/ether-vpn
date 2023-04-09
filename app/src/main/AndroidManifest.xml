@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name=".RemoteExampleApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EtherVPN"
+        tools:replace="android:label, android:theme, android:name"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
@@ -32,6 +34,7 @@
             android:label="Login Activity">
         </activity>
         <activity
+            android:exported="true"
             android:name=".VpnDock"
             android:label="VPN Dock Activity">
         </activity>
