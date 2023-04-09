@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".RemoteExampleApplication"
@@ -13,8 +16,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:extractNativeLibs="true"
         android:theme="@style/Theme.EtherVPN"
-        tools:replace="android:label, android:theme, android:name"
+        tools:replace="android:label, android:theme, android:name, android:extractNativeLibs"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
@@ -36,8 +40,33 @@
         <activity
             android:exported="true"
             android:name=".VpnDock"
-            android:label="VPN Dock Activity">
+            android:label="VPN Dock Activity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <receiver
+            android:name=".OpenVpnReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <activity
+            android:name="de.blinkt.openvpn.activities.DisconnectVPN"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=".DisconnectVPN"
+            android:theme="@style/blinkt.dialog" />
+
+        <service
+            android:name="de.blinkt.openvpn.core.OpenVPNService"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

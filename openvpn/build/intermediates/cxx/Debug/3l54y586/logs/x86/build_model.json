@@ -8,7 +8,7 @@
   },
   "cxxBuildFolder": "C:\\Users\\tanuj\\OneDrive\\Desktop\\ether-vpn\\openvpn\\.cxx\\Debug\\3l54y586\\x86",
   "soFolder": "C:\\Users\\tanuj\\OneDrive\\Desktop\\ether-vpn\\openvpn\\build\\intermediates\\cxx\\Debug\\3l54y586\\obj\\x86",
-  "soRepublishFolder": "C:\\Users\\tanuj\\OneDrive\\Desktop\\ether-vpn\\openvpn\\build\\intermediates\\cmake\\skeletonDebug\\obj\\x86",
+  "soRepublishFolder": "C:\\Users\\tanuj\\OneDrive\\Desktop\\ether-vpn\\openvpn\\build\\intermediates\\cmake\\uiDebug\\obj\\x86",
   "abiPlatformVersion": 21,
   "cmake": {
     "effectiveConfiguration": {
@@ -20,7 +20,7 @@
     "buildSystemArgumentList": [],
     "cFlagsList": [],
     "cppFlagsList": [],
-    "variantName": "skeletonDebug",
+    "variantName": "uiDebug",
     "isDebuggableEnabled": true,
     "validAbiList": [
       "ARMEABI_V7A",

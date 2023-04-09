@@ -11,4 +11,13 @@
     <string name="addNew">Add new Profile</string>
     <string name="addNewEdit">Add editable profile</string>
     <string name="start_profile_after_adding">Start profile after adding</string>
+    <string name="vpn_on">VPN ON</string>
+    <string name="vpn_off">VPN OFF</string>
+    <string name="navigation_drawer_open">drawer open</string>
+    <string name="navigation_drawer_close">drawer close</string>
+    <string name="connect">Connect</string>
+    <string name="connecting">Connecting</string>
+    <string name="connection_close_confirm">Would you like to cancel the current VPN Connection?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
 </resources>
