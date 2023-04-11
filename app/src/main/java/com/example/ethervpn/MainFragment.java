@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.net.VpnService;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -28,9 +27,6 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.bumptech.glide.Glide;
-import com.example.ethervpn.CheckInternetConnection;
-import com.example.ethervpn.R;
-import com.example.ethervpn.SharedPreference;
 import com.example.ethervpn.databinding.FragmentMainBinding;
 import com.example.ethervpn.interfaces.ChangeServer;
 import com.example.ethervpn.model.Server;
@@ -39,12 +35,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-//import de.blinkt.openvpn.OpenVpnApi;
+import de.blinkt.openvpn.api.APIVpnProfile;
 import de.blinkt.openvpn.api.IOpenVPNAPIService;
 import de.blinkt.openvpn.api.IOpenVPNStatusCallback;
 import de.blinkt.openvpn.core.OpenVPNService;
-import de.blinkt.openvpn.core.OpenVPNThread;
 import de.blinkt.openvpn.core.VpnStatus;
 
 import static android.app.Activity.RESULT_OK;
@@ -82,7 +76,9 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     private static final int PROFILE_ADD_NEW_EDIT = 9;
 
 
-    protected IOpenVPNAPIService mService;
+    protected IOpenVPNAPIService mService = null;
+
+    private String mStartUUID=null;
 
     private Handler mHandler;
 
@@ -105,6 +101,11 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
         binding.vpnBtn.setOnClickListener(this);
 
+//        if (mService == null) {
+//            Intent intent = new Intent(getActivity(), OpenVPNService.class);
+//            intent.setAction(OpenVPNService.START_SERVICE);
+//            getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+//        }
         // Checking is vpn already running or not
         isServiceRunning();
         VpnStatus.initLogCache(getActivity().getCacheDir());
@@ -165,7 +166,9 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
                 if (intent != null) {
                     startActivityForResult(intent, 1);
-                } else startVpn();//have already permission
+                } else {
+                    startVpn();//have already permission
+                }
 
                 // Update confection status
                 status("connecting");
@@ -208,15 +211,19 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK) {
-
-            //Permission granted, start the VPN
-            startVpn();
+        if (requestCode == ICS_OPENVPN_PERMISSION) {
             try {
                 mService.registerStatusCallback(mCallback);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
+
+        }
+        if (resultCode == RESULT_OK) {
+
+            //Permission granted, start the VPN
+            startVpn();
+
         } else {
             showToast("Permission Deny !! ");
         }
@@ -256,6 +263,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
             br.readLine();
 //            OpenVpnApi.startVpn(getContext(), config, server.getCountry(), server.getOvpnUserName(), server.getOvpnUserPassword());
+            APIVpnProfile profile = mService.addNewVPNProfile(server.getCountry(), false, config.toString());
+            mService.startProfile(profile.mUUID);
             mService.startVPN(config.toString());
 
             // Update log
@@ -421,6 +430,14 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     @Override
     public void onStart() {
         super.onStart();
+
+//        final String EXTRA_NAME = "de.blinkt.openvpn.api.APIVpnProfile";
+//
+//        Intent shortcutIntent = new Intent(Intent.ACTION_MAIN);
+//        shortcutIntent.setClassName("com.example.ethervpn", "de.blinkt.openvpn.LaunchVPN");
+//        shortcutIntent.putExtra(EXTRA_NAME,"upb ssl");
+//        startActivity(shortcutIntent);
+
         mHandler = new Handler(this);
         bindService();
     }
@@ -481,14 +498,15 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
         }
     };
-    private String mStartUUID=null;
 
     private void bindService() {
 
-        Intent icsopenvpnService = new Intent(IOpenVPNAPIService.class.getName());
+        Intent icsopenvpnService = new Intent(getActivity(), OpenVPNService.class);
         icsopenvpnService.setPackage("de.blinkt.openvpn");
+        icsopenvpnService.setAction(OpenVPNService.START_SERVICE);
 
         getActivity().bindService(icsopenvpnService, mConnection, Context.BIND_AUTO_CREATE);
+
     }
 
     @Override
@@ -499,11 +517,18 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             server = preference.getServer();
         }
         super.onResume();
+//        bindService();
+//        Intent intent = new Intent(getActivity(), OpenVPNService.class);
+//        getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
     public void onPause() {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
+//        if (mService != null) {
+//            getActivity().unbindService(mConnection);
+//        }
+//        unbindService();
         super.onPause();
     }
 

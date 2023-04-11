@@ -43,13 +43,15 @@
             android:label="VPN Dock Activity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <receiver
-            android:name=".OpenVpnReceiver"
+        <receiver android:name=".OpenVpnReceiver"
+            android:exported="false"
             android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            android:label="StartVPNReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_CHANGED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
         <activity
