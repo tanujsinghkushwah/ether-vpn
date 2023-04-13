@@ -1,7 +1,0 @@
-C:\Users\tanuj\OneDrive\Desktop\my_projects\ether-vpn\openvpn\src\main\cpp\CMakeLists.txt
-C:\Users\tanuj\OneDrive\Desktop\my_projects\ether-vpn\openvpn\src\main\cpp\GetGitRevisionDescription.cmake
-C:\Users\tanuj\OneDrive\Desktop\my_projects\ether-vpn\openvpn\src\main\cpp\GetGitRevisionDescription.cmake.in
-C:\Users\tanuj\OneDrive\Desktop\my_projects\ether-vpn\openvpn\src\main\cpp\lz4.cmake
-C:\Users\tanuj\OneDrive\Desktop\my_projects\ether-vpn\openvpn\src\main\cpp\lzo.cmake
-C:\Users\tanuj\OneDrive\Desktop\my_projects\ether-vpn\openvpn\src\main\cpp\openssl\openssl.cmake
-C:\Users\tanuj\OneDrive\Desktop\my_projects\ether-vpn\openvpn\src\main\cpp\tools.cmake
