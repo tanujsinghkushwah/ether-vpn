@@ -219,14 +219,14 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             }
 
         }
-        if (resultCode == RESULT_OK) {
-
-            //Permission granted, start the VPN
-            startVpn();
-
-        } else {
-            showToast("Permission Deny !! ");
-        }
+//        if (resultCode == RESULT_OK) {
+//
+//            //Permission granted, start the VPN
+//            startVpn();
+//
+//        } else {
+//            showToast("Permission Deny !! ");
+//        }
     }
 
     /**
@@ -266,6 +266,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             APIVpnProfile profile = mService.addNewVPNProfile(server.getCountry(), false, config.toString());
             mService.startProfile(profile.mUUID);
             mService.startVPN(config.toString());
+
 
             // Update log
             binding.logTv.setText("Connecting...");
@@ -431,13 +432,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     public void onStart() {
         super.onStart();
 
-//        final String EXTRA_NAME = "de.blinkt.openvpn.api.APIVpnProfile";
-//
-//        Intent shortcutIntent = new Intent(Intent.ACTION_MAIN);
-//        shortcutIntent.setClassName("com.example.ethervpn", "de.blinkt.openvpn.LaunchVPN");
-//        shortcutIntent.putExtra(EXTRA_NAME,"upb ssl");
-//        startActivity(shortcutIntent);
-
         mHandler = new Handler(this);
         bindService();
     }
@@ -501,9 +495,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
     private void bindService() {
 
-        Intent icsopenvpnService = new Intent(getActivity(), OpenVPNService.class);
-        icsopenvpnService.setPackage("de.blinkt.openvpn");
-        icsopenvpnService.setAction(OpenVPNService.START_SERVICE);
+        Intent icsopenvpnService = new Intent(IOpenVPNAPIService.class.getName());
+        icsopenvpnService.setPackage("com.example.ethervpn");
 
         getActivity().bindService(icsopenvpnService, mConnection, Context.BIND_AUTO_CREATE);
 
@@ -525,9 +518,9 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     @Override
     public void onPause() {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
-//        if (mService != null) {
-//            getActivity().unbindService(mConnection);
-//        }
+        if (mService != null) {
+            getActivity().unbindService(mConnection);
+        }
 //        unbindService();
         super.onPause();
     }
