@@ -510,7 +510,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     public void onPause() {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
         if (mService != null) {
-            unbindService();
+            getActivity().unbindService(mConnection);
         }
         super.onPause();
     }
@@ -524,7 +524,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             preference.saveServer(server);
         }
 
-        unbindService();
+//        unbindService();
         super.onStop();
     }
 
