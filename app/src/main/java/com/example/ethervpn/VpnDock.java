@@ -74,11 +74,15 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
         }
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel chan = new NotificationChannel("openvpn_newstat", "VPN service", NotificationManager.IMPORTANCE_NONE);
+            NotificationChannel chan = new NotificationChannel("openvpn_newstat", "VPN foreground service", NotificationManager.IMPORTANCE_NONE);
             chan.setLightColor(Color.BLUE);
             chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            NotificationChannel chanBgVPN = new NotificationChannel("openvpn_bg", "VPN background service", NotificationManager.IMPORTANCE_NONE);
+            chanBgVPN.setLightColor(Color.BLUE);
+            chanBgVPN.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
             NotificationManager service = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             service.createNotificationChannel(chan);
+            service.createNotificationChannel(chanBgVPN);
         }
 
     }

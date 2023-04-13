@@ -1,2 +1,2 @@
-ninja: Entering directory `C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\.cxx\Debug\3l54y586\x86'
-[1/1] cmd.exe /C "cd /D C:\Users\tanuj\OneDrive\Desktop\ether-vpn\openvpn\.cxx\Debug\3l54y586\x86 && C:\Users\tanuj\AppData\Local\Android\Sdk\cmake\3.22.1\bin\cmake.exe -E make_directory C:/Users/tanuj/OneDrive/Desktop/ether-vpn/openvpn/src/main/cpp/../../../build/ovpnassets"
+ninja: Entering directory `C:\Users\tanuj\OneDrive\Desktop\my_projects\ether-vpn\openvpn\.cxx\Debug\3l54y586\x86'
+[1/1] cmd.exe /C "cd /D C:\Users\tanuj\OneDrive\Desktop\my_projects\ether-vpn\openvpn\.cxx\Debug\3l54y586\x86 && C:\Users\tanuj\AppData\Local\Android\Sdk\cmake\3.22.1\bin\cmake.exe -E make_directory C:/Users/tanuj/OneDrive/Desktop/my_projects/ether-vpn/openvpn/src/main/cpp/../../../build/ovpnassets"

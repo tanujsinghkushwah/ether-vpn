@@ -48,8 +48,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     private Server server;
     private CheckInternetConnection connection;
 
-//    private OpenVPNThread vpnThread = new OpenVPNThread();
-//    private OpenVPNService vpnService = new OpenVPNService();
     boolean vpnStart = false;
     private SharedPreference preference;
 
@@ -101,11 +99,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
         binding.vpnBtn.setOnClickListener(this);
 
-//        if (mService == null) {
-//            Intent intent = new Intent(getActivity(), OpenVPNService.class);
-//            intent.setAction(OpenVPNService.START_SERVICE);
-//            getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-//        }
         // Checking is vpn already running or not
         isServiceRunning();
         VpnStatus.initLogCache(getActivity().getCacheDir());
@@ -509,19 +502,16 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         if (server == null) {
             server = preference.getServer();
         }
+        bindService();
         super.onResume();
-//        bindService();
-//        Intent intent = new Intent(getActivity(), OpenVPNService.class);
-//        getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
     public void onPause() {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
         if (mService != null) {
-            getActivity().unbindService(mConnection);
+            unbindService();
         }
-//        unbindService();
         super.onPause();
     }
 
