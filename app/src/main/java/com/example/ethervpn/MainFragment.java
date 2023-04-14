@@ -63,13 +63,10 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     }
 
     private static final int MSG_UPDATE_STATE = 0;
-    private static final int MSG_UPDATE_MYIP = 1;
+
     private static final int ICS_OPENVPN_PERMISSION = 7;
 
-
     protected IOpenVPNAPIService mService = null;
-
-    private String mStartUUID=null;
 
     private Handler mHandler;
 
@@ -205,14 +202,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             }
 
         }
-//        if (resultCode == RESULT_OK) {
-//
-//            //Permission granted, start the VPN
-//            startVpn();
-//
-//        } else {
-//            showToast("Permission Deny !! ");
-//        }
     }
 
     /**
@@ -226,7 +215,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
      * Get service status
      */
     public void isServiceRunning() {
-//        setStatus(vpnService.getStatus());
+        setStatus((String) binding.logTv.getText());
     }
 
     /**
@@ -248,7 +237,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             }
 
             br.readLine();
-//            OpenVpnApi.startVpn(getContext(), config, server.getCountry(), server.getOvpnUserName(), server.getOvpnUserPassword());
             APIVpnProfile profile = mService.addNewVPNProfile(server.getCountry(), false, config.toString());
             mService.startProfile(profile.mUUID);
             mService.startVPN(config.toString());
@@ -273,7 +261,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                 case "DISCONNECTED":
                     status("connect");
                     vpnStart = false;
-//                    vpnService.setDefaultStatus();
                     binding.logTv.setText("");
                     break;
                 case "CONNECTED":
@@ -432,9 +419,28 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
          */
 
         @Override
-        public void newStatus(String uuid, String state, String message, String level)
-                throws RemoteException {
+        public void newStatus(String uuid, String state, String message, String level) throws RemoteException {
             Message msg = Message.obtain(mHandler, MSG_UPDATE_STATE, state + "|" + message);
+            try {
+                setStatus(state);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                String duration = null;
+                String lastPacketReceive = null;
+                String byteIn = null;
+                String byteOut = null;
+
+                if (duration == null) duration = "00:00:00";
+                if (lastPacketReceive == null) lastPacketReceive = "0";
+                if (byteIn == null) byteIn = " ";
+                if (byteOut == null) byteOut = " ";
+                updateConnectionStatus(duration, lastPacketReceive, byteIn, byteOut);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             msg.sendToTarget();
 
         }
@@ -466,7 +472,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                 }
 
             } catch (RemoteException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -495,15 +500,15 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         if (server == null) {
             server = preference.getServer();
         }
-        bindService();
         super.onResume();
+        bindService();
     }
 
     @Override
     public void onPause() {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
         if (mService != null) {
-            getActivity().unbindService(mConnection);
+            unbindService();
         }
         super.onPause();
     }
@@ -516,8 +521,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         if (server != null) {
             preference.saveServer(server);
         }
-
-//        unbindService();
         super.onStop();
     }
 
