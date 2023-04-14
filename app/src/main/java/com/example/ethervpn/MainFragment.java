@@ -38,10 +38,7 @@ import java.io.InputStreamReader;
 import de.blinkt.openvpn.api.APIVpnProfile;
 import de.blinkt.openvpn.api.IOpenVPNAPIService;
 import de.blinkt.openvpn.api.IOpenVPNStatusCallback;
-import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.VpnStatus;
-
-import static android.app.Activity.RESULT_OK;
 
 public class MainFragment extends Fragment implements View.OnClickListener, ChangeServer, Handler.Callback {
 
@@ -67,11 +64,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
     private static final int MSG_UPDATE_STATE = 0;
     private static final int MSG_UPDATE_MYIP = 1;
-    private static final int START_PROFILE_EMBEDDED = 2;
-    private static final int START_PROFILE_BYUUID = 3;
     private static final int ICS_OPENVPN_PERMISSION = 7;
-    private static final int PROFILE_ADD_NEW = 8;
-    private static final int PROFILE_ADD_NEW_EDIT = 9;
 
 
     protected IOpenVPNAPIService mService = null;
@@ -185,12 +178,12 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
      */
     public boolean stopVpn() {
         try {
-//            vpnThread.stop();
+            mService.disconnect();
 
             status("connect");
             vpnStart = false;
             return true;
-        } catch (Exception e) {
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
 
@@ -536,9 +529,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     public boolean handleMessage(@NonNull Message msg) {
         if(msg.what == MSG_UPDATE_STATE) {
             binding.logTv.setText((CharSequence) msg.obj);
-        } else if (msg.what == MSG_UPDATE_MYIP) {
-
-//            mMyIp.setText((CharSequence) msg.obj);
         }
         return true;
     }
