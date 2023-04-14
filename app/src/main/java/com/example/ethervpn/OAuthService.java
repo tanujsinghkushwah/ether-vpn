@@ -63,7 +63,7 @@ public class OAuthService extends AppCompatActivity {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
         if (firebaseUser != null) {
-            startActivity(new Intent(OAuthService.this, ProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            startActivity(new Intent(OAuthService.this, VpnDock.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     }
 
@@ -92,7 +92,7 @@ public class OAuthService extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
                                 if (task.isSuccessful()) {
-                                    startActivity(new Intent(OAuthService.this, ProfileActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                                    startActivity(new Intent(OAuthService.this, VpnDock.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                                     displayToast("Firebase authentication successful");
                                 } else {
                                     displayToast("Authentication Failed :" + task.getException().getMessage());
@@ -108,6 +108,6 @@ public class OAuthService extends AppCompatActivity {
     }
 
     private void displayToast(String s) {
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(OAuthService.this, s, Toast.LENGTH_SHORT).show();
     }
 }

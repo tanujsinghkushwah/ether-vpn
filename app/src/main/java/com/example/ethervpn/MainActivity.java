@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent;
         if (isLoggedIn) {
-            intent = new Intent(this, ProfileActivity.class);
+            intent = new Intent(this, VpnDock.class);
         } else {
             intent = new Intent(this, OAuthService.class);
         }

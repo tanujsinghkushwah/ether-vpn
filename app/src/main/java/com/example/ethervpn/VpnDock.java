@@ -1,5 +1,18 @@
 package com.example.ethervpn;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,24 +23,31 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
-
 import com.example.ethervpn.adapter.ServerListRVAdapter;
 import com.example.ethervpn.interfaces.ChangeServer;
 import com.example.ethervpn.interfaces.NavItemClickListener;
 import com.example.ethervpn.model.Server;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-
 public class VpnDock extends AppCompatActivity implements NavItemClickListener {
+
+    Button btLogout;
+
+    FirebaseAuth firebaseAuth;
+
+    GoogleSignInClient googleSignInClient;
+
+    SharedPreferences sharedPreferences;
+
+    SharedPreferences.Editor editor;
+
     private FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
     private Fragment fragment;
     private RecyclerView serverListRv;
@@ -36,7 +56,7 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
     private DrawerLayout drawer;
     private ChangeServer changeServer;
 
-    public static final String TAG = "CakeVPN";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +64,33 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
 
         // Initialize all variable
         initializeAll();
+
+        sharedPreferences = getSharedPreferences("appPreferences",MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        btLogout = findViewById(R.id.bt_logout);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        googleSignInClient = GoogleSignIn.getClient(VpnDock.this, GoogleSignInOptions.DEFAULT_SIGN_IN);
+
+        btLogout.setOnClickListener(view -> {
+            googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        firebaseAuth.signOut();
+                        Toast.makeText(VpnDock.this, "Logout successful", Toast.LENGTH_SHORT).show();
+
+                        editor.putBoolean("isLoggedIn", false);
+                        editor.apply();
+
+                        startActivity(new Intent(VpnDock.this, OAuthService.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        finish();
+                    }
+                }
+            });
+        });
 
         ImageButton menuRight = findViewById(R.id.navbar_right);
 
@@ -84,7 +131,6 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
             service.createNotificationChannel(chan);
             service.createNotificationChannel(chanBgVPN);
         }
-
     }
 
     /**

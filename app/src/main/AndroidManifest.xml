@@ -30,18 +30,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProfileActivity"
-            android:label="Profile Activity">
-        </activity>
-        <activity
-            android:name=".OAuthService"
-            android:label="Login Activity">
-        </activity>
-        <activity
             android:exported="true"
             android:name=".VpnDock"
             android:label="VPN Dock Activity"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".OAuthService"
+            android:label="Ether VPN">
         </activity>
         <receiver android:name=".OpenVpnReceiver"
             android:exported="false"
