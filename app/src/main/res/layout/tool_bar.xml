@@ -4,6 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize">
 
+    <Button
+        android:layout_gravity="left"
+        android:id="@+id/bt_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textSize="10sp"
+        android:text="Logout" />
+
     <TextView
         android:id="@+id/titleTv"
         android:layout_width="wrap_content"
