@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/openvpn" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/openvpn/src/main/cpp/platform_external_openssl" vcs="Git" />
   </component>
 </project>

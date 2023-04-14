@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2012-2016 Arne Schwabe
+  ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+  -->
+<resources>
+    <!--  Keep the order the same as the TYPE_ constants in VPNProfile -->
+    <string-array name="vpn_types">
+        <item>Certificados</item>
+        <item>Archivo PKCS12</item>
+        <item>Certificado de Android</item>
+        <item>Usuario/Contraseña</item>
+        <item>Llaves Estáticas</item>
+        <item>Usuario/Contraseña + Certificados</item>
+        <item>Usuario/Contraseña + PKCS12 </item>
+        <item>Usuario/Contraseña + Android</item>
+        <item>Proveedor externo de autenticación</item>
+    </string-array>
+    <string-array name="tls_directions_entries">
+        <item translatable="false">0</item>
+        <item translatable="false">1</item>
+        <item>No especificado</item>
+        <item>Cifrado (--tls-crypt)</item>
+        <item>TLS Crypt V2</item>
+    </string-array>
+    <string-array name="auth_retry_type">
+        <item>Desconectar, olvidar contraseña</item>
+        <item>Desconectar, guardar la contraseña</item>
+        <item>Ignorar, volver a intentar</item>
+    </string-array>
+    <string-array name="compat_mode">
+        <item>Estándares modernos</item>
+        <item>Versión OpenVPN 2.5.x</item>
+        <item>Versión OpenVPN 2.4.x</item>
+        <item>OpenVPN 2.3.x y antiguas versiones </item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>Inseguro (No es recomendado, debido a que se usara un cifrado poco seguro)</item>
+        <item>legacy (estándar)</item>
+        <item>Sugerido (Es recomendado pero la compatibilidad es limitada)</item>
+        <item>Perfil de cifrado \"Suite B\" (Solo el método de cifrado por curvas elípticas es aprobado por NIST (National Institute of Standards and Technology) )</item>
+    </string-array>
+</resources>
