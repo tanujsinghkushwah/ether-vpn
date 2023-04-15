@@ -1,12 +1,12 @@
-# ether-vpn
-Android VPN client developed using openvpn[https://github.com/schwabe/ics-openvpn] library.
+# Ether VPN
+Android VPN client developed using openvpn(https://github.com/schwabe/ics-openvpn "ics-openvpn") library.
 
 Build instructions:
 * Download swig[https://www.swig.org/download.html] on the system.
 * Add swig executable path to system/android studio environment path variables.
 * Check if submodules in cpp folder are fetched on your system using git submodule command.
 * Replace requestIdToken and google-services.json configuration according to firebase configurations on your account.
-* If current ovpn servers are not working then replace .ovpn configurations. Some free sites to find ovpn configs: https://www.freeopenvpn.org/index.php?lang=en, https://www.vpngate.net/en/.
+* If current ovpn servers are not working then replace .ovpn configurations. Some free sites to find ovpn configs: (https://www.freeopenvpn.org/index.php?lang=en "freeopenvpn"), (https://www.vpngate.net/en/ "vpngate").
 
 Tips to build imported openvpn module with latest code while integrating in a base app:
 * Change plugin id("com.android.application") to id("com.android.library") in openvpn build.gradle.kts.
@@ -17,3 +17,9 @@ Tips to build imported openvpn module with latest code while integrating in a ba
 * Enable databinding and add productFlavors['ui', 'skeleton' in build.gradle of base app.
 * Comment out splits and applicantVariants register function in openvpn build.gradle.kts.
 * Verify de.blinkt.openvpn.core.OpenVPNService service and de.blinkt.openvpn.activities.DisconnectVPN activity is added to base project's AndroidManifest file.
+
+Project/IDE configurations:
+* Gradle version - 7.5, Gradle plugin version - 7.4.1
+* SDK compile version - 33.0.0
+* java version "1.8.0_361"
+* Kotlin plugin installed on IDE
