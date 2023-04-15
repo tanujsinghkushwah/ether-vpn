@@ -1,12 +1,12 @@
 # Ether VPN
-Android VPN client developed using openvpn(https://github.com/schwabe/ics-openvpn "ics-openvpn") library.
+Android VPN client developed using [ics-openvpn](https://github.com/schwabe/ics-openvpn) library.
 
 Build instructions:
 * Download swig[https://www.swig.org/download.html] on the system.
 * Add swig executable path to system/android studio environment path variables.
 * Check if submodules in cpp folder are fetched on your system using git submodule command.
 * Replace requestIdToken and google-services.json configuration according to firebase configurations on your account.
-* If current ovpn servers are not working then replace .ovpn configurations. Some free sites to find ovpn configs: (https://www.freeopenvpn.org/index.php?lang=en "freeopenvpn"), (https://www.vpngate.net/en/ "vpngate").
+* If current ovpn servers are not working then replace .ovpn configurations. Some free sites to find ovpn configs: [freeopenvpn](https://www.freeopenvpn.org/index.php?lang=en), [vpngate](https://www.vpngate.net/en/).
 
 Tips to build imported openvpn module with latest code while integrating in a base app:
 * Change plugin id("com.android.application") to id("com.android.library") in openvpn build.gradle.kts.
