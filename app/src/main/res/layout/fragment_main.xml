@@ -76,14 +76,14 @@
                 android:textSize="14sp" />
 
             <Button
-                android:layout_marginRight="30dp"
+                android:id="@+id/vpnBtn"
+                android:tag="1"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:tag="1"
-                android:id="@+id/vpnBtn"
-                android:layout_width="150dp"
-                android:layout_height="35dp"
-                android:background="@drawable/button"
+                android:background="@drawable/circular_button_background"
                 android:text="Connect"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp" />
