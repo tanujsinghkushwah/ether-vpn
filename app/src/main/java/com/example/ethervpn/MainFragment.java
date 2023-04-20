@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Locale;
+
 import de.blinkt.openvpn.api.APIVpnProfile;
 import de.blinkt.openvpn.api.IOpenVPNAPIService;
 import de.blinkt.openvpn.api.IOpenVPNStatusCallback;
@@ -66,6 +69,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     protected IOpenVPNAPIService mService = null;
 
     private Handler mHandler;
+
+    private long mStartTime = 0L;
 
     /**
      * Initialize all variable and object
@@ -173,7 +178,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     public boolean stopVpn() {
         try {
             mService.disconnect();
-
+            mHandler.removeCallbacks(mUpdateTimeRunnable);
+            binding.durationTv.setText("Duration: 00:00:00");
             status("connect");
             vpnStart = false;
             return true;
@@ -369,6 +375,30 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         bindService();
     }
 
+    private Runnable mUpdateTimeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            updateDuration();
+            mHandler.postDelayed(this, 1000);
+        }
+    };
+
+    private void updateDuration() {
+        try {
+            String duration = null;
+            long timeElapsed = SystemClock.elapsedRealtime() - mStartTime;
+            int hours = (int) (timeElapsed / 3600000);
+            int minutes = (int) ((timeElapsed / 60000) % 60);
+            int seconds = (int) ((timeElapsed / 1000) % 60);
+            duration = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
+
+            if (duration == null) duration = "00:00:00";
+            updateConnectionStatus(duration);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private IOpenVPNStatusCallback mCallback = new IOpenVPNStatusCallback.Stub() {
         /**
          * This is called by the remote service regularly to tell us about
@@ -387,14 +417,14 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                 e.printStackTrace();
             }
 
-            try {
-                String duration = null;
-
-                if (duration == null) duration = "00:00:00";
-                updateConnectionStatus(duration);
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (state.equals("CONNECTED")) {
+                mStartTime = SystemClock.elapsedRealtime();
+                mHandler.post(mUpdateTimeRunnable);
+                // Start the foreground service
+            } else {
+                mStartTime = 0L;
             }
+
             msg.sendToTarget();
 
         }
