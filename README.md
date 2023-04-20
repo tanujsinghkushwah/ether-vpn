@@ -27,3 +27,11 @@ Project/IDE configurations:
 * SDK compile version - 33.0.0
 * java version "1.8.0_361"
 * Kotlin plugin installed on IDE
+
+Screenshots:
+![Screenshot_20230421-011005](https://user-images.githubusercontent.com/32940477/233471447-f1463c93-9f33-4f02-9a37-3e3c905f053f.png)
+![Screenshot_20230421-011019](https://user-images.githubusercontent.com/32940477/233471509-da9414a2-646d-4e1f-b056-8eee6d4854ba.png)
+![Screenshot_20230421-010849](https://user-images.githubusercontent.com/32940477/233471553-b51308c7-f84e-4395-b54b-327ba162b648.png)
+![Screenshot_20230421-010901](https://user-images.githubusercontent.com/32940477/233471662-6756baa8-0650-4a8f-954e-e52b972634b1.png)
+
+
