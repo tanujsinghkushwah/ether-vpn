@@ -7,8 +7,8 @@
     <Button
         android:layout_gravity="left"
         android:id="@+id/bt_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="10dp"
         android:textSize="10sp"
         android:text="Logout" />

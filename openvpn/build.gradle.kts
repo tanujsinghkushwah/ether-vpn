@@ -1,5 +1,3 @@
-import com.android.build.gradle.api.ApplicationVariant
-import org.jetbrains.kotlin.fir.expressions.FirEmptyArgumentList.arguments
 
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
@@ -22,11 +20,8 @@ android {
     ndkVersion = "25.1.8937393"
 
     defaultConfig {
-//        applicationId = "de.blinkt.openvpn"
         minSdk = 21
         targetSdk = 33
-//        versionCode = 198
-//        versionName = "0.7.43"
         externalNativeBuild {
             cmake {
             }
@@ -39,7 +34,6 @@ android {
     externalNativeBuild {
         cmake {
             path = File("${projectDir}/src/main/cpp/CMakeLists.txt")
-//            arguments ;"-DSWIG_EXECUTABLE=C:\\Users\\tanuj\\OneDrive\\Desktop\\my_projects\\swigwin-4.1.1\\swig"
         }
     }
 
