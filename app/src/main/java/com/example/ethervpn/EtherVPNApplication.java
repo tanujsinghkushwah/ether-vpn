@@ -8,7 +8,7 @@ package com.example.ethervpn;
 import android.app.Application;
 import android.os.StrictMode;
 
-public class RemoteExampleApplication extends Application {
+public class EtherVPNApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
