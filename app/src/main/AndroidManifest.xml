@@ -39,17 +39,6 @@
             android:name=".OAuthService"
             android:label="Ether VPN">
         </activity>
-        <receiver android:name=".OpenVpnReceiver"
-            android:exported="false"
-            android:enabled="true"
-            android:label="StartVPNReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_CHANGED" />
-                <action android:name="android.intent.action.PACKAGE_REPLACED" />
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
         <activity
             android:name="de.blinkt.openvpn.activities.DisconnectVPN"
             android:excludeFromRecents="true"

@@ -6,7 +6,6 @@
 package com.example.ethervpn;
 
 import android.app.Application;
-import android.os.Build;
 import android.os.StrictMode;
 
 public class RemoteExampleApplication extends Application {
