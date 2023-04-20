@@ -1,12 +1,10 @@
 package com.example.ethervpn;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +22,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.bumptech.glide.Glide;
 import com.example.ethervpn.databinding.FragmentMainBinding;
@@ -317,48 +314,11 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     }
 
     /**
-     * Receive broadcast message
-     */
-    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                setStatus(intent.getStringExtra("state"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            try {
-
-                String duration = intent.getStringExtra("duration");
-                String lastPacketReceive = intent.getStringExtra("lastPacketReceive");
-                String byteIn = intent.getStringExtra("byteIn");
-                String byteOut = intent.getStringExtra("byteOut");
-
-                if (duration == null) duration = "00:00:00";
-                if (lastPacketReceive == null) lastPacketReceive = "0";
-                if (byteIn == null) byteIn = " ";
-                if (byteOut == null) byteOut = " ";
-                updateConnectionStatus(duration, lastPacketReceive, byteIn, byteOut);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-    };
-
-    /**
      * Update status UI
      * @param duration: running time
-     * @param lastPacketReceive: last packet receive time
-     * @param byteIn: incoming data
-     * @param byteOut: outgoing data
      */
-    public void updateConnectionStatus(String duration, String lastPacketReceive, String byteIn, String byteOut) {
+    public void updateConnectionStatus(String duration) {
         binding.durationTv.setText("Duration: " + duration);
-        binding.lastPacketReceiveTv.setText("Packet Received: " + lastPacketReceive + " second ago");
-        binding.byteInTv.setText("Bytes In: " + byteIn);
-        binding.byteOutTv.setText("Bytes Out: " + byteOut);
     }
 
     /**
@@ -429,15 +389,9 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
             try {
                 String duration = null;
-                String lastPacketReceive = null;
-                String byteIn = null;
-                String byteOut = null;
 
                 if (duration == null) duration = "00:00:00";
-                if (lastPacketReceive == null) lastPacketReceive = "0";
-                if (byteIn == null) byteIn = " ";
-                if (byteOut == null) byteOut = " ";
-                updateConnectionStatus(duration, lastPacketReceive, byteIn, byteOut);
+                updateConnectionStatus(duration);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -495,8 +449,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
     @Override
     public void onResume() {
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(broadcastReceiver, new IntentFilter("connectionState"));
-
         if (server == null) {
             server = preference.getServer();
         }
@@ -506,7 +458,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
     @Override
     public void onPause() {
-        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
         if (mService != null) {
             unbindService();
         }

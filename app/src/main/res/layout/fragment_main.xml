@@ -48,41 +48,16 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/lastPacketReceiveTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Packet Received:"
-                android:textColor="@color/colorWhite"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/byteInTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Bytes In: "
-                android:textColor="@color/colorWhite"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/byteOutTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Bytes OUT: "
-                android:textColor="@color/colorWhite"
-                android:textSize="14sp" />
-
             <Button
                 android:id="@+id/vpnBtn"
                 android:tag="1"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
+                android:elevation="20dp"
+                android:translationZ="20dp"
                 android:background="@drawable/circular_button_background"
                 android:text="Connect"
                 android:textColor="@color/colorWhite"
@@ -92,8 +67,8 @@
             android:layout_marginBottom="20dp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:id="@+id/selectedServerIcon"
             android:src="@drawable/usa_flag"/>
     </RelativeLayout>
