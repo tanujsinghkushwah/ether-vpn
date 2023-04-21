@@ -6,12 +6,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
-import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -33,7 +34,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Locale;
 
 import de.blinkt.openvpn.api.APIVpnProfile;
 import de.blinkt.openvpn.api.IOpenVPNAPIService;
@@ -66,11 +66,11 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
     private static final int ICS_OPENVPN_PERMISSION = 7;
 
+    private static final int NOTIFICATIONS_PERMISSION_REQUEST_CODE = 11;
+
     protected IOpenVPNAPIService mService = null;
 
     private Handler mHandler;
-
-    private long mStartTime = 0L;
 
     /**
      * Initialize all variable and object
@@ -178,9 +178,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     public boolean stopVpn() {
         try {
             mService.disconnect();
-            mHandler.removeCallbacks(mUpdateTimeRunnable);
-            binding.durationTv.setText("Duration: 00:00:00");
             status("connect");
+            binding.connectionStateTv.setText("state: NONE");
             vpnStart = false;
             return true;
         } catch (RemoteException e) {
@@ -244,7 +243,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             mService.startProfile(profile.mUUID);
             mService.startVPN(config.toString());
 
-
             // Update log
             binding.logTv.setText("Connecting...");
             vpnStart = true;
@@ -261,7 +259,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     public void setStatus(String connectionState) {
         if (connectionState!= null)
             switch (connectionState) {
-                case "DISCONNECTED":
+                case "NOPROCESS":
+                    binding.logTv.setText("No network connection");
                     status("connect");
                     vpnStart = false;
                     binding.logTv.setText("");
@@ -272,17 +271,20 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                     binding.logTv.setText("");
                     break;
                 case "WAIT":
+                    status("connecting");
                     binding.logTv.setText("waiting for server connection!!");
                     break;
                 case "AUTH":
+                    status("connecting");
                     binding.logTv.setText("server authenticating!!");
                     break;
-                case "RECONNECTING":
+                case "CONNECTRETRY":
                     status("connecting");
                     binding.logTv.setText("Reconnecting...");
                     break;
-                case "NONETWORK":
-                    binding.logTv.setText("No network connection");
+                default:
+                    status("connecting");
+                    binding.logTv.setText("Connection in progress!!");
                     break;
             }
 
@@ -296,35 +298,21 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
         if (status.equals("connect")) {
             binding.vpnBtn.setText(getContext().getString(R.string.connect));
+        } else if (status.equals("connected")) {
+            binding.vpnBtn.setText(getContext().getString(R.string.disconnect));
         } else if (status.equals("connecting")) {
             binding.vpnBtn.setText(getContext().getString(R.string.connecting));
-        } else if (status.equals("connected")) {
-
-            binding.vpnBtn.setText(getContext().getString(R.string.disconnect));
-
-        } else if (status.equals("tryDifferentServer")) {
-
-            binding.vpnBtn.setBackgroundResource(R.drawable.button_connected);
-            binding.vpnBtn.setText("Try Different\nServer");
-        } else if (status.equals("loading")) {
-            binding.vpnBtn.setBackgroundResource(R.drawable.button);
-            binding.vpnBtn.setText("Loading Server..");
-        } else if (status.equals("invalidDevice")) {
-            binding.vpnBtn.setBackgroundResource(R.drawable.button_connected);
-            binding.vpnBtn.setText("Invalid Device");
-        } else if (status.equals("authenticationCheck")) {
-            binding.vpnBtn.setBackgroundResource(R.drawable.button_connecting);
-            binding.vpnBtn.setText("Authentication \n Checking...");
         }
 
     }
 
     /**
      * Update status UI
-     * @param duration: running time
+     * @param state: running time
      */
-    public void updateConnectionStatus(String duration) {
-        binding.durationTv.setText("Duration: " + duration);
+    public void updateConnectionStatus(String state) {
+        if(!("NOPROCESS").equals(state))
+            binding.connectionStateTv.setText("State: " + state);
     }
 
     /**
@@ -375,30 +363,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         bindService();
     }
 
-    private Runnable mUpdateTimeRunnable = new Runnable() {
-        @Override
-        public void run() {
-            updateDuration();
-            mHandler.postDelayed(this, 1000);
-        }
-    };
-
-    private void updateDuration() {
-        try {
-            String duration = null;
-            long timeElapsed = SystemClock.elapsedRealtime() - mStartTime;
-            int hours = (int) (timeElapsed / 3600000);
-            int minutes = (int) ((timeElapsed / 60000) % 60);
-            int seconds = (int) ((timeElapsed / 1000) % 60);
-            duration = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
-
-            if (duration == null) duration = "00:00:00";
-            updateConnectionStatus(duration);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     private IOpenVPNStatusCallback mCallback = new IOpenVPNStatusCallback.Stub() {
         /**
          * This is called by the remote service regularly to tell us about
@@ -413,16 +377,15 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             Message msg = Message.obtain(mHandler, MSG_UPDATE_STATE, state + "|" + message);
             try {
                 setStatus(state);
+                updateConnectionStatus(state);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             if (state.equals("CONNECTED")) {
-                mStartTime = SystemClock.elapsedRealtime();
-                mHandler.post(mUpdateTimeRunnable);
-                // Start the foreground service
-            } else {
-                mStartTime = 0L;
+                if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, NOTIFICATIONS_PERMISSION_REQUEST_CODE);
+                }
             }
 
             msg.sendToTarget();
