@@ -1,4 +1,4 @@
-package com.example.ethervpn;
+package com.example.ethervpn.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -43,7 +43,7 @@ public class TimerService extends Service {
     }
 
     public class LocalBinder extends Binder {
-        TimerService getService() {
+        public TimerService getService() {
             // Return this instance of LocalService so clients can call public methods.
             return TimerService.this;
         }

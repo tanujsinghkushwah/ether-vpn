@@ -29,6 +29,9 @@ import com.bumptech.glide.Glide;
 import com.example.ethervpn.databinding.FragmentMainBinding;
 import com.example.ethervpn.interfaces.ChangeServer;
 import com.example.ethervpn.model.Server;
+import com.example.ethervpn.services.TimerService;
+import com.example.ethervpn.utilities.CheckInternetConnection;
+import com.example.ethervpn.utilities.SharedPreference;
 
 import java.io.BufferedReader;
 import java.io.IOException;

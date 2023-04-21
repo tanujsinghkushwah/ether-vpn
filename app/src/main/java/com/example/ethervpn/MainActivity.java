@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.ethervpn.services.OAuthService;
+
 public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sharedpreferences;

@@ -1,10 +1,11 @@
-package com.example.ethervpn;
+package com.example.ethervpn.utilities;
 
-import static com.example.ethervpn.Utils.getImgURL;
+import static com.example.ethervpn.utilities.Utils.getImgURL;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.ethervpn.R;
 import com.example.ethervpn.model.Server;
 
 public class SharedPreference {

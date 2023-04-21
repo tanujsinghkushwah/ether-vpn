@@ -1,6 +1,8 @@
-package com.example.ethervpn;
+package com.example.ethervpn.utilities;
 
 import android.net.Uri;
+
+import com.example.ethervpn.R;
 
 public class Utils {
 
