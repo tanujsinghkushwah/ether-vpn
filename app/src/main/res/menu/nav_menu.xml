@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_about_us"
+        android:icon="@drawable/baseline_info_24"
+        android:title="About us" />
+
+    <item
+        android:id="@+id/nav_freeopenvpn"
+        android:icon="@drawable/baseline_link_24"
+        android:title="FreeOpenVPN.com" />
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/astronaut_icon_round"
+        android:title="Logout" />
+
+</menu>

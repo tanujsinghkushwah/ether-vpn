@@ -79,6 +79,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
     private Handler mHandler;
 
+    private Boolean auth_failed = false;
+
     /**
      * Initialize all variable and object
      */
@@ -251,7 +253,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
             // Update log
             binding.logTv.setText("Connecting...");
-            vpnStart = true;
 
         } catch (IOException | RemoteException e) {
             e.printStackTrace();
@@ -287,9 +288,18 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                     status("connecting");
                     binding.logTv.setText("Reconnecting...");
                     break;
+                case "AUTH_FAILED":
+                    status("connect");
+                    binding.logTv.setText("Authorization failed!!");
+                    break;
+                case "EXITING":
+                    status("connect");
+                    binding.logTv.setText("Unable to connect to server!!");
+                    break;
                 default:
                     status("connecting");
                     binding.logTv.setText("Connection in progress!!");
+                    vpnStart = false;
                     break;
             }
 
@@ -408,6 +418,10 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         @Override
         public void newStatus(String uuid, String state, String message, String level) throws RemoteException {
             Message msg = Message.obtain(mHandler, MSG_UPDATE_STATE, state + "|" + message);
+
+            if (state.equals("EXITING")){
+                auth_failed = true;
+            }
             try {
                 setStatus(state);
                 updateConnectionStatus(state);
@@ -415,6 +429,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                 e.printStackTrace();
             }
 
+            if(auth_failed && state.equals("NOPROCESS"))
+                binding.logTv.setText("AUTHORIZATION FAILED!!");
             if (state.equals("CONNECTED")) {
                 if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, NOTIFICATIONS_PERMISSION_REQUEST_CODE);
