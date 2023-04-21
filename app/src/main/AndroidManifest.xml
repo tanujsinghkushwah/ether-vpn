@@ -41,6 +41,10 @@
             android:label="Ether VPN"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <service
+            android:name=".TimerService"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:exported="false"/>
         <activity
             android:name="de.blinkt.openvpn.activities.DisconnectVPN"
             android:excludeFromRecents="true"

@@ -70,6 +70,10 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
     protected IOpenVPNAPIService mService = null;
 
+    protected TimerService mTimerService = null;
+
+    boolean mBound = false;
+
     private Handler mHandler;
 
     /**
@@ -179,7 +183,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         try {
             mService.disconnect();
             status("connect");
-            binding.connectionStateTv.setText("state: NONE");
             vpnStart = false;
             return true;
         } catch (RemoteException e) {
@@ -263,7 +266,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                     binding.logTv.setText("No network connection");
                     status("connect");
                     vpnStart = false;
-                    binding.logTv.setText("");
                     break;
                 case "CONNECTED":
                     vpnStart = true;// it will use after restart this activity
@@ -272,11 +274,11 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                     break;
                 case "WAIT":
                     status("connecting");
-                    binding.logTv.setText("waiting for server connection!!");
+                    binding.logTv.setText("Waiting for server connection!!");
                     break;
                 case "AUTH":
                     status("connecting");
-                    binding.logTv.setText("server authenticating!!");
+                    binding.logTv.setText("Server authenticating!!");
                     break;
                 case "CONNECTRETRY":
                     status("connecting");
@@ -298,6 +300,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
         if (status.equals("connect")) {
             binding.vpnBtn.setText(getContext().getString(R.string.connect));
+            binding.connectionStateTv.setText("state: NONE");
+            binding.durationTv.setText("duration: 00:00:00");
         } else if (status.equals("connected")) {
             binding.vpnBtn.setText(getContext().getString(R.string.disconnect));
         } else if (status.equals("connecting")) {
@@ -312,7 +316,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
      */
     public void updateConnectionStatus(String state) {
         if(!("NOPROCESS").equals(state))
-            binding.connectionStateTv.setText("State: " + state);
+            binding.connectionStateTv.setText("state: " + state);
     }
 
     /**
@@ -363,6 +367,32 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         bindService();
     }
 
+    private TimerService.TimerServiceCallback mTimerServiceCallback = new TimerService.TimerServiceCallback() {
+        @Override
+        public void onDurationChanged(String duration) {
+            // Update UI with new duration value
+            if(mBound)
+                binding.durationTv.setText("duration: " + duration);
+        }
+    };
+
+    private ServiceConnection mTimerServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            // This will be called when the service is connected
+            TimerService.LocalBinder binder = (TimerService.LocalBinder) iBinder;
+            mTimerService = binder.getService();
+            binder.setCallback(mTimerServiceCallback);
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            // This will be called when the service is disconnected unexpectedly
+            mBound = false;
+        }
+    };
+
     private IOpenVPNStatusCallback mCallback = new IOpenVPNStatusCallback.Stub() {
         /**
          * This is called by the remote service regularly to tell us about
@@ -386,6 +416,9 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                 if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, NOTIFICATIONS_PERMISSION_REQUEST_CODE);
                 }
+                bindTimerService();
+            } else {
+                unbindTimerService();
             }
 
             msg.sendToTarget();
@@ -440,6 +473,12 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
     }
 
+    private void bindTimerService() {
+        Intent serviceIntent = new Intent(getActivity(), TimerService.class);
+        serviceIntent.setPackage("com.example.ethervpn");
+        getActivity().bindService(serviceIntent, mTimerServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
     @Override
     public void onResume() {
         if (server == null) {
@@ -470,6 +509,11 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
     private void unbindService() {
         getActivity().unbindService(mConnection);
+    }
+
+    private void unbindTimerService(){
+        getActivity().unbindService(mTimerServiceConnection);
+        mBound = false;
     }
 
     @Override
