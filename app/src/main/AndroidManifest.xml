@@ -41,6 +41,10 @@
             android:label="Ether VPN"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".FreeServerWebview"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <service
             android:name=".services.TimerService"
             android:permission="android.permission.BIND_VPN_SERVICE"

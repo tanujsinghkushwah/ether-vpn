@@ -43,13 +43,9 @@ import java.util.ArrayList;
 public class VpnDock extends AppCompatActivity implements NavItemClickListener {
 
     FirebaseAuth firebaseAuth;
-
     GoogleSignInClient googleSignInClient;
-
     SharedPreferences sharedPreferences;
-
     SharedPreferences.Editor editor;
-
     private FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
     private Fragment fragment;
     private RecyclerView serverListRv;
@@ -58,6 +54,7 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
     private DrawerLayout drawer;
     private ChangeServer changeServer;
     ImageView navbar_left;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -203,8 +200,12 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        if(id == R.id.nav_freeopenvpn){
+            Intent intent = new Intent(this, FreeServerWebview.class);
+            startActivity(intent);
+            return true;
+        }
         if (id == R.id.nav_logout) {
-            // Open the options menu programmatically
             googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
