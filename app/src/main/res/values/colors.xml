@@ -12,4 +12,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#ffffff</color>
     <color name="rightNav">#032e63</color>
+    <color name="gray">#323131</color>
 </resources>

@@ -8,11 +8,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -87,10 +87,18 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
             }
         });
 
+        PopupMenu popupMenu = new PopupMenu(this, navbar_left);
+        popupMenu.getMenuInflater().inflate(R.menu.nav_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                onMenuOptionSelected(item);
+                return true;
+            }
+        });
         navbar_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openOptionsMenu();
+                popupMenu.show();
             }
         });
 
@@ -190,15 +198,7 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
         changeServer.newServer(serverLists.get(index));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.nav_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    private boolean onMenuOptionSelected(MenuItem item) {
         int id = item.getItemId();
 
         if(id == R.id.nav_about_us){
@@ -229,7 +229,6 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
             });
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 }
