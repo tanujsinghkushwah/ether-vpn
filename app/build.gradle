@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -71,8 +72,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'com.google.gms:google-services:4.3.10'
-    implementation platform('com.google.firebase:firebase-bom:31.2.3')
+    implementation platform('com.google.firebase:firebase-bom:31.5.0')
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'androidx.databinding:databinding-runtime:4.1.3'
     implementation project(path: ':openvpn')
     testImplementation 'junit:junit:4.13.2'

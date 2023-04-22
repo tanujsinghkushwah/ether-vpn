@@ -33,6 +33,7 @@ import com.example.ethervpn.model.Server;
 import com.example.ethervpn.services.TimerService;
 import com.example.ethervpn.utilities.CheckInternetConnection;
 import com.example.ethervpn.utilities.SharedPreference;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,6 +54,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     private SharedPreference preference;
 
     private FragmentMainBinding binding;
+
+    FirebaseCrashlytics logger = FirebaseCrashlytics.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -120,6 +123,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                     try{
                         prepareVpn();
                     } catch(RemoteException e){
+                        logger.log("openvpn initialization failed: " + e.getMessage());
                         e.printStackTrace();
                     }
                 }
@@ -192,6 +196,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             vpnStart = false;
             return true;
         } catch (RemoteException e) {
+            logger.log("openvpn disconnect failed: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -209,6 +214,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             try {
                 mService.registerStatusCallback(mCallback);
             } catch (RemoteException e) {
+                logger.log("openvpn status callback failed: " + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -256,6 +262,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             binding.logTv.setText("Connecting...");
 
         } catch (IOException | RemoteException e) {
+            logger.log("openvpn server connection failed: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -368,6 +375,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         try{
             prepareVpn();
         } catch(RemoteException e){
+            logger.log("openvpn initialization failed: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -427,6 +435,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                 setStatus(state);
                 updateConnectionStatus(state);
             } catch (Exception e) {
+                logger.log("openvpn status callback failed: " + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -472,6 +481,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                 }
 
             } catch (RemoteException e) {
+                logger.log("openvpn service connection failed: " + e.getMessage());
                 e.printStackTrace();
             }
         }

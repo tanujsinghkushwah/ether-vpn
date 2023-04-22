@@ -25,6 +25,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 public class OAuthService extends AppCompatActivity {
 
@@ -103,6 +104,7 @@ public class OAuthService extends AppCompatActivity {
                         });
                     }
                 } catch (ApiException e) {
+                    FirebaseCrashlytics.getInstance().log("Firebase authentication failed: " + e.getMessage());
                     e.printStackTrace();
                 }
             }
