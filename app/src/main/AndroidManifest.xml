@@ -32,7 +32,7 @@
         </activity>
         <activity
             android:exported="true"
-            android:name=".VpnDock"
+            android:name=".activities.VpnDock"
             android:label="VPN Dock Activity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
@@ -42,7 +42,11 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".FreeServerWebview"
+            android:name=".activities.FreeServerWebview"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.AboutUs"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <service

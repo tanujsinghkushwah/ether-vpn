@@ -1,9 +1,11 @@
-package com.example.ethervpn;
+package com.example.ethervpn.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+
+import com.example.ethervpn.R;
 
 public class FreeServerWebview extends Activity {
 

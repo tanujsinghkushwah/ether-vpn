@@ -1,4 +1,4 @@
-package com.example.ethervpn;
+package com.example.ethervpn.activities;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -25,6 +25,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ethervpn.R;
 import com.example.ethervpn.adapter.ServerListRVAdapter;
 import com.example.ethervpn.interfaces.ChangeServer;
 import com.example.ethervpn.interfaces.NavItemClickListener;
@@ -200,12 +201,17 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.nav_freeopenvpn){
+        if(id == R.id.nav_about_us){
+            Intent intent = new Intent(this, AboutUs.class);
+            startActivity(intent);
+            return true;
+        }
+        else if(id == R.id.nav_freeopenvpn){
             Intent intent = new Intent(this, FreeServerWebview.class);
             startActivity(intent);
             return true;
         }
-        if (id == R.id.nav_logout) {
+        else if (id == R.id.nav_logout) {
             googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {

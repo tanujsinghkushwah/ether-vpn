@@ -1,4 +1,4 @@
-package com.example.ethervpn;
+package com.example.ethervpn.activities;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -26,6 +26,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.ethervpn.R;
 import com.example.ethervpn.databinding.FragmentMainBinding;
 import com.example.ethervpn.interfaces.ChangeServer;
 import com.example.ethervpn.model.Server;

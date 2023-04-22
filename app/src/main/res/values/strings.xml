@@ -20,4 +20,7 @@
     <string name="connection_close_confirm">Would you like to cancel the current VPN Connection?</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
+    <string name="app_description">Looking for a VPN app that is more secure than a tiger mom protecting her cubs? Well, look no further! Our VPN client app is so secure, even James Bond would be impressed. Not only do we not store any of your precious data, but all of your messages are encrypted so tightly, even the NSA could not crack them. Trust us, your data is in safer hands with our app than it would be in a room full of baby pandas with strict instructions to not touch anything. Anonymity should not be expensive.</string>
+    <string name="wallet_addresses">Support the development for more free servers: bc1qm7j9qsn55ue3ke54n2f92el9jx8rfa343yqxq7 (BTC), 0x81466D108b0969DC26baE8AC040d15F706E9a231 (ETH)</string>
+    <string name="corp_sign">&#x24D2; Anonymous Space Corporation</string>
 </resources>
