@@ -1,37 +1,64 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/onboarding_layout"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
-    <!-- Image -->
-    <ImageView
-        android:id="@+id/onboarding_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        android:src="@drawable/freeopenvpn_dialog"/>
+<ImageView android:id="@+id/slider_image"
+        android:layout_width="0dp"
+        android:layout_height="400dp"
+        android:layout_marginTop="32dp"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/freeopenvpn_dialog" />
 
-    <!-- Description -->
     <TextView
-        android:id="@+id/onboarding_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/onboarding_image"
-        android:text="Click here!!!"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:textColor="@color/black"/>
-
-    <!-- Close Button -->
-    <Button
-        android:id="@+id/close_button"
+        android:id="@+id/slider_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="OK"
-        android:textSize="16sp"
-        android:background="@color/black"
-        android:textColor="@color/white"/>
+        android:layout_marginStart="140dp"
+        android:layout_marginEnd="140dp"
+        android:gravity="center"
+        android:text="@string/onboarding_title"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/slider_image" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/slider_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginLeft="176dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginRight="176dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/onboarding_desc"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/slider_heading" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/skip_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:onClick="skip"
+            android:padding="10dp"
+            android:text="SKIP"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/black"/>
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

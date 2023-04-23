@@ -1,22 +1,30 @@
 package com.example.ethervpn.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import android.view.View;
+import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ethervpn.R;
+import com.example.ethervpn.services.OAuthService;
 
-public class OnBoardingFragment extends Fragment {
+public class OnBoardingFragment extends AppCompatActivity {
 
-        @Nullable
-        @Override
-        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.freeopenvpn_onboardingfragment, container, false);
-        }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.freeopenvpn_onboardingfragment);
 
+    }
+
+    public void skip(View view) {
+        Intent intent = new Intent(this, OAuthService.class);
+        intent.putExtra("first_run", true);
+        startActivity(intent);
+        finish();
+    }
 }

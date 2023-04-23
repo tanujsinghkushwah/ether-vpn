@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isLoggedIn;
 
+    private boolean onBoardingFlag = false;
+
     public static final String mypreference = "appPreferences";
 
     SharedPreferences.Editor editor;
@@ -39,28 +41,17 @@ public class MainActivity extends AppCompatActivity {
             editor.apply();
 
             if (!isOnBoardingFragmentShown) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(android.R.id.content, new OnBoardingFragment())
-                        .commit();
+                Intent intent = new Intent(this, OnBoardingFragment.class);
+                onBoardingFlag = true;
+                startActivity(intent);
 
                 // Save that the app has been run before
                 sharedpreferences.edit().putBoolean("isOnBoardingFragmentShown", true).apply();
             }
 
-            isLoggedIn = sharedpreferences.getBoolean("isLoggedIn", false);
-
-            Intent intent;
-            if (isLoggedIn) {
-                intent = new Intent(this, VpnDock.class);
-                intent.putExtra("first_run", firstRun);
-            } else {
-                intent = new Intent(this, OAuthService.class);
-                intent.putExtra("first_run", firstRun);
-            }
-            startActivity(intent);
-
             editor.putBoolean("first_run", false);
             editor.apply();
+            finish();
         }
 
         isLoggedIn = sharedpreferences.getBoolean("isLoggedIn", false);
@@ -73,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent(this, OAuthService.class);
             intent.putExtra("first_run", firstRun);
         }
-        startActivity(intent);
+        if(!onBoardingFlag)
+            startActivity(intent);
         finish();
     }
 
