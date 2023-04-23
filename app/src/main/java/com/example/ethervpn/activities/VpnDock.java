@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -217,7 +216,6 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
                         firebaseAuth.signOut();
-                        Toast.makeText(VpnDock.this, "Logout successful", Toast.LENGTH_SHORT).show();
 
                         editor.putBoolean("isLoggedIn", false);
                         editor.apply();

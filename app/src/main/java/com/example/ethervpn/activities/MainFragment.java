@@ -16,8 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -173,15 +171,11 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                 status("connecting");
 
             } else {
-
-                // No internet connection available
-                showToast("you have no internet connection !!");
+                System.out.println("you have no internet connection !!");
             }
 
         } else if (stopVpn()) {
-
-            // VPN is stopped, show a Toast message.
-            showToast("Disconnect Successfully");
+            System.out.println("Disconnect Successfully");
         }
     }
 
@@ -338,14 +332,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     public void updateConnectionStatus(String state) {
         if(!("NOPROCESS").equals(state))
             binding.connectionStateTv.setText("state: " + state);
-    }
-
-    /**
-     * Show toast message
-     * @param message: toast message
-     */
-    public void showToast(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     /**

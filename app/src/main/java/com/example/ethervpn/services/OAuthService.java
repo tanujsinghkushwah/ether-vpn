@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -81,8 +80,6 @@ public class OAuthService extends AppCompatActivity {
             Task<GoogleSignInAccount> signInAccountTask = GoogleSignIn.getSignedInAccountFromIntent(data);
 
             if (signInAccountTask.isSuccessful()) {
-                String s = "Google sign in successful";
-                displayToast(s);
                 editor.putBoolean("isLoggedIn", true);
                 editor.apply();
 
@@ -99,9 +96,8 @@ public class OAuthService extends AppCompatActivity {
 
                                 if (task.isSuccessful()) {
                                     startActivity(new Intent(OAuthService.this, VpnDock.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                                    displayToast("Firebase authentication successful");
                                 } else {
-                                    displayToast("Authentication Failed :" + task.getException().getMessage());
+                                    FirebaseCrashlytics.getInstance().log("Firebase authentication failed: " + task.getException().getMessage());
                                 }
                             }
                         });
@@ -112,9 +108,5 @@ public class OAuthService extends AppCompatActivity {
                 }
             }
         }
-    }
-
-    private void displayToast(String s) {
-        Toast.makeText(OAuthService.this, s, Toast.LENGTH_SHORT).show();
     }
 }
