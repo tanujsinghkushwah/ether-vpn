@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1094407803885:android:49813cd70f246fced84de4",
+        "mobilesdk_app_id": "1:1094407803885:android:f188b83fb3856312d84de4",
         "android_client_info": {
           "package_name": "com.example.ethervpn"
         }
@@ -22,7 +22,7 @@
           }
         },
         {
-          "client_id": "1094407803885-qkd55tebfmknaihgnldfl4cifm7lr5jk.apps.googleusercontent.com",
+          "client_id": "1094407803885-gdih713nm1hkl31a2vbg8bgbc26srhu4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1094407803885-qkd55tebfmknaihgnldfl4cifm7lr5jk.apps.googleusercontent.com",
+              "client_id": "1094407803885-gdih713nm1hkl31a2vbg8bgbc26srhu4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
