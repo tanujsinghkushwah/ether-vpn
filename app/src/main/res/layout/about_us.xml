@@ -12,11 +12,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:id="@+id/applicationLoginBanner"
         android:background="@drawable/logo_banner_layerlist"/>
 
     <TextView
-        android:id="@+id/appTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -27,7 +25,6 @@
         android:textColor="@color/black"/>
 
     <TextView
-        android:id="@+id/appDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
@@ -36,7 +33,6 @@
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/supportDeveloper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
