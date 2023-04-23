@@ -39,6 +39,8 @@ public class OAuthService extends AppCompatActivity {
 
     SharedPreferences.Editor editor;
 
+    boolean firstRun;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,7 @@ public class OAuthService extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("appPreferences",MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        firstRun = getIntent().getBooleanExtra("first_run", false);
 
         btSignIn = findViewById(R.id.sign_in_button);
 
@@ -65,7 +68,7 @@ public class OAuthService extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-        if (firebaseUser != null) {
+        if (firebaseUser != null && !firstRun) {
             startActivity(new Intent(OAuthService.this, VpnDock.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     }
