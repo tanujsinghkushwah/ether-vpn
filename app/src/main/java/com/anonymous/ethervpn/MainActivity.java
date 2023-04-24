@@ -1,14 +1,14 @@
-package com.example.ethervpn;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.anonymous.ethervpn;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.example.ethervpn.activities.OnBoardingFragment;
-import com.example.ethervpn.activities.VpnDock;
-import com.example.ethervpn.services.OAuthService;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.anonymous.ethervpn.activities.OnBoardingFragment;
+import com.anonymous.ethervpn.activities.VpnDock;
+import com.anonymous.ethervpn.services.OAuthService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,8 +64,9 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent(this, OAuthService.class);
             intent.putExtra("first_run", firstRun);
         }
-        if(!onBoardingFlag)
+        if(!onBoardingFlag){
             startActivity(intent);
+        }
         finish();
     }
 

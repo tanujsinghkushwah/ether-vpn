@@ -1,4 +1,4 @@
-package com.example.ethervpn.interfaces;
+package com.anonymous.ethervpn.interfaces;
 
 public interface NavItemClickListener {
 

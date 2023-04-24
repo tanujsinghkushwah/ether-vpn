@@ -1,4 +1,4 @@
-package com.example.ethervpn.activities;
+package com.anonymous.ethervpn.activities;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -23,14 +23,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.anonymous.ethervpn.interfaces.ChangeServer;
+import com.anonymous.ethervpn.model.Server;
+import com.anonymous.ethervpn.services.TimerService;
+import com.anonymous.ethervpn.utilities.CheckInternetConnection;
+import com.anonymous.ethervpn.utilities.SharedPreference;
 import com.bumptech.glide.Glide;
-import com.example.ethervpn.R;
-import com.example.ethervpn.databinding.FragmentMainBinding;
-import com.example.ethervpn.interfaces.ChangeServer;
-import com.example.ethervpn.model.Server;
-import com.example.ethervpn.services.TimerService;
-import com.example.ethervpn.utilities.CheckInternetConnection;
-import com.example.ethervpn.utilities.SharedPreference;
+import com.anonymous.ethervpn.R;
+import com.anonymous.ethervpn.databinding.FragmentMainBinding;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.io.BufferedReader;
@@ -483,7 +483,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     private void bindService() {
 
         Intent icsopenvpnService = new Intent(IOpenVPNAPIService.class.getName());
-        icsopenvpnService.setPackage("com.example.ethervpn");
+        icsopenvpnService.setPackage("com.anonymous.ethervpn");
 
         getActivity().bindService(icsopenvpnService, mConnection, Context.BIND_AUTO_CREATE);
 
@@ -491,7 +491,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
     private void bindTimerService() {
         Intent serviceIntent = new Intent(getActivity(), TimerService.class);
-        serviceIntent.setPackage("com.example.ethervpn");
+        serviceIntent.setPackage("com.anonymous.ethervpn");
         getActivity().bindService(serviceIntent, mTimerServiceConnection, Context.BIND_AUTO_CREATE);
     }
 

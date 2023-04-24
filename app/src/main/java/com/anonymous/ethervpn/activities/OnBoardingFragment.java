@@ -1,23 +1,22 @@
-package com.example.ethervpn.activities;
+package com.anonymous.ethervpn.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.View;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ethervpn.R;
-import com.example.ethervpn.services.OAuthService;
+import com.anonymous.ethervpn.services.OAuthService;
+import com.anonymous.ethervpn.R;
 
 public class OnBoardingFragment extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.freeopenvpn_onboardingfragment);
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.freeopenvpn_onboardingfragment);
 
     }
 

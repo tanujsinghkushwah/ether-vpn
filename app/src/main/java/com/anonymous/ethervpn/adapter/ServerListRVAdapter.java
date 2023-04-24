@@ -1,4 +1,4 @@
-package com.example.ethervpn.adapter;
+package com.anonymous.ethervpn.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,10 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.anonymous.ethervpn.interfaces.NavItemClickListener;
+import com.anonymous.ethervpn.model.Server;
 import com.bumptech.glide.Glide;
-import com.example.ethervpn.R;
-import com.example.ethervpn.interfaces.NavItemClickListener;
-import com.example.ethervpn.model.Server;
+import com.anonymous.ethervpn.R;
 
 import java.util.ArrayList;
 

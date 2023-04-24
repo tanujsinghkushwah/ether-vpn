@@ -1,4 +1,4 @@
-package com.example.ethervpn.utilities;
+package com.anonymous.ethervpn.utilities;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

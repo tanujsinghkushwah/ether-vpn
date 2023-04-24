@@ -1,4 +1,4 @@
-package com.example.ethervpn.model;
+package com.anonymous.ethervpn.model;
 
 public class Server {
     private String country;

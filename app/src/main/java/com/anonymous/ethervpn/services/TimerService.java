@@ -1,4 +1,4 @@
-package com.example.ethervpn.services;
+package com.anonymous.ethervpn.services;
 
 import android.app.Service;
 import android.content.Intent;

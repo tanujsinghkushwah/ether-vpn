@@ -1,4 +1,4 @@
-package com.example.ethervpn.activities;
+package com.anonymous.ethervpn.activities;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,13 +25,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ethervpn.R;
-import com.example.ethervpn.adapter.ServerListRVAdapter;
-import com.example.ethervpn.interfaces.ChangeServer;
-import com.example.ethervpn.interfaces.NavItemClickListener;
-import com.example.ethervpn.model.Server;
-import com.example.ethervpn.services.OAuthService;
-import com.example.ethervpn.utilities.Utils;
+import com.anonymous.ethervpn.adapter.ServerListRVAdapter;
+import com.anonymous.ethervpn.interfaces.ChangeServer;
+import com.anonymous.ethervpn.interfaces.NavItemClickListener;
+import com.anonymous.ethervpn.model.Server;
+import com.anonymous.ethervpn.services.OAuthService;
+import com.anonymous.ethervpn.utilities.Utils;
+import com.anonymous.ethervpn.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;

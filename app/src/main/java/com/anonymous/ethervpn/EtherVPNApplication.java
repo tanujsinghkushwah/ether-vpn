@@ -3,10 +3,12 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 
-package com.example.ethervpn;
+package com.anonymous.ethervpn;
 
 import android.app.Application;
 import android.os.StrictMode;
+
+import com.anonymous.ethervpn.BuildConfig;
 
 public class EtherVPNApplication extends Application {
     @Override

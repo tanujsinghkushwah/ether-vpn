@@ -1,9 +1,9 @@
-package com.example.ethervpn.activities;
+package com.anonymous.ethervpn.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.example.ethervpn.R;
+import com.anonymous.ethervpn.R;
 
 public class AboutUs extends Activity {
 
