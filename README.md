@@ -26,10 +26,14 @@ Project/IDE configurations:
 * java version "1.8.0_361"
 * Kotlin plugin installed on IDE
 
-Screenshots:  
-<img src="https://user-images.githubusercontent.com/32940477/233471447-f1463c93-9f33-4f02-9a37-3e3c905f053f.png" width="200" height="450"/>
-<img src="https://user-images.githubusercontent.com/32940477/233471509-da9414a2-646d-4e1f-b056-8eee6d4854ba.png" width="200" height="450"/>
-<img src="https://user-images.githubusercontent.com/32940477/233471553-b51308c7-f84e-4395-b54b-327ba162b648.png" width="200" height="450"/>
-<img src="https://user-images.githubusercontent.com/32940477/233471662-6756baa8-0650-4a8f-954e-e52b972634b1.png" width="200" height="450"/>
+Screenshots:
+<img src="https://user-images.githubusercontent.com/32940477/234352990-4a29fec4-a900-4bc1-92f2-5612134810dc.png" width="200" height="450"/>
+<img src="https://user-images.githubusercontent.com/32940477/234353073-8c513e67-a284-4286-b339-23ea7e7d61d4.png" width="200" height="450"/>
+<img src="https://user-images.githubusercontent.com/32940477/234353534-635be106-c2fd-448a-89b9-c3bd63355bc2.png" width="200" height="450"/>
+<img src="https://user-images.githubusercontent.com/32940477/234353884-7187cbe9-e279-4065-843a-d0d0eb1816a7.png" width="200" height="450"/>
+<img src="https://user-images.githubusercontent.com/32940477/234353935-238bcd55-1e8f-4f2c-a88f-71de9ee0799d.png" width="200" height="450"/>
+<img src="https://user-images.githubusercontent.com/32940477/234353952-aa127901-3f8c-4aa3-8124-b66e52aa9bab.png" width="200" height="450"/>
+<img src="https://user-images.githubusercontent.com/32940477/234354032-3d0bd026-add7-415e-b972-a4b96c8aa70f.png" width="200" height="450"/>
+<img src="https://user-images.githubusercontent.com/32940477/234354071-4e68e289-0671-427d-93e9-e5915ba0660b.png" width="200" height="450"/>
 
 
