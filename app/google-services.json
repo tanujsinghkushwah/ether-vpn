@@ -7,22 +7,22 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1094407803885:android:49813cd70f246fced84de4",
+        "mobilesdk_app_id": "1:1094407803885:android:4e2eb44051d41660d84de4",
         "android_client_info": {
-          "package_name": "com.example.ethervpn"
+          "package_name": "com.anonymous.ethervpn"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1094407803885-9v9lvmt13hvo8ffbi89uitaiumnal76r.apps.googleusercontent.com",
+          "client_id": "1094407803885-d1ne98v4d6ujmp283ml3rfuoc453s21k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.ethervpn",
+            "package_name": "com.anonymous.ethervpn",
             "certificate_hash": "b99a22f478a1a8107ceb93d88ae33f4353e2e073"
           }
         },
         {
-          "client_id": "1094407803885-qkd55tebfmknaihgnldfl4cifm7lr5jk.apps.googleusercontent.com",
+          "client_id": "1094407803885-gdih713nm1hkl31a2vbg8bgbc26srhu4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1094407803885-qkd55tebfmknaihgnldfl4cifm7lr5jk.apps.googleusercontent.com",
+              "client_id": "1094407803885-gdih713nm1hkl31a2vbg8bgbc26srhu4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

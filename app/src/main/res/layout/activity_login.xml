@@ -6,14 +6,13 @@
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".OAuthService">
+    tools:context=".services.OAuthService">
 
     <ImageView
         android:layout_marginBottom="40dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:id="@+id/applicationLoginBanner"
         android:background="@drawable/logo_banner_layerlist"/>
 
     <com.google.android.gms.common.SignInButton

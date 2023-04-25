@@ -1,4 +1,4 @@
-package com.example.ethervpn;
+package com.anonymous.ethervpn;
 
 import org.junit.Test;
 

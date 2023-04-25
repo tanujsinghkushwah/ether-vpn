@@ -1,2 +1,4 @@
 /build
 openvpn/build
+/.idea
+/app/skeleton

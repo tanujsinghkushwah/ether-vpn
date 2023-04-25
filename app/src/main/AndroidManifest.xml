@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.anonymous.ethervpn">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".EtherVPNApplication"
@@ -31,15 +33,31 @@
         </activity>
         <activity
             android:exported="true"
-            android:name=".VpnDock"
+            android:name=".activities.VpnDock"
             android:label="VPN Dock Activity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".OAuthService"
+            android:name=".services.OAuthService"
             android:label="Ether VPN"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".activities.FreeServerWebview"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.AboutUs"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.OnBoardingFragment"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <service
+            android:name=".services.TimerService"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:exported="false"/>
         <activity
             android:name="de.blinkt.openvpn.activities.DisconnectVPN"
             android:excludeFromRecents="true"
