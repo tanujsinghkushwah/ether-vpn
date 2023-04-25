@@ -528,8 +528,10 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     }
 
     private void unbindTimerService(){
+        if(mBound){
         getActivity().unbindService(mTimerServiceConnection);
         mBound = false;
+        }
     }
 
     @Override
