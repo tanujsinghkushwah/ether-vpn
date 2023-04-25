@@ -41,6 +41,12 @@ Future developments possible:
 * Improvements in UI, connection status display and retry mechanism after server authorization fails.
 * Implementation of subscription model for stable paid vpn servers.
 
+Support the development for more free servers:  
+* BTC - bc1qm7j9qsn55ue3ke54n2f92el9jx8rfa343yqxq7
+* ETH - 0x81466D108b0969DC26baE8AC040d15F706E9a231
+
+To discuss any hiring opportunities, please drop an email to tanujsinghkushwah@gmail.com
+
 License: 
   
 This project is covered under GNUv3 license. It uses ics-openvpn module which uses GNUv2 license. Please [read](https://github.com/tj4752/ether-vpn/blob/master/LICENSE.md) and understand scope of the license before starting the development.
