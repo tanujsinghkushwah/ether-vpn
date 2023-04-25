@@ -26,7 +26,7 @@ Project/IDE configurations:
 * java version "1.8.0_361"
 * Kotlin plugin installed on IDE
 
-Screenshots:
+Screenshots:  
 <img src="https://user-images.githubusercontent.com/32940477/234352990-4a29fec4-a900-4bc1-92f2-5612134810dc.png" width="200" height="450"/>
 <img src="https://user-images.githubusercontent.com/32940477/234353073-8c513e67-a284-4286-b339-23ea7e7d61d4.png" width="200" height="450"/>
 <img src="https://user-images.githubusercontent.com/32940477/234353534-635be106-c2fd-448a-89b9-c3bd63355bc2.png" width="200" height="450"/>
