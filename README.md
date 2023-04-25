@@ -43,4 +43,4 @@ Future developments possible:
 
 License: 
   
-This project is covered under GNUv3 license. It uses ics-openvpn module which uses GNUv2 license. Please read and understand scope of the license before starting the development.
+This project is covered under GNUv3 license. It uses ics-openvpn module which uses GNUv2 license. Please [read](https://github.com/tj4752/ether-vpn/blob/master/LICENSE.md) and understand scope of the license before starting the development.
