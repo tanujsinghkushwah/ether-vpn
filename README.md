@@ -36,5 +36,10 @@ Screenshots:
 <img src="https://user-images.githubusercontent.com/32940477/234354032-3d0bd026-add7-415e-b972-a4b96c8aa70f.png" width="200" height="450"/>
 <img src="https://user-images.githubusercontent.com/32940477/234354071-4e68e289-0671-427d-93e9-e5915ba0660b.png" width="200" height="450"/>
 
-License:
+Future developments possible: 
+* Migration of ovpn configs to a DB and fetching it from there.
+* Improvements in UI, connection status display and retry mechanism after server authorization fails.
+* Implementation of subscription model for stable paid vpn servers.
+
+License:  
 This project is covered under GNUv3 license. It uses ics-openvpn module which uses GNUv2 license. Please read and understand scope of the license before starting the development.
