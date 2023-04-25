@@ -19,6 +19,7 @@ Tips to build imported openvpn module with latest code while integrating in a ba
 * Enable databinding and add productFlavors['ui', 'skeleton' in build.gradle of base app.
 * Comment out splits and applicantVariants register function in openvpn build.gradle.kts.
 * Verify de.blinkt.openvpn.core.OpenVPNService service and de.blinkt.openvpn.activities.DisconnectVPN activity is added to base project's AndroidManifest file.
+<img width="178" alt="Screenshot 2023-04-25 224037" src="https://user-images.githubusercontent.com/32940477/234355724-46387c01-fe07-46b9-9d57-8f75be6659f6.png">
 
 Project/IDE configurations:
 * Gradle version - 7.5, Gradle plugin version - 7.4.1
@@ -30,7 +31,7 @@ Screenshots:
 <img src="https://user-images.githubusercontent.com/32940477/234352990-4a29fec4-a900-4bc1-92f2-5612134810dc.png" width="200" height="450"/>
 <img src="https://user-images.githubusercontent.com/32940477/234353073-8c513e67-a284-4286-b339-23ea7e7d61d4.png" width="200" height="450"/>
 <img src="https://user-images.githubusercontent.com/32940477/234353534-635be106-c2fd-448a-89b9-c3bd63355bc2.png" width="200" height="450"/>
-<img src="https://user-images.githubusercontent.com/32940477/234353884-7187cbe9-e279-4065-843a-d0d0eb1816a7.png" width="200" height="450"/>
+<img src="https://user-images.githubusercontent.com/32940477/234353884-7187cbe9-e279-4065-843a-d0d0eb1816a7.png" width="178" height="450"/>
 <img src="https://user-images.githubusercontent.com/32940477/234353935-238bcd55-1e8f-4f2c-a88f-71de9ee0799d.png" width="200" height="450"/>
 <img src="https://user-images.githubusercontent.com/32940477/234353952-aa127901-3f8c-4aa3-8124-b66e52aa9bab.png" width="200" height="450"/>
 <img src="https://user-images.githubusercontent.com/32940477/234354032-3d0bd026-add7-415e-b972-a4b96c8aa70f.png" width="200" height="450"/>
