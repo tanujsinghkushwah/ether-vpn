@@ -27,6 +27,7 @@ Project/IDE configurations:
 * Kotlin plugin installed on IDE
 
 Screenshots:  
+  
 <img src="https://user-images.githubusercontent.com/32940477/234352990-4a29fec4-a900-4bc1-92f2-5612134810dc.png" width="200" height="450"/>
 <img src="https://user-images.githubusercontent.com/32940477/234353073-8c513e67-a284-4286-b339-23ea7e7d61d4.png" width="200" height="450"/>
 <img src="https://user-images.githubusercontent.com/32940477/234353534-635be106-c2fd-448a-89b9-c3bd63355bc2.png" width="200" height="450"/>
@@ -41,5 +42,6 @@ Future developments possible:
 * Improvements in UI, connection status display and retry mechanism after server authorization fails.
 * Implementation of subscription model for stable paid vpn servers.
 
-License:  
+License: 
+  
 This project is covered under GNUv3 license. It uses ics-openvpn module which uses GNUv2 license. Please read and understand scope of the license before starting the development.
