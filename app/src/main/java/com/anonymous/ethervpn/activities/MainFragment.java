@@ -94,6 +94,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         updateCurrentServerIcon(server.getFlagUrl());
 
         connection = new CheckInternetConnection();
+
+        status("connect");
     }
 
     @Override
@@ -252,6 +254,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             mService.startProfile(profile.mUUID);
             mService.startVPN(config.toString());
 
+            auth_failed = false;
+
             // Update log
             binding.logTv.setText("Connecting...");
 
@@ -270,7 +274,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             switch (connectionState) {
                 case "NOPROCESS":
                     binding.logTv.setText("No network connection");
-                    status("connect");
                     vpnStart = false;
                     break;
                 case "CONNECTED":
@@ -287,11 +290,17 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                     binding.logTv.setText("Server authenticating!!");
                     break;
                 case "CONNECTRETRY":
-                    status("connecting");
-                    binding.logTv.setText("Reconnecting...");
+                    status("retry");
+                    try{
+                        mService.disconnect();
+                    } catch (RemoteException ex){
+                        logger.log("openvpn server disconnect failed: " + ex.getMessage());
+                        ex.printStackTrace();
+                    }
+
                     break;
                 case "AUTH_FAILED":
-                    status("connect");
+                    status("retry");
                     binding.logTv.setText("Authorization failed!!");
                     break;
                 case "EXITING":
@@ -299,8 +308,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                     binding.logTv.setText("Unable to connect to server!!");
                     break;
                 default:
-                    status("connecting");
-                    binding.logTv.setText("Connection in progress!!");
                     vpnStart = false;
                     break;
             }
@@ -321,6 +328,10 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             binding.vpnBtn.setText(getContext().getString(R.string.disconnect));
         } else if (status.equals("connecting")) {
             binding.vpnBtn.setText(getContext().getString(R.string.connecting));
+        } else if (status.equals("retry")) {
+            binding.vpnBtn.setText(getContext().getString(R.string.retry));
+            binding.connectionStateTv.setText("state: NONE");
+            binding.durationTv.setText("duration: 00:00:00");
         }
 
     }
@@ -414,20 +425,26 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         public void newStatus(String uuid, String state, String message, String level) throws RemoteException {
             Message msg = Message.obtain(mHandler, MSG_UPDATE_STATE, state + "|" + message);
 
-            if (state.equals("EXITING")){
+            if (state.equals("AUTH_FAILED") || state.equals("CONNECTRETRY")){
                 auth_failed = true;
             }
-            try {
-                setStatus(state);
-                updateConnectionStatus(state);
-            } catch (Exception e) {
-                logger.log("openvpn status callback failed: " + e.getMessage());
-                e.printStackTrace();
+            if(!auth_failed){
+                try {
+                    setStatus(state);
+                    updateConnectionStatus(state);
+                } catch (Exception e) {
+                    logger.log("openvpn status callback failed: " + e.getMessage());
+                    e.printStackTrace();
+                }
+                msg.sendToTarget();
             }
 
-            if(auth_failed && state.equals("NOPROCESS"))
+            if(auth_failed) {
                 binding.logTv.setText("AUTHORIZATION FAILED!!");
+                setStatus("CONNECTRETRY");
+            }
             if (state.equals("CONNECTED")) {
+                auth_failed = false;
                 if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, NOTIFICATIONS_PERMISSION_REQUEST_CODE);
                 }
@@ -435,8 +452,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             } else {
                 unbindTimerService();
             }
-
-            msg.sendToTarget();
 
         }
 
