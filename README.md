@@ -38,7 +38,7 @@ Screenshots:
 
 Future developments possible: 
 * Migration of ovpn configs to a DB and fetching it from there.
-* Improvements in UI, connection status display and retry mechanism after server authorization fails.
+* Improvements in UI and connection status display.
 * Implementation of subscription model for stable paid vpn servers.
 
 Support the development for more free servers:  
