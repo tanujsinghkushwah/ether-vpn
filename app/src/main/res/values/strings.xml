@@ -6,6 +6,7 @@
     <string name="navigation_drawer_close">drawer close</string>
     <string name="connect">Connect</string>
     <string name="connecting">Connecting</string>
+    <string name="retry">Retry</string>
     <string name="connection_close_confirm">Would you like to cancel the current VPN Connection?</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
