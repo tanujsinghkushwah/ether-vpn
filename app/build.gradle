@@ -27,7 +27,7 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\tanuj\\OneDrive\\Desktop\\My Projects\\debug.keystore')
+            storeFile file('C:\\Users\\tanuj\\OneDrive\\Desktop\\my_projects\\debug.keystore')
             keyAlias 'androiddebugkey'
             keyPassword 'android'
             storePassword 'android'
