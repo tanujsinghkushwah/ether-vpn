@@ -64,6 +64,12 @@
             android:noHistory="true"
             android:taskAffinity=".DisconnectVPN"
             android:theme="@style/blinkt.dialog" />
+        <activity
+            android:name="de.blinkt.openvpn.LaunchVPN"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=".LaunchVPN"
+            android:theme="@style/blinkt.dialog" />
 
         <service
             android:name="de.blinkt.openvpn.core.OpenVPNService"

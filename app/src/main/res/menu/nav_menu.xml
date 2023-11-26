@@ -9,7 +9,7 @@
     <item
         android:id="@+id/nav_freeopenvpn"
         android:icon="@drawable/baseline_link_24"
-        android:title="FreeOpenVPN.com" />
+        android:title="vpnbook.com" />
 
     <item
         android:id="@+id/nav_logout"
