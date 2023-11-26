@@ -44,8 +44,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/corp_sign"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:layout_gravity="center_horizontal"
         android:textSize="12sp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/passkeys"
+        android:textSize="10sp"
         android:textColor="@color/black"/>
 </LinearLayout>

@@ -160,53 +160,53 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
 
         ArrayList<Server> servers = new ArrayList<>();
 
-        servers.add(new Server("United States",
+        servers.add(new Server("United States-1",
                 Utils.getImgURL(R.drawable.usa_flag),
-                "us.ovpn",
-                "freeopenvpn",
-                "108927705"
+                "us-1.ovpn",
+                "vpnbook",
+                "s4m5axb"
         ));
-        servers.add(new Server("Japan",
-                Utils.getImgURL(R.drawable.japan),
-                "japan.ovpn",
-                "freeopenvpn",
-                "714974189"
+        servers.add(new Server("United States-2",
+                Utils.getImgURL(R.drawable.usa_flag),
+                "us-2.ovpn",
+                "vpnbook",
+                "s4m5axb"
         ));
-        servers.add(new Server("United Kingdom",
+        servers.add(new Server("United Kingdom-1",
                 Utils.getImgURL(R.drawable.uk_flag),
-                "uk.ovpn",
-                "freeopenvpn",
-                "077154591"
+                "uk-1.ovpn",
+                "vpnbook",
+                "s4m5axb"
         ));
-        servers.add(new Server("Brazil",
-                Utils.getImgURL(R.drawable.brazil_flag),
-                "brazil.ovpn",
-                "freeopenvpn",
-                "077154591"
+        servers.add(new Server("United Kingdom-2",
+                Utils.getImgURL(R.drawable.uk_flag),
+                "uk-2.ovpn",
+                "vpnbook",
+                "s4m5axb"
+        ));
+        servers.add(new Server("Canada",
+                Utils.getImgURL(R.drawable.ca_flag),
+                "canada.ovpn",
+                "vpnbook",
+                "s4m5axb"
         ));
         servers.add(new Server("France",
                 Utils.getImgURL(R.drawable.france_flag),
                 "france.ovpn",
-                "freeopenvpn",
-                "077154591"
+                "vpnbook",
+                "s4m5axb"
         ));
-        servers.add(new Server("South Korea",
-                Utils.getImgURL(R.drawable.korea),
-                "korea.ovpn",
-                "freeopenvpn",
-                "077154591"
-        ));
-        servers.add(new Server("United States-FreeOpenVPN",
-                Utils.getImgURL(R.drawable.usa_flag),
-                "us-freeopenvpn.ovpn",
-                "freeopenvpn",
-                "108927705"
-        ));
-        servers.add(new Server("Germany-FreeOpenVPN",
+        servers.add(new Server("Germany",
                 Utils.getImgURL(R.drawable.germany),
-                "germany-freeopenvpn.ovpn",
-                "freeopenvpn",
-                "714974189"
+                "germany.ovpn",
+                "vpnbook",
+                "s4m5axb"
+        ));
+        servers.add(new Server("Poland",
+                Utils.getImgURL(R.drawable.pl_flag),
+                "poland.ovpn",
+                "vpnbook",
+                "s4m5axb"
         ));
 
         return servers;

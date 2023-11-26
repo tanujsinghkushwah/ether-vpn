@@ -19,6 +19,6 @@ public class FreeServerWebview extends Activity {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        webView.loadUrl("https://www.freeopenvpn.org/");
+        webView.loadUrl("https://www.vpnbook.com/");
     }
 }
