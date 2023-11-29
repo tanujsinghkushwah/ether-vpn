@@ -178,8 +178,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                 }
 
                 // Update confection status
-                status("connecting");
-
+                status("connect");
             } else {
                 System.out.println("you have no internet connection !!");
             }
