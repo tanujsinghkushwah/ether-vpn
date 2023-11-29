@@ -40,8 +40,8 @@ android {
         applicationId "com.anonymous.ethervpn"
         minSdk 23
         targetSdk 33
-        versionCode 3
-        versionName '3.0'
+        versionCode 8
+        versionName '8.0'
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -49,12 +49,17 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
-            crunchPngs true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            minifyEnabled true
+//            shrinkResources true
+//            crunchPngs true
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    bundle {
+        abi { enableSplit = false }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
