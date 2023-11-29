@@ -44,10 +44,6 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".activities.FreeServerWebview"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
             android:name=".activities.AboutUs"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

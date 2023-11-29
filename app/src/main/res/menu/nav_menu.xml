@@ -7,11 +7,6 @@
         android:title="About us" />
 
     <item
-        android:id="@+id/nav_freeopenvpn"
-        android:icon="@drawable/baseline_link_24"
-        android:title="vpnbook.com" />
-
-    <item
         android:id="@+id/nav_logout"
         android:icon="@drawable/astronaut_icon_round"
         android:title="Logout" />
