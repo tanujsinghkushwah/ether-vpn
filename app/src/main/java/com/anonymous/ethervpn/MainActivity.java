@@ -3,16 +3,30 @@ package com.anonymous.ethervpn;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.anonymous.ethervpn.activities.OnBoardingFragment;
 import com.anonymous.ethervpn.activities.VpnDock;
 import com.anonymous.ethervpn.services.OAuthService;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.google.firebase.remoteconfig.ConfigUpdate;
+import com.google.firebase.remoteconfig.ConfigUpdateListener;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigException;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sharedpreferences;
+
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+
+    private static final String WELCOME_MESSAGE_KEY = "welcome_message";
 
     private boolean isOnBoardingFragmentShown = false;
 
@@ -31,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         sharedpreferences = getSharedPreferences(mypreference, MODE_PRIVATE);
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         editor = sharedpreferences.edit();
 
         isOnBoardingFragmentShown = sharedpreferences.getBoolean("isOnBoardingFragmentShown", false);
@@ -55,6 +70,33 @@ public class MainActivity extends AppCompatActivity {
         }
 
         isLoggedIn = sharedpreferences.getBoolean("isLoggedIn", false);
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setMinimumFetchIntervalInSeconds(3600)
+                .build();
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
+        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_defaults);
+
+        mFirebaseRemoteConfig.addOnConfigUpdateListener(new ConfigUpdateListener() {
+            @Override
+            public void onUpdate(ConfigUpdate configUpdate) {
+
+                if (configUpdate.getUpdatedKeys().contains(WELCOME_MESSAGE_KEY)) {
+                    mFirebaseRemoteConfig.activate().addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Boolean> task) {
+                            Log.d("firebase remote-config", "Updated keys: " + configUpdate.getUpdatedKeys());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onError(FirebaseRemoteConfigException error) {
+                Log.w("firebase remote-config", "Config update error with code: " + error.getCode(), error);
+                FirebaseCrashlytics.getInstance().log("Config update error: " + error.getMessage());
+            }
+        });
+        fetchRemoteConfig();
 
         Intent intent;
         if (isLoggedIn) {
@@ -70,4 +112,19 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    private void fetchRemoteConfig() {
+        mFirebaseRemoteConfig.fetchAndActivate()
+                .addOnCompleteListener(this, new OnCompleteListener<Boolean>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Boolean> task) {
+                        if (task.isSuccessful()) {
+                            boolean updated = task.getResult();
+                            Log.d("firebase remote-config", "Config params updated: " + updated);
+
+                        } else {
+                            FirebaseCrashlytics.getInstance().log("Config fetch failed");
+                        }
+                    }
+                });
+    }
 }
