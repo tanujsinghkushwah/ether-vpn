@@ -1,9 +1,10 @@
 # Ether VPN
 Android VPN client developed using [ics-openvpn](https://github.com/schwabe/ics-openvpn) library.
 
+Available on Play Store now:arrow_right:: <https://play.google.com/store/apps/details?id=com.anonymous.ethervpn>
+
 https://user-images.githubusercontent.com/32940477/234350462-56fd801c-c066-47e0-81e1-47c7d30725a8.mp4
 
-Available on Play Store now:arrow_right:: <https://play.google.com/store/apps/details?id=com.anonymous.ethervpn>
 
 Build instructions:
 * Download swig[https://www.swig.org/download.html] on the system.
