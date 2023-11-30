@@ -230,11 +230,6 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
             startActivity(intent);
             return true;
         }
-        else if(id == R.id.nav_freeopenvpn){
-            Intent intent = new Intent(this, FreeServerWebview.class);
-            startActivity(intent);
-            return true;
-        }
         else if (id == R.id.nav_logout) {
             googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

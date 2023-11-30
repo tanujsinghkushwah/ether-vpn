@@ -32,6 +32,7 @@ import com.bumptech.glide.Glide;
 import com.anonymous.ethervpn.R;
 import com.anonymous.ethervpn.databinding.FragmentMainBinding;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -50,6 +51,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
     boolean vpnStart = false;
     private SharedPreference preference;
+
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     private FragmentMainBinding binding;
 
@@ -89,6 +92,11 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     private void initializeAll() {
         preference = new SharedPreference(getContext());
         server = preference.getServer();
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+
+        binding.vpnUsername.setText("Username: "+mFirebaseRemoteConfig.getString("username"));
+        binding.vpnPassword.setText("Password: "+mFirebaseRemoteConfig.getString("password"));
+
 
         // Update current selected server icon
         updateCurrentServerIcon(server.getFlagUrl());
@@ -170,8 +178,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                 }
 
                 // Update confection status
-                status("connecting");
-
+                status("connect");
             } else {
                 System.out.println("you have no internet connection !!");
             }

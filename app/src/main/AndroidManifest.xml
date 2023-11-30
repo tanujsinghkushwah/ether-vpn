@@ -22,6 +22,7 @@
         android:theme="@style/Theme.EtherVPN"
         tools:replace="android:label, android:theme, android:name, android:extractNativeLibs, android:icon, android:roundIcon"
         tools:targetApi="31">
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -40,10 +41,6 @@
         <activity
             android:name=".services.OAuthService"
             android:label="Ether VPN"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".activities.FreeServerWebview"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity

@@ -22,13 +22,13 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="20dp"
             android:id="@+id/connectionStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:orientation="vertical"
-            android:layout_marginStart="20dp">
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,19 +59,46 @@
 
             <Button
                 android:id="@+id/vpnBtn"
-                android:tag="1"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:elevation="20dp"
-                android:translationZ="20dp"
                 android:background="@drawable/circular_button_background"
+                android:elevation="20dp"
+                android:tag="1"
                 android:text="Connect"
                 android:textColor="@color/colorWhite"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:translationZ="20dp" />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/vpn_auth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/connectionStatus"
+            android:layout_marginBottom="120dp"
+            android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/vpn_username"
+            android:text="username"
+            android:textColor="@color/colorWhite"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/vpn_password"
+            android:text="password"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"/>
+        </LinearLayout>
+
         <ImageView
             android:layout_marginBottom="20dp"
             android:layout_centerHorizontal="true"
