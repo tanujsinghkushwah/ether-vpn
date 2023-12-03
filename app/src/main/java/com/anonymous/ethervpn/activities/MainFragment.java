@@ -27,14 +27,20 @@ import com.anonymous.ethervpn.interfaces.ChangeServer;
 import com.anonymous.ethervpn.model.Server;
 import com.anonymous.ethervpn.services.TimerService;
 import com.anonymous.ethervpn.utilities.CheckInternetConnection;
+import com.anonymous.ethervpn.utilities.Constants;
 import com.anonymous.ethervpn.utilities.SharedPreference;
 import com.bumptech.glide.Glide;
 import com.anonymous.ethervpn.R;
 import com.anonymous.ethervpn.databinding.FragmentMainBinding;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -56,7 +62,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
     private FragmentMainBinding binding;
 
-    FirebaseCrashlytics logger = FirebaseCrashlytics.getInstance();
+    private FirebaseCrashlytics logger = FirebaseCrashlytics.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -174,10 +180,10 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                 if (intent != null) {
                     startActivityForResult(intent, 1);
                 } else {
-                    startVpn();//have already permission
+                    startVpn();//Already have permission
                 }
 
-                // Update confection status
+                // Update connection status
                 status("connect");
             } else {
                 System.out.println("you have no internet connection !!");
@@ -227,7 +233,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     /**
      * Internet connection status.
      */
-    public boolean getInternetStatus() {
+    private boolean getInternetStatus() {
         return connection.netCheck(getContext());
     }
 
@@ -242,33 +248,48 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
      * Start the VPN
      */
     private void startVpn() {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+
+        String assetsPathPrefix = Constants.assetsPathPrefix;
+        StorageReference ovpnRef = storageRef.child(assetsPathPrefix+server.getOvpn());
         try {
-            // .ovpn file
-            InputStream conf = getActivity().getAssets().open(server.getOvpn());
-            InputStreamReader isr = new InputStreamReader(conf);
-            BufferedReader br = new BufferedReader(isr);
-            String config = "";
-            String line;
+            File localFile = File.createTempFile("temp", ".ovpn");
+            ovpnRef.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                try{
+                    InputStream conf = new FileInputStream(localFile);
+                    InputStreamReader isr = new InputStreamReader(conf);
+                    BufferedReader br = new BufferedReader(isr);
+                    String config = "";
+                    String line;
 
-            while (true) {
-                line = br.readLine();
-                if (line == null) break;
-                config += line + "\n";
-            }
+                    while (true) {
+                        line = br.readLine();
+                        if (line == null) break;
+                        config += line + "\n";
+                    }
 
-            br.readLine();
-            APIVpnProfile profile = mService.addNewVPNProfile(server.getCountry(), false, config.toString());
-            mService.startProfile(profile.mUUID);
-            mService.startVPN(config.toString());
+                    br.readLine();
+                    APIVpnProfile profile = mService.addNewVPNProfile(server.getCountry(), false, config);
+                    mService.startProfile(profile.mUUID);
+                    mService.startVPN(config);
 
-            auth_failed = false;
+                    auth_failed = false;
 
-            // Update log
-            binding.logTv.setText("Connecting...");
+                    // Update log
+                    binding.logTv.setText("Connecting...");
 
-        } catch (IOException | RemoteException e) {
-            logger.log("openvpn server connection failed: " + e.getMessage());
+                } catch (IOException | RemoteException e) {
+                    e.printStackTrace();
+                    logger.log("openvpn server connection failed: " + e.getMessage());
+                }
+            }).addOnFailureListener(exception -> {
+                exception.printStackTrace();
+                logger.log("Failed to download ovpn config: " + exception.getMessage());
+            });
+        } catch (IOException e) {
             e.printStackTrace();
+            logger.log("openvpn server connection failed: " + e.getMessage());
         }
     }
 
@@ -359,6 +380,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     public void updateCurrentServerIcon(String serverIcon) {
         Glide.with(getContext())
                 .load(serverIcon)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.selectedServerIcon);
     }
 

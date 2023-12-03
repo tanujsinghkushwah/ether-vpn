@@ -1,5 +1,12 @@
 package com.anonymous.ethervpn.utilities;
 
+import static com.anonymous.ethervpn.utilities.Constants.APP_PREFS_NAME;
+import static com.anonymous.ethervpn.utilities.Constants.DEFAULT_COUNTRY;
+import static com.anonymous.ethervpn.utilities.Constants.SERVER_COUNTRY;
+import static com.anonymous.ethervpn.utilities.Constants.SERVER_FLAG;
+import static com.anonymous.ethervpn.utilities.Constants.SERVER_OVPN;
+import static com.anonymous.ethervpn.utilities.Constants.SERVER_OVPN_PASSWORD;
+import static com.anonymous.ethervpn.utilities.Constants.SERVER_OVPN_USER;
 import static com.anonymous.ethervpn.utilities.Utils.getImgURL;
 
 import android.content.Context;
@@ -9,18 +16,9 @@ import com.anonymous.ethervpn.model.Server;
 import com.anonymous.ethervpn.R;
 
 public class SharedPreference {
-
-    private static final String APP_PREFS_NAME = "EtherVPNPreference";
-
     private SharedPreferences mPreference;
     private SharedPreferences.Editor mPrefEditor;
     private Context context;
-
-    private static final String SERVER_COUNTRY = "server_country";
-    private static final String SERVER_FLAG = "server_flag";
-    private static final String SERVER_OVPN = "server_ovpn";
-    private static final String SERVER_OVPN_USER = "server_ovpn_user";
-    private static final String SERVER_OVPN_PASSWORD = "server_ovpn_password";
 
     public SharedPreference(Context context) {
         this.mPreference = context.getSharedPreferences(APP_PREFS_NAME, Context.MODE_PRIVATE);
@@ -48,11 +46,11 @@ public class SharedPreference {
     public Server getServer() {
 
         Server server = new Server(
-                mPreference.getString(SERVER_COUNTRY,"United Kingdom-2"),
+                mPreference.getString(SERVER_COUNTRY, DEFAULT_COUNTRY),
                 mPreference.getString(SERVER_FLAG,getImgURL(R.drawable.uk_flag)),
-                mPreference.getString(SERVER_OVPN, "uk-2.ovpn"),
-                mPreference.getString(SERVER_OVPN_USER,"vpnbook"),
-                mPreference.getString(SERVER_OVPN_PASSWORD,"s4m5axb")
+                mPreference.getString(SERVER_OVPN, DEFAULT_COUNTRY+".ovpn"),
+                mPreference.getString(SERVER_OVPN_USER,Constants.vpnUserName),
+                mPreference.getString(SERVER_OVPN_PASSWORD,Constants.vpnPassword)
         );
 
         return server;

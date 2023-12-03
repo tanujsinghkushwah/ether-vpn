@@ -1,21 +1,12 @@
 package com.anonymous.ethervpn.model;
 
 public class Server {
+
     private String country;
     private String flagUrl;
     private String ovpn;
     private String ovpnUserName;
     private String ovpnUserPassword;
-
-
-    public Server() {
-    }
-
-    public Server(String country, String flagUrl, String ovpn) {
-        this.country = country;
-        this.flagUrl = flagUrl;
-        this.ovpn = ovpn;
-    }
 
     public Server(String country, String flagUrl, String ovpn, String ovpnUserName, String ovpnUserPassword) {
         this.country = country;

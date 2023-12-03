@@ -2,12 +2,15 @@ package com.anonymous.ethervpn.services;
 
 import static android.content.ContentValues.TAG;
 
+import static com.anonymous.ethervpn.utilities.Constants.APP_PREFS_NAME;
+
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -20,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.anonymous.ethervpn.activities.VpnDock;
 import com.anonymous.ethervpn.R;
+import com.anonymous.ethervpn.utilities.CheckInternetConnection;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.auth.api.identity.BeginSignInResult;
 import com.google.android.gms.auth.api.identity.GetSignInIntentRequest;
@@ -41,17 +45,19 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 public class OAuthService extends AppCompatActivity {
 
-    SignInButton btSignIn;
+    private SignInButton btSignIn;
+
+    private CheckInternetConnection connection;
 
     private SignInClient signInClient;
 
-    FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;
 
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
-    SharedPreferences.Editor editor;
+    private SharedPreferences.Editor editor;
 
-    boolean firstRun;
+    private boolean firstRun;
 
     private final ActivityResultLauncher<IntentSenderRequest> signInLauncher = registerForActivityResult(
             new ActivityResultContracts.StartIntentSenderForResult(),
@@ -68,24 +74,35 @@ public class OAuthService extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        sharedPreferences = getSharedPreferences("appPreferences",MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
         editor = sharedPreferences.edit();
         firstRun = getIntent().getBooleanExtra("first_run", false);
 
         btSignIn = findViewById(R.id.sign_in_button);
+        connection = new CheckInternetConnection();
 
         //initializing auth client
         signInClient = Identity.getSignInClient(this);
 
         btSignIn.setOnClickListener((View.OnClickListener) view -> {
-            signIn();
+            if(getInternetStatus()){
+                signIn();
+            } else {
+                Toast.makeText(this, "Please check your Internet Connection!!!",
+                        Toast.LENGTH_LONG).show();
+            }
         });
 
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
         if (firebaseUser == null) {
-            oneTapSignIn();
+            if(getInternetStatus()) {
+                oneTapSignIn();
+            } else {
+                Toast.makeText(this, "Please check your Internet Connection!!!",
+                        Toast.LENGTH_LONG).show();
+            }
         }
 
         if (firebaseUser != null && !firstRun) {
@@ -185,5 +202,12 @@ public class OAuthService extends AppCompatActivity {
             e.printStackTrace();
             FirebaseCrashlytics.getInstance().log("Couldn't start Sign In: " + e.getMessage());
         }
+    }
+
+    /**
+     * Internet connection status.
+     */
+    private boolean getInternetStatus() {
+        return connection.netCheck(this);
     }
 }
