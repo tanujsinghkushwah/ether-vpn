@@ -16,7 +16,7 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginRight="20dp"
-        android:src="@drawable/usa_flag" />
+        android:src="@drawable/uk_flag" />
 
     <TextView
         android:id="@+id/countryTv"
