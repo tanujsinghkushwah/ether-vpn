@@ -30,7 +30,6 @@ import com.anonymous.ethervpn.interfaces.ChangeServer;
 import com.anonymous.ethervpn.interfaces.NavItemClickListener;
 import com.anonymous.ethervpn.model.Server;
 import com.anonymous.ethervpn.services.OAuthService;
-import com.anonymous.ethervpn.utilities.Utils;
 import com.anonymous.ethervpn.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -38,8 +37,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class VpnDock extends AppCompatActivity implements NavItemClickListener {
 
@@ -105,12 +108,6 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
         transaction.add(R.id.container, fragment);
         transaction.commit();
 
-        // Server List recycler view initialize
-        if (serverLists != null) {
-            serverListRVAdapter = new ServerListRVAdapter(serverLists, this);
-            serverListRv.setAdapter(serverListRVAdapter);
-        }
-
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel chan = new NotificationChannel("openvpn_newstat", "VPN foreground service", NotificationManager.IMPORTANCE_NONE);
             chan.setLightColor(Color.BLUE);
@@ -137,7 +134,7 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
 
         serverListRv.setLayoutManager(new LinearLayoutManager(this));
 
-        serverLists = getServerList();
+        setServerList();
         changeServer = (ChangeServer) fragment;
 
     }
@@ -156,60 +153,109 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
     /**
      * Generate server array list
      */
-    private ArrayList getServerList() {
+    private void setServerList() {
 
         ArrayList<Server> servers = new ArrayList<>();
+        String[] countryArray = {"usa_flag", "uk_flag", "ca_flag", "france_flag", "germany", "pl_flag"};
 
-        servers.add(new Server("United States-1",
-                Utils.getImgURL(R.drawable.usa_flag),
-                "us-1.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
-        servers.add(new Server("United States-2",
-                Utils.getImgURL(R.drawable.usa_flag),
-                "us-2.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
-        servers.add(new Server("United Kingdom-1",
-                Utils.getImgURL(R.drawable.uk_flag),
-                "uk-1.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
-        servers.add(new Server("United Kingdom-2",
-                Utils.getImgURL(R.drawable.uk_flag),
-                "uk-2.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
-        servers.add(new Server("Canada",
-                Utils.getImgURL(R.drawable.ca_flag),
-                "canada.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
-        servers.add(new Server("France",
-                Utils.getImgURL(R.drawable.france_flag),
-                "france.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
-        servers.add(new Server("Germany",
-                Utils.getImgURL(R.drawable.germany),
-                "germany.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
-        servers.add(new Server("Poland",
-                Utils.getImgURL(R.drawable.pl_flag),
-                "poland.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        AtomicInteger downloadCounter = new AtomicInteger(countryArray.length);
 
-        return servers;
+        // Create a reference to the Firebase Storage path where the images are stored
+        String imagesPathPrefix = "drawables/";
+
+        for (String country : countryArray) {
+            StorageReference flagRef = storageRef.child(imagesPathPrefix + country+".png");
+            try{
+                flagRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                    String flagUrl = uri.toString();
+
+                    if (country.equals("usa_flag")) {
+                        servers.add(new Server("United States-1",
+                                flagUrl,
+                                "us-1.ovpn",
+                                "vpnbook",
+                                "s4m5axb"
+                        ));
+                        servers.add(new Server("United States-2",
+                                flagUrl,
+                                "us-2.ovpn",
+                                "vpnbook",
+                                "s4m5axb"
+                        ));
+                    }
+
+                    if (country.equals("uk_flag")) {
+                        servers.add(new Server("United Kingdom-1",
+                                flagUrl,
+                                "uk-1.ovpn",
+                                "vpnbook",
+                                "s4m5axb"
+                        ));
+                        servers.add(new Server("United Kingdom-2",
+                                flagUrl,
+                                "uk-2.ovpn",
+                                "vpnbook",
+                                "s4m5axb"
+                        ));
+                    }
+
+                    if (country.equals("ca_flag")) {
+                        servers.add(new Server("Canada",
+                                flagUrl,
+                                "canada.ovpn",
+                                "vpnbook",
+                                "s4m5axb"
+                        ));
+                    }
+
+                    if (country.equals("france_flag")) {
+                        servers.add(new Server("France",
+                                flagUrl,
+                                "france.ovpn",
+                                "vpnbook",
+                                "s4m5axb"
+                        ));
+                    }
+
+                    if (country.equals("germany")) {
+                        servers.add(new Server("Germany",
+                                flagUrl,
+                                "germany.ovpn",
+                                "vpnbook",
+                                "s4m5axb"
+                        ));
+                    }
+
+                    if (country.equals("pl_flag")) {
+                        servers.add(new Server("Poland",
+                                flagUrl,
+                                "poland.ovpn",
+                                "vpnbook",
+                                "s4m5axb"
+                        ));
+                    }
+
+                    if (downloadCounter.decrementAndGet() == 0){
+                        serverLists = servers;
+                        serverListRVAdapter = new ServerListRVAdapter(serverLists, this);
+                        serverListRv.setAdapter(serverListRVAdapter);
+                    }
+
+                }).addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    FirebaseCrashlytics.getInstance().log("Failed to download image: " + e.getMessage());
+                    if (downloadCounter.decrementAndGet() == 0) {
+                        serverLists = servers;
+                        serverListRVAdapter = new ServerListRVAdapter(serverLists, this);
+                        serverListRv.setAdapter(serverListRVAdapter);
+                    }
+                });
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
