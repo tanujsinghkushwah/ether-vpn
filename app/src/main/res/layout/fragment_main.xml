@@ -96,7 +96,8 @@
             android:id="@+id/vpn_password"
             android:text="password"
             android:textColor="@color/colorWhite"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textStyle="bold"/>
         </LinearLayout>
 
         <ImageView

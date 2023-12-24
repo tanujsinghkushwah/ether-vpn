@@ -2,14 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/starry_bg">
+    android:layout_height="match_parent">
 
     <include layout="@layout/tool_bar"></include>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/container">
-    </FrameLayout>
+        android:orientation="vertical">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/metaverse"
+            android:id="@+id/metaversebg"
+            android:scaleType="centerCrop"
+            android:elevation="2dp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/container"
+            android:elevation="4dp"
+            android:translationZ="4dp">
+        </FrameLayout>
+    </RelativeLayout>
 </LinearLayout>
