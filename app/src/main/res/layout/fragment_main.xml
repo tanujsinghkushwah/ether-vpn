@@ -70,8 +70,13 @@
                 android:text="Connect"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp"
-                android:translationZ="20dp" />
+                android:translationZ="20dp"
+                android:fontFamily="@font/roboto_slab"
+                android:letterSpacing="0.05"
+                android:backgroundTint="@color/black"
+                android:foreground="?android:attr/selectableItemBackground"/>
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/vpn_auth"
             android:layout_width="match_parent"

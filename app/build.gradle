@@ -40,8 +40,8 @@ android {
         applicationId "com.anonymous.ethervpn"
         minSdk 23
         targetSdk 33
-        versionCode 8
-        versionName '8.0'
+        versionCode 11
+        versionName '11.0'
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
