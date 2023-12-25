@@ -1,5 +1,8 @@
 package com.anonymous.ethervpn.activities;
 
+import static com.anonymous.ethervpn.utilities.Constants.APP_PREFS_NAME;
+import static com.anonymous.ethervpn.utilities.Utils.serverComparator;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -30,23 +33,30 @@ import com.anonymous.ethervpn.interfaces.ChangeServer;
 import com.anonymous.ethervpn.interfaces.NavItemClickListener;
 import com.anonymous.ethervpn.model.Server;
 import com.anonymous.ethervpn.services.OAuthService;
-import com.anonymous.ethervpn.utilities.Utils;
 import com.anonymous.ethervpn.R;
+import com.anonymous.ethervpn.utilities.Constants;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class VpnDock extends AppCompatActivity implements NavItemClickListener {
 
-    FirebaseAuth firebaseAuth;
-    GoogleSignInClient googleSignInClient;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    private GoogleSignInClient googleSignInClient;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
     private Fragment fragment;
     private RecyclerView serverListRv;
@@ -54,7 +64,7 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
     private ServerListRVAdapter serverListRVAdapter;
     private DrawerLayout drawer;
     private ChangeServer changeServer;
-    ImageView navbar_left;
+    private ImageView navbar_left;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +73,7 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
 
         // Initialize all variable
         initializeAll();
-        sharedPreferences = getSharedPreferences("appPreferences",MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(APP_PREFS_NAME,MODE_PRIVATE);
         editor = sharedPreferences.edit();
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -105,12 +115,6 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
         transaction.add(R.id.container, fragment);
         transaction.commit();
 
-        // Server List recycler view initialize
-        if (serverLists != null) {
-            serverListRVAdapter = new ServerListRVAdapter(serverLists, this);
-            serverListRv.setAdapter(serverListRVAdapter);
-        }
-
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel chan = new NotificationChannel("openvpn_newstat", "VPN foreground service", NotificationManager.IMPORTANCE_NONE);
             chan.setLightColor(Color.BLUE);
@@ -137,7 +141,7 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
 
         serverListRv.setLayoutManager(new LinearLayoutManager(this));
 
-        serverLists = getServerList();
+        setServerList();
         changeServer = (ChangeServer) fragment;
 
     }
@@ -156,60 +160,55 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
     /**
      * Generate server array list
      */
-    private ArrayList getServerList() {
+    private void setServerList() {
 
         ArrayList<Server> servers = new ArrayList<>();
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 
-        servers.add(new Server("United States-1",
-                Utils.getImgURL(R.drawable.usa_flag),
-                "us-1.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
-        servers.add(new Server("United States-2",
-                Utils.getImgURL(R.drawable.usa_flag),
-                "us-2.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
-        servers.add(new Server("United Kingdom-1",
-                Utils.getImgURL(R.drawable.uk_flag),
-                "uk-1.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
-        servers.add(new Server("United Kingdom-2",
-                Utils.getImgURL(R.drawable.uk_flag),
-                "uk-2.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
-        servers.add(new Server("Canada",
-                Utils.getImgURL(R.drawable.ca_flag),
-                "canada.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
-        servers.add(new Server("France",
-                Utils.getImgURL(R.drawable.france_flag),
-                "france.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
-        servers.add(new Server("Germany",
-                Utils.getImgURL(R.drawable.germany),
-                "germany.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
-        servers.add(new Server("Poland",
-                Utils.getImgURL(R.drawable.pl_flag),
-                "poland.ovpn",
-                "vpnbook",
-                "s4m5axb"
-        ));
+        String[] countryArray = mFirebaseRemoteConfig.getString("countries").replaceAll("[{}\"]", "").split(", ");
 
-        return servers;
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        AtomicInteger downloadCounter = new AtomicInteger(countryArray.length);
+
+        //Reference to the Firebase Storage path where the images are stored
+        String imagesPathPrefix = Constants.imagesPathPrefix;
+
+        for (String country : countryArray) {
+            StorageReference flagRef = storageRef.child(imagesPathPrefix + country+".png");
+            try{
+                flagRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                    String flagUrl = uri.toString();
+
+                    servers.add(new Server(country,
+                            flagUrl,
+                            country+".ovpn",
+                            Constants.vpnUserName,
+                            Constants.vpnPassword
+                    ));
+
+                    if (downloadCounter.decrementAndGet() == 0){
+                        Collections.sort(servers, serverComparator);
+                        serverLists = servers;
+                        serverListRVAdapter = new ServerListRVAdapter(serverLists, this);
+                        serverListRv.setAdapter(serverListRVAdapter);
+                    }
+
+                }).addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    FirebaseCrashlytics.getInstance().log("Failed to download image: " + e.getMessage());
+                    if (downloadCounter.decrementAndGet() == 0) {
+                        Collections.sort(servers, serverComparator);
+                        serverLists = servers;
+                        serverListRVAdapter = new ServerListRVAdapter(serverLists, this);
+                        serverListRv.setAdapter(serverListRVAdapter);
+                    }
+                });
+            } catch (Exception e){
+                e.printStackTrace();
+                FirebaseCrashlytics.getInstance().log("Failed to fetch country data: " + e.getMessage());
+            }
+        }
     }
 
     /**

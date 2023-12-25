@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <defaults>
   <entry>
+    <key>countries</key>
+    <value>{"usa", "uk", "canada", "france", "germany", "poland"}</value>
+  </entry>
+  <entry>
     <key>username</key>
     <value>vpnbook</value>
   </entry>

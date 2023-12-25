@@ -70,8 +70,13 @@
                 android:text="Connect"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp"
-                android:translationZ="20dp" />
+                android:translationZ="20dp"
+                android:fontFamily="@font/roboto_slab"
+                android:letterSpacing="0.05"
+                android:backgroundTint="@color/black"
+                android:foreground="?android:attr/selectableItemBackground"/>
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/vpn_auth"
             android:layout_width="match_parent"
@@ -96,7 +101,8 @@
             android:id="@+id/vpn_password"
             android:text="password"
             android:textColor="@color/colorWhite"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textStyle="bold"/>
         </LinearLayout>
 
         <ImageView
@@ -106,6 +112,6 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:id="@+id/selectedServerIcon"
-            android:src="@drawable/usa_flag"/>
+            android:src="@drawable/uk_flag"/>
     </RelativeLayout>
 </layout>

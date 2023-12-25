@@ -15,6 +15,7 @@ import com.anonymous.ethervpn.interfaces.NavItemClickListener;
 import com.anonymous.ethervpn.model.Server;
 import com.bumptech.glide.Glide;
 import com.anonymous.ethervpn.R;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,7 @@ public class ServerListRVAdapter extends RecyclerView.Adapter<ServerListRVAdapte
         holder.serverCountry.setText(serverLists.get(position).getCountry());
         Glide.with(mContext)
                 .load(serverLists.get(position).getFlagUrl())
+                .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache both original and resized versions
                 .into(holder.serverIcon);
 
         holder.serverItemLayout.setOnClickListener(new View.OnClickListener() {

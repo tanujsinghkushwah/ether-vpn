@@ -1,5 +1,8 @@
 package com.anonymous.ethervpn;
 
+import static com.anonymous.ethervpn.utilities.Constants.APP_PREFS_NAME;
+import static com.anonymous.ethervpn.utilities.Constants.WELCOME_MESSAGE_KEY;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,11 +25,9 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 public class MainActivity extends AppCompatActivity {
 
-    SharedPreferences sharedpreferences;
+    private SharedPreferences sharedpreferences;
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
-
-    private static final String WELCOME_MESSAGE_KEY = "welcome_message";
 
     private boolean isOnBoardingFragmentShown = false;
 
@@ -36,15 +37,13 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean onBoardingFlag = false;
 
-    public static final String mypreference = "appPreferences";
-
-    SharedPreferences.Editor editor;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sharedpreferences = getSharedPreferences(mypreference, MODE_PRIVATE);
+        sharedpreferences = getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         editor = sharedpreferences.edit();
 
