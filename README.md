@@ -29,7 +29,8 @@ Project/IDE configurations:
 * java version "1.8.0_361"
 * Kotlin plugin installed on IDE
 
-Screenshots: 
+Screenshots:
+
 <img src="https://github.com/tj4752/ether-vpn/assets/32940477/68342c85-996b-4fe5-9415-6699bea9bf56" width="200" height="450"/>
 <img src="https://github.com/tj4752/ether-vpn/assets/32940477/fe16471b-08df-49e5-85a7-8f82e19425e8" width="200" height="450"/>
 <img src="https://github.com/tj4752/ether-vpn/assets/32940477/b76f6481-92f6-429e-b1d2-222d23ee5001" width="200" height="450"/>
