@@ -30,14 +30,13 @@ Project/IDE configurations:
 * Kotlin plugin installed on IDE
 
 Screenshots:  
-<img src="https://user-images.githubusercontent.com/32940477/234352990-4a29fec4-a900-4bc1-92f2-5612134810dc.png" width="200" height="450"/>
-<img src="https://user-images.githubusercontent.com/32940477/234353073-8c513e67-a284-4286-b339-23ea7e7d61d4.png" width="200" height="450"/>
-<img src="https://user-images.githubusercontent.com/32940477/234353534-635be106-c2fd-448a-89b9-c3bd63355bc2.png" width="200" height="450"/>
-<img src="https://user-images.githubusercontent.com/32940477/234353884-7187cbe9-e279-4065-843a-d0d0eb1816a7.png" width="178"/>  
-<img src="https://user-images.githubusercontent.com/32940477/234353935-238bcd55-1e8f-4f2c-a88f-71de9ee0799d.png" width="200" height="450"/>
-<img src="https://user-images.githubusercontent.com/32940477/234353952-aa127901-3f8c-4aa3-8124-b66e52aa9bab.png" width="200" height="450"/>
-<img src="https://user-images.githubusercontent.com/32940477/234354032-3d0bd026-add7-415e-b972-a4b96c8aa70f.png" width="200" height="450"/>
-<img src="https://user-images.githubusercontent.com/32940477/234354071-4e68e289-0671-427d-93e9-e5915ba0660b.png" width="200" height="450"/>
+![Screenshot_20231226-031857](https://github.com/tj4752/ether-vpn/assets/32940477/3f47f872-0fa9-46b8-9bde-c936ea110875)
+![Screenshot_20231226-031837](https://github.com/tj4752/ether-vpn/assets/32940477/68342c85-996b-4fe5-9415-6699bea9bf56)
+![Screenshot_20231226-031809](https://github.com/tj4752/ether-vpn/assets/32940477/fe16471b-08df-49e5-85a7-8f82e19425e8)
+![Screenshot_20231226-031759](https://github.com/tj4752/ether-vpn/assets/32940477/b76f6481-92f6-429e-b1d2-222d23ee5001)
+![Screenshot_20231226-031747](https://github.com/tj4752/ether-vpn/assets/32940477/65dbe288-9617-48c3-9380-930b58e6e5f8)
+![Screenshot_20231226-031733](https://github.com/tj4752/ether-vpn/assets/32940477/92f22d3d-6626-4f28-988d-d0b280b0af05)
+
 
 Future developments possible: 
 * Migration of ovpn configs to a DB and fetching it from there.
