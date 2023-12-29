@@ -130,9 +130,13 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.vpnBtn:
-                // Vpn is running, user would like to disconnect current connection.
+                // Vpn is running, user would like to disconnect/resume current connection.
                 if (vpnStart) {
-                    confirmDisconnect();
+                    boolean disconnectSwitch = (binding.vpnBtn.getText()).equals(getContext().getString(R.string.disconnect));
+                    if(disconnectSwitch)
+                        confirmDisconnect();
+                    else
+                        resumeVpn();
                 }else {
                     try{
                         prepareVpn();
@@ -210,6 +214,21 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         }
 
         return false;
+    }
+
+    /**
+     * Resume vpn
+     * @return boolean: VPN status
+     */
+    public void resumeVpn() {
+        try {
+            mService.resume();
+            status("connected");
+            vpnStart = true;
+        } catch (RemoteException e) {
+            logger.log("openvpn connection resume failed: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -581,7 +600,20 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     @Override
     public boolean handleMessage(@NonNull Message msg) {
         if(msg.what == MSG_UPDATE_STATE) {
-            binding.logTv.setText((CharSequence) msg.obj);
+            String messageText = (String) msg.obj;
+            String[] stateDetails = messageText.split("\\|");
+            String currState = stateDetails[0];
+
+            if(currState.equals("NOPROCESS")){
+                binding.vpnBtn.setText(getContext().getString(R.string.connect));
+                binding.logTv.setText(getContext().getString(R.string.establish_connection));
+            } else if(currState.equals("USERPAUSE")) {
+                binding.vpnBtn.setText(getContext().getString(R.string.resume));
+                binding.logTv.setText(currState);
+                vpnStart = true;
+            } else {
+                binding.logTv.setText(currState);
+            }
         }
         return true;
     }

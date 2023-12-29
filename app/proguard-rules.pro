@@ -12,6 +12,11 @@
 #   public *;
 #}
 
+-keep class de.blinkt.openvpn.api.** { *; }
+-keep interface de.blinkt.openvpn.api.** { *; }
+-keep class de.blinkt.openvpn.core.** { *; }
+-keep interface de.blinkt.openvpn.core.** { *; }
+
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
 #-keepattributes SourceFile,LineNumberTable
