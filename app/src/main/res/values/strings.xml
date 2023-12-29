@@ -7,6 +7,7 @@
     <string name="connect">Connect</string>
     <string name="connecting">Connecting</string>
     <string name="retry">Retry</string>
+    <string name="resume">Resume</string>
     <string name="connection_close_confirm">Would you like to cancel the current VPN Connection?</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
@@ -15,4 +16,5 @@
     <string name="corp_sign">&#x24D2; Anonymous Space Corporation</string>
     <string name="onboarding_title">Connection Instructions</string>
     <string name="onboarding_desc">Click on vpnbook.com for server username/password!!!</string>
+    <string name="establish_connection">Establish Connection to the Metaverse!!!</string>
 </resources>

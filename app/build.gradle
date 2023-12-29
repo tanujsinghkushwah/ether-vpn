@@ -40,8 +40,8 @@ android {
         applicationId "com.anonymous.ethervpn"
         minSdk 23
         targetSdk 33
-        versionCode 11
-        versionName '11.0'
+        versionCode 14
+        versionName '14.0'
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -49,15 +49,14 @@ android {
 
     buildTypes {
         release {
-//            minifyEnabled true
-//            shrinkResources true
-//            crunchPngs true
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
     bundle {
-        abi { enableSplit = false }
+        abi { enableSplit = true }
     }
 
     compileOptions {
