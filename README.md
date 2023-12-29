@@ -35,7 +35,7 @@ Screenshots:
 <img src="https://github.com/tj4752/ether-vpn/assets/32940477/68342c85-996b-4fe5-9415-6699bea9bf56" width="200" height="450"/>
 <img src="https://github.com/tj4752/ether-vpn/assets/32940477/fe16471b-08df-49e5-85a7-8f82e19425e8" width="200" height="450"/>
 <img src="https://github.com/tj4752/ether-vpn/assets/32940477/b76f6481-92f6-429e-b1d2-222d23ee5001" width="200" height="450"/>
-<img src="https://github.com/tj4752/ether-vpn/assets/32940477/65dbe288-9617-48c3-9380-930b58e6e5f8" width="200" height="450"/>  
+<img src="https://github.com/tj4752/ether-vpn/assets/32940477/6ccd67b5-5f3f-41b0-9428-871ef906e71e" width="200" height="450"/>  
 <img src="https://github.com/tj4752/ether-vpn/assets/32940477/92f22d3d-6626-4f28-988d-d0b280b0af05" width="200" height="450"/>
 <img src="https://github.com/tj4752/ether-vpn/assets/32940477/3f47f872-0fa9-46b8-9bde-c936ea110875" width="200" height="450"/>
 
