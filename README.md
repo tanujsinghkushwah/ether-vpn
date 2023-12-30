@@ -41,9 +41,9 @@ Screenshots:
 
 
 Future developments possible: 
-* Migration of ovpn configs to a DB and fetching it from there.
-* Improvements in UI and connection status display.
-* Implementation of subscription model for stable paid vpn servers.
+* UI Improvements.
+* Implementation of the subscription model for stable paid VPN servers or token-based governance integration.
+* Multiple protocols added support [IKEv2/Wireguard/SSTP].
 
 Support the development for more free servers:  
 * BTC - bc1qm7j9qsn55ue3ke54n2f92el9jx8rfa343yqxq7
