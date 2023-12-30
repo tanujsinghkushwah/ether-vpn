@@ -41,9 +41,10 @@ Screenshots:
 
 
 Future developments possible: 
-* UI Improvements.
+* UI/UX Improvements.
 * Implementation of the subscription model for stable paid VPN servers or token-based governance integration.
 * Multiple protocols added support [IKEv2/Wireguard/SSTP].
+* Addition of split tunneling for apps.
 
 Support the development for more free servers:  
 * BTC - bc1qm7j9qsn55ue3ke54n2f92el9jx8rfa343yqxq7
