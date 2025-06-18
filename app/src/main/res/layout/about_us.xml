@@ -33,12 +33,12 @@
         android:textSize="15sp" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_width="371dp"
+        android:layout_height="77dp"
         android:layout_gravity="center_horizontal"
+        android:layout_margin="30dp"
         android:text="@string/wallet_addresses"
-        android:textSize="12sp" />
+        android:textSize="11sp" />
 
     <TextView
         android:layout_width="wrap_content"
