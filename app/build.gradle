@@ -32,6 +32,12 @@ android {
             keyPassword 'android'
             storePassword 'android'
         }
+        release {
+            storeFile file('C:\\Users\\tanuj\\OneDrive\\Desktop\\my_projects\\debug.keystore')
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storePassword 'android'
+        }
     }
     compileSdk 34
     buildToolsVersion "34.0.0"
@@ -40,8 +46,8 @@ android {
         applicationId "com.anonymous.ethervpn"
         minSdk 23
         targetSdk 34
-        versionCode 15
-        versionName '15.0'
+        versionCode 16
+        versionName '16.0'
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -52,6 +58,7 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 

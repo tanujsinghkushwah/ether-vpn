@@ -107,14 +107,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
     }
 
-    splits {
-        abi {
-            isEnable = true
-            reset()
-            include("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
-            isUniversalApk = true
-        }
-    }
+    // splits {
+//    abi {
+//        isEnable = true
+//        reset()
+//        include("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
+//        isUniversalApk = true
+//    }
+//}
 
 
 }
@@ -150,14 +150,16 @@ fun registerGenTask(variantName: String, variantDirName: String): File {
     return baseDir
 }
 
-//android.applicationVariants.all(object : Action<ApplicationVariant> {
-//    override fun execute(variant: ApplicationVariant) {
-//        val sourceDir = registerGenTask(variant.name, variant.baseName.replace("-", "/"))
-//        val task = tasks.named("generateOpenVPN3Swig${variant.name}").get()
-//
-//        variant.registerJavaGeneratingTask(task, sourceDir)
-//    }
-//})
+/*
+android.applicationVariants.all(object : Action<ApplicationVariant> {
+    override fun execute(variant: ApplicationVariant) {
+        val sourceDir = registerGenTask(variant.name, variant.baseName.replace("-", "/"))
+        val task = tasks.named("generateOpenVPN3Swig${variant.name}").get()
+
+        variant.registerJavaGeneratingTask(task, sourceDir)
+    }
+})
+*/
 
 
 dependencies {
