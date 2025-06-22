@@ -103,6 +103,7 @@ Help us maintain free servers and continue development:
 |----------|---------|
 | **Bitcoin (BTC)** | `bc1qm7j9qsn55ue3ke54n2f92el9jx8rfa343yqxq7` |
 | **Ethereum (ETH)** | `0x81466D108b0969DC26baE8AC040d15F706E9a231` |
+| **Bittensor (TAO)** | `5CK47QMdHnPAApetdhJjn6pKHGGwwQJQ1QHgBBwY5GPQX3MF` |
 
 ## 📧 Contact
 
