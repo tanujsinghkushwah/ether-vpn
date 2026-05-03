@@ -1,51 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white"
-    tools:context=".activities.AboutUs">
+    android:background="@drawable/bg_ether_gradient"
+    android:fillViewport="true">
 
-    <ImageView
-        android:layout_marginTop="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:background="@drawable/logo_banner_layerlist"/>
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/app_name"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/app_description"
-        android:textSize="15sp" />
+        <!-- Chrome -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/aboutChrome"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ether_chrome_height">
 
-    <TextView
-        android:layout_width="371dp"
-        android:layout_height="77dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="30dp"
-        android:text="@string/wallet_addresses"
-        android:textSize="11sp" />
+            <ImageButton
+                android:id="@+id/aboutBack"
+                android:layout_width="@dimen/ether_icon_btn_size"
+                android:layout_height="@dimen/ether_icon_btn_size"
+                android:background="@drawable/bg_icon_button"
+                android:contentDescription="@string/cd_back"
+                android:padding="8dp"
+                android:src="@drawable/ic_back"
+                android:scaleType="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/ether_space_16" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/corp_sign"
-        android:layout_margin="20dp"
-        android:layout_gravity="center_horizontal"
-        android:textSize="12sp"
-        android:textColor="@color/black"/>
-</LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ether_about_title"
+                android:textAppearance="@style/TextAppearance.Ether.ChromeTitle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Hero: Ether mark + brand -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingTop="@dimen/ether_space_32"
+            android:paddingBottom="@dimen/ether_space_24">
+
+            <FrameLayout
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:background="@drawable/bg_hero_glow">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_ether_mark"
+                    android:contentDescription="@null" />
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ether_app_title"
+                android:textAppearance="@style/TextAppearance.Ether.Display"
+                android:layout_marginTop="@dimen/ether_space_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/corp_sign"
+                android:textAppearance="@style/TextAppearance.Ether.Caption"
+                android:textColor="@color/ether_ink_2"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <!-- Quote card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_surface"
+            android:padding="@dimen/ether_space_24"
+            android:layout_marginStart="@dimen/ether_space_16"
+            android:layout_marginEnd="@dimen/ether_space_16"
+            android:layout_marginBottom="@dimen/ether_space_16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_quote"
+                android:textAppearance="@style/TextAppearance.Ether.Quote"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <!-- Donate section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_donate_title"
+            android:textAppearance="@style/TextAppearance.Ether.Label"
+            android:textColor="@color/ether_ink_2"
+            android:layout_marginStart="@dimen/ether_space_16"
+            android:layout_marginBottom="8dp" />
+
+        <!-- BTC row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_card_surface"
+            android:gravity="center_vertical"
+            android:padding="@dimen/ether_space_16"
+            android:layout_marginStart="@dimen/ether_space_16"
+            android:layout_marginEnd="@dimen/ether_space_16"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_btc_label"
+                    android:textAppearance="@style/TextAppearance.Ether.Label"
+                    android:textColor="@color/ether_accent" />
+
+                <TextView
+                    android:id="@+id/aboutBtcAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_btc_address"
+                    android:textAppearance="@style/TextAppearance.Ether.Mono"
+                    android:textColor="@color/ether_ink_1"
+                    android:layout_marginTop="2dp"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnCopyBtc"
+                android:layout_width="@dimen/ether_icon_btn_size"
+                android:layout_height="@dimen/ether_icon_btn_size"
+                android:background="@drawable/bg_icon_button"
+                android:contentDescription="@string/cd_copy"
+                android:src="@drawable/ic_copy"
+                android:scaleType="center"
+                android:padding="8dp" />
+
+        </LinearLayout>
+
+        <!-- ETH row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_card_surface"
+            android:gravity="center_vertical"
+            android:padding="@dimen/ether_space_16"
+            android:layout_marginStart="@dimen/ether_space_16"
+            android:layout_marginEnd="@dimen/ether_space_16"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_eth_label"
+                    android:textAppearance="@style/TextAppearance.Ether.Label"
+                    android:textColor="@color/ether_accent" />
+
+                <TextView
+                    android:id="@+id/aboutEthAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_eth_address"
+                    android:textAppearance="@style/TextAppearance.Ether.Mono"
+                    android:textColor="@color/ether_ink_1"
+                    android:layout_marginTop="2dp"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnCopyEth"
+                android:layout_width="@dimen/ether_icon_btn_size"
+                android:layout_height="@dimen/ether_icon_btn_size"
+                android:background="@drawable/bg_icon_button"
+                android:contentDescription="@string/cd_copy"
+                android:src="@drawable/ic_copy"
+                android:scaleType="center"
+                android:padding="8dp" />
+
+        </LinearLayout>
+
+        <!-- TAO row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_card_surface"
+            android:gravity="center_vertical"
+            android:padding="@dimen/ether_space_16"
+            android:layout_marginStart="@dimen/ether_space_16"
+            android:layout_marginEnd="@dimen/ether_space_16"
+            android:layout_marginBottom="@dimen/ether_space_32">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_tao_label"
+                    android:textAppearance="@style/TextAppearance.Ether.Label"
+                    android:textColor="@color/ether_accent" />
+
+                <TextView
+                    android:id="@+id/aboutTaoAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_tao_address"
+                    android:textAppearance="@style/TextAppearance.Ether.Mono"
+                    android:textColor="@color/ether_ink_1"
+                    android:layout_marginTop="2dp"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnCopyTao"
+                android:layout_width="@dimen/ether_icon_btn_size"
+                android:layout_height="@dimen/ether_icon_btn_size"
+                android:background="@drawable/bg_icon_button"
+                android:contentDescription="@string/cd_copy"
+                android:src="@drawable/ic_copy"
+                android:scaleType="center"
+                android:padding="8dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

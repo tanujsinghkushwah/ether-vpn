@@ -1,17 +1,21 @@
 *.iml
 .gradle
-/local.properties
-.idea/deploymentTargetDropDown.xml
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+local.properties
 .DS_Store
+
+# IDE — all IntelliJ/Android Studio project metadata
+.idea/
+
+# Build outputs
 /build
 openvpn/build/
 /captures
 .externalNativeBuild
 .cxx
-local.properties
+
+# UI prototype working directory
+app/ether-vpn-ui-v2/
+
+# scripts: never commit service account keys
+scripts/credentials/*
+!scripts/credentials/.gitkeep

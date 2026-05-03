@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Background for all Ether screens: deep-space dark gradient -->
+<!-- Approximates: radial-gradient(120% 80% at 50% -10%, #0E1530 0%, #0B1020 45%, #06080F 100%) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:type="radial"
+        android:gradientRadius="200%"
+        android:startColor="#0E1530"
+        android:centerColor="#0B1020"
+        android:endColor="#06080F"
+        android:centerX="0.5"
+        android:centerY="0.0" />
+</shape>

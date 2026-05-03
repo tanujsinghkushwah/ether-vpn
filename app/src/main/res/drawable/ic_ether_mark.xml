@@ -1,0 +1,22 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+    <!-- Outer ring -->
+    <path
+        android:strokeColor="#B98AFF"
+        android:strokeWidth="3"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M50,8 A42,42 0 1,0 50,92 A42,42 0 1,0 50,8 Z" />
+    <!-- Inner E glyph — three horizontal bars -->
+    <path
+        android:fillColor="#B98AFF"
+        android:pathData="M30,34 H70 V41 H30 Z" />
+    <path
+        android:fillColor="#B98AFF"
+        android:pathData="M30,46.5 H62 V53.5 H30 Z" />
+    <path
+        android:fillColor="#B98AFF"
+        android:pathData="M30,59 H70 V66 H30 Z" />
+</vector>

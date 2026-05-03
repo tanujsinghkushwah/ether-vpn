@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Custom theme attribute for the single Ether accent color. -->
+    <!-- Swap the value in themes.xml to change the palette globally. -->
+    <attr name="etherAccent" format="color" />
+
+    <!-- EtherOrbView XML attributes -->
+    <declare-styleable name="EtherOrbView">
+        <attr name="orbState" format="enum">
+            <enum name="idle" value="0" />
+            <enum name="connecting" value="1" />
+            <enum name="connected" value="2" />
+        </attr>
+        <attr name="orbSize" format="dimension" />
+    </declare-styleable>
+</resources>

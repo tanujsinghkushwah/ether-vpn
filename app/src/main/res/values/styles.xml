@@ -1,13 +1,165 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/colorWhite</item>
+    <!-- ═══════════════════════════════════════════════
+         TEXT APPEARANCES
+    ═══════════════════════════════════════════════ -->
+
+    <style name="TextAppearance.Ether.Display" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="android:textSize">36sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ether_text_primary</item>
+        <item name="android:letterSpacing">-0.03</item>
     </style>
+
+    <style name="TextAppearance.Ether.Headline" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:textSize">28sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ether_text_primary</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="TextAppearance.Ether.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/ether_text_primary</item>
+    </style>
+
+    <style name="TextAppearance.Ether.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/ether_text_primary</item>
+    </style>
+
+    <style name="TextAppearance.Ether.BodySmall" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/ether_text_secondary</item>
+    </style>
+
+    <style name="TextAppearance.Ether.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/ether_text_tertiary</item>
+    </style>
+
+    <style name="TextAppearance.Ether.Label" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">11sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.15</item>
+        <item name="android:textColor">@color/ether_text_secondary</item>
+    </style>
+
+    <style name="TextAppearance.Ether.ChromeTitle" parent="TextAppearance.Ether.Label">
+        <item name="android:textSize">13sp</item>
+        <item name="android:letterSpacing">0.22</item>
+        <item name="android:textColor">@color/ether_text_secondary</item>
+    </style>
+
+    <style name="TextAppearance.Ether.Mono" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textColor">@color/ether_text_primary</item>
+    </style>
+
+    <style name="TextAppearance.Ether.Numeric" parent="TextAppearance.Ether.Mono">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Ether.Quote" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/ether_text_secondary</item>
+    </style>
+
+    <!-- ═══════════════════════════════════════════════
+         BUTTONS
+    ═══════════════════════════════════════════════ -->
+
+    <style name="Widget.Ether.Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:minHeight">@dimen/ether_btn_height</item>
+        <item name="android:textAppearance">@style/TextAppearance.Ether.Body</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="cornerRadius">@dimen/ether_radius_button</item>
+        <item name="backgroundTint">@color/ether_accent</item>
+        <item name="android:textColor">@color/ether_bg_0</item>
+        <item name="rippleColor">@color/ether_surface_high</item>
+    </style>
+
+    <style name="Widget.Ether.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">@dimen/ether_btn_height</item>
+        <item name="android:textAppearance">@style/TextAppearance.Ether.Body</item>
+        <item name="cornerRadius">@dimen/ether_radius_button</item>
+        <item name="strokeColor">@color/ether_border_med</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:textColor">@color/ether_text_primary</item>
+        <item name="backgroundTint">@color/ether_surface_low</item>
+        <item name="rippleColor">@color/ether_surface_high</item>
+    </style>
+
+    <style name="Widget.Ether.Button.Destructive" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">@dimen/ether_btn_height</item>
+        <item name="android:textAppearance">@style/TextAppearance.Ether.Body</item>
+        <item name="cornerRadius">@dimen/ether_radius_button</item>
+        <item name="strokeColor">@color/ether_status_unprotected</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:textColor">@color/ether_status_unprotected</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
+
+    <style name="Widget.Ether.IconButton" parent="Widget.Material3.Button.IconButton">
+        <item name="android:minWidth">@dimen/ether_icon_btn_size</item>
+        <item name="android:minHeight">@dimen/ether_icon_btn_size</item>
+        <item name="android:padding">8dp</item>
+        <item name="cornerRadius">@dimen/ether_radius_icon_btn</item>
+        <item name="backgroundTint">@color/ether_surface_low</item>
+        <item name="iconTint">@color/ether_text_primary</item>
+        <item name="rippleColor">@color/ether_surface_high</item>
+    </style>
+
+    <!-- ═══════════════════════════════════════════════
+         CARDS & CHIPS
+    ═══════════════════════════════════════════════ -->
+
+    <style name="Widget.Ether.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/ether_surface_low</item>
+        <item name="cardCornerRadius">@dimen/ether_radius_card</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeColor">@color/ether_border_low</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="Widget.Ether.Chip.Status" parent="Widget.Material3.Chip.Assist">
+        <item name="android:textAppearance">@style/TextAppearance.Ether.Label</item>
+        <item name="chipCornerRadius">@dimen/ether_radius_chip</item>
+        <item name="chipMinHeight">28dp</item>
+    </style>
+
+    <!-- ═══════════════════════════════════════════════
+         TEXT INPUT
+    ═══════════════════════════════════════════════ -->
+
+    <style name="Widget.Ether.TextInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">@dimen/ether_radius_input</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/ether_radius_input</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/ether_radius_input</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/ether_radius_input</item>
+        <item name="boxStrokeColor">@color/ether_border_low</item>
+        <item name="boxBackgroundColor">@color/ether_surface_low</item>
+        <item name="hintTextColor">@color/ether_text_tertiary</item>
+        <item name="android:textColorHint">@color/ether_text_tertiary</item>
+    </style>
+
+    <!-- ═══════════════════════════════════════════════
+         LEGACY (keep for lib compatibility)
+    ═══════════════════════════════════════════════ -->
+
+    <style name="AppTheme" parent="Theme.EtherVPN" />
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

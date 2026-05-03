@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A single onboarding page inside the ViewPager2. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingStart="32dp"
+    android:paddingEnd="32dp">
+
+    <!-- Illustration -->
+    <ImageView
+        android:id="@+id/pageIllustration"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginBottom="32dp"
+        android:scaleType="fitCenter"
+        android:contentDescription="@null"
+        tools:src="@drawable/ic_planet_ringed" />
+
+    <!-- Page counter eyebrow -->
+    <TextView
+        android:id="@+id/pageEyebrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Ether.Label"
+        android:textColor="@color/ether_accent"
+        android:layout_marginBottom="12dp"
+        tools:text="01 / 03" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/pageTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Ether.Headline"
+        android:gravity="center"
+        android:layout_marginBottom="12dp"
+        tools:text="Your privacy,\nuncompromised." />
+
+    <!-- Description -->
+    <TextView
+        android:id="@+id/pageDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Ether.BodySmall"
+        android:gravity="center"
+        tools:text="Ether routes your traffic through an encrypted tunnel." />
+
+</LinearLayout>

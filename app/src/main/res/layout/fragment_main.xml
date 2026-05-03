@@ -1,117 +1,319 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingBottom="5dp">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <!-- ── Background ── -->
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/connectionStatus">
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_ether_gradient"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.anonymous.ethervpn.views.EtherStarfieldView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- ── Top chrome ── -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/homeChrome"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ether_chrome_height"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/chromeLeft"
+                android:layout_width="@dimen/ether_icon_btn_size"
+                android:layout_height="@dimen/ether_icon_btn_size"
+                android:background="@drawable/bg_icon_button"
+                android:contentDescription="@string/cd_menu"
+                android:padding="8dp"
+                android:src="@drawable/ic_menu"
+                android:scaleType="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/ether_space_16" />
 
             <TextView
-                android:id="@+id/logTv"
-                android:layout_width="match_parent"
+                android:id="@+id/chromeTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:textColor="@color/colorWhite" />
+                android:text="@string/ether_app_title"
+                android:textAppearance="@style/TextAppearance.Ether.ChromeTitle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/chromeRight"
+                android:layout_width="@dimen/ether_icon_btn_size"
+                android:layout_height="@dimen/ether_icon_btn_size"
+                android:background="@drawable/bg_icon_button"
+                android:contentDescription="@string/cd_locations"
+                android:padding="8dp"
+                android:src="@drawable/ic_globe"
+                android:scaleType="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="@dimen/ether_space_16" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- ── Status chip ── -->
+        <LinearLayout
+            android:id="@+id/statusChipContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="12dp"
+            android:background="@drawable/bg_chip_unprotected"
+            android:layout_marginTop="@dimen/ether_space_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/homeChrome">
+
+            <View
+                android:id="@+id/statusDot"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/dot_status"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:id="@+id/statusChipText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Ether.Label"
+                android:textColor="@color/ether_status_unprotected"
+                android:text="@string/status_unprotected" />
+
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/connectionStatus"
-            android:layout_width="match_parent"
+        <!-- ── Header: title + subtitle ── -->
+        <TextView
+            android:id="@+id/homeTitle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Ether.Headline"
+            android:layout_marginTop="@dimen/ether_space_12"
+            android:layout_marginStart="@dimen/ether_space_24"
+            android:layout_marginEnd="@dimen/ether_space_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/statusChipContainer"
+            tools:text="Ready when you are." />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="Connection Status"
-                android:textColor="@color/colorWhite"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/homeSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Ether.BodySmall"
+            android:layout_marginTop="@dimen/ether_space_8"
+            android:layout_marginStart="@dimen/ether_space_32"
+            android:layout_marginEnd="@dimen/ether_space_32"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/homeTitle"
+            tools:text="Your connection is unprotected." />
 
-            <TextView
-                android:id="@+id/connectionStateTv"
+        <!-- ── Orb ── -->
+        <com.anonymous.ethervpn.views.EtherOrbView
+            android:id="@+id/orbView"
+            android:layout_width="@dimen/ether_orb_size"
+            android:layout_height="@dimen/ether_orb_size"
+            android:layout_marginTop="@dimen/ether_space_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/homeSubtitle" />
+
+        <!-- ── Connecting checklist (visible only while connecting) ── -->
+        <LinearLayout
+            android:id="@+id/groupConnecting"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_surface"
+            android:paddingStart="@dimen/ether_space_16"
+            android:paddingEnd="@dimen/ether_space_16"
+            android:paddingTop="@dimen/ether_space_12"
+            android:paddingBottom="@dimen/ether_space_12"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/ether_space_16"
+            android:layout_marginEnd="@dimen/ether_space_16"
+            android:layout_marginTop="@dimen/ether_space_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/orbView">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Ether.BodySmall"
+                android:textColor="@color/ether_text_primary"
+                android:text="Encrypting connection" android:layout_marginBottom="4dp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Ether.BodySmall"
+                android:textColor="@color/ether_text_secondary"
+                android:text="Establishing tunnel" android:layout_marginBottom="4dp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Ether.BodySmall"
+                android:textColor="@color/ether_text_tertiary"
+                android:text="Verifying server" />
+        </LinearLayout>
+
+        <!-- ── Stat strip (visible only when connected) ── -->
+        <LinearLayout
+            android:id="@+id/statStrip"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/ether_stat_strip_height"
+            android:background="@drawable/bg_card_surface"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/ether_space_16"
+            android:layout_marginEnd="@dimen/ether_space_16"
+            android:layout_marginTop="@dimen/ether_space_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/orbView">
+
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                <TextView android:id="@+id/statDown" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Ether.Numeric" android:text="—" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Ether.Label" android:text="DOWN" />
+            </LinearLayout>
+
+            <View android:layout_width="1dp" android:layout_height="24dp"
+                android:background="@color/ether_border_low" />
+
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                <TextView android:id="@+id/statUp" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Ether.Numeric" android:text="—" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Ether.Label" android:text="UP" />
+            </LinearLayout>
+
+            <View android:layout_width="1dp" android:layout_height="24dp"
+                android:background="@color/ether_border_low" />
+
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                <TextView android:id="@+id/statPing" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Ether.Numeric" android:text="—" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Ether.Label" android:text="PING" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- ── Bottom container: server card + CTA ── -->
+        <LinearLayout
+            android:id="@+id/bottomContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/ether_space_16"
+            android:layout_marginEnd="@dimen/ether_space_16"
+            android:layout_marginBottom="@dimen/ether_space_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <!-- Server card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/serverCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="state: NONE"
-                android:textColor="@color/colorWhite"
-                android:textSize="14sp" />
+                android:layout_height="@dimen/ether_server_card_height"
+                android:background="@drawable/bg_card_surface"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingStart="@dimen/ether_space_16"
+                android:paddingEnd="@dimen/ether_space_12"
+                android:layout_marginBottom="@dimen/ether_space_12">
 
-            <TextView
-                android:id="@+id/durationTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="duration: 00:00:00"
-                android:textColor="@color/colorWhite"
-                android:textSize="14sp" />
+                <ImageView
+                    android:id="@+id/serverFlag"
+                    android:layout_width="@dimen/ether_flag_size"
+                    android:layout_height="@dimen/ether_flag_size"
+                    android:src="@drawable/flag_uk"
+                    android:contentDescription="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/ether_space_12"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/serverChevron"
+                    app:layout_constraintStart_toEndOf="@id/serverFlag"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/serverCountry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Ether.Body"
+                        android:textStyle="bold"
+                        tools:text="United Kingdom" />
+
+                    <TextView
+                        android:id="@+id/serverCity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Ether.Caption"
+                        android:layout_marginTop="2dp"
+                        tools:text="London" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/serverChevron"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_chevron_right"
+                    android:contentDescription="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Primary CTA -->
             <Button
-                android:id="@+id/vpnBtn"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/circular_button_background"
-                android:elevation="20dp"
-                android:tag="1"
-                android:text="Connect"
-                android:textColor="@color/colorWhite"
-                android:textSize="16sp"
-                android:translationZ="20dp"
-                android:fontFamily="@font/roboto_slab"
-                android:letterSpacing="0.05"
-                android:backgroundTint="@color/black"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:id="@+id/primaryCta"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ether_btn_height"
+                android:text="@string/cta_connect"
+                android:background="@drawable/bg_button_primary"
+                android:textColor="@color/ether_bg_0"
+                android:textAppearance="@style/TextAppearance.Ether.Body"
+                android:textStyle="bold"
+                android:letterSpacing="0.04" />
+
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/vpn_auth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/connectionStatus"
-            android:layout_marginBottom="100dp"
-            android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/vpn_username"
-            android:text="username"
-            android:textColor="@color/colorWhite"
-            android:textSize="25sp"
-            android:textStyle="bold"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/vpn_password"
-            android:text="password"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-        </LinearLayout>
-
-        <ImageView
-            android:layout_marginBottom="20dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:id="@+id/selectedServerIcon"
-            android:src="@drawable/uk_flag"/>
-    </RelativeLayout>
 </layout>

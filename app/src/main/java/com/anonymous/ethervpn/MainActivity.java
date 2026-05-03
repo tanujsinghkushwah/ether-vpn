@@ -54,14 +54,12 @@ public class MainActivity extends AppCompatActivity {
             editor.clear();
             editor.apply();
 
-//            if (!isOnBoardingFragmentShown) {
-//                Intent intent = new Intent(this, OnBoardingFragment.class);
-//                onBoardingFlag = true;
-//                startActivity(intent);
-//
-//                // Save that the app has been run before
-//                sharedpreferences.edit().putBoolean("isOnBoardingFragmentShown", true).apply();
-//            }
+            if (!isOnBoardingFragmentShown) {
+                Intent onboardIntent = new Intent(this, OnBoardingFragment.class);
+                onBoardingFlag = true;
+                startActivity(onboardIntent);
+                sharedpreferences.edit().putBoolean("isOnBoardingFragmentShown", true).apply();
+            }
 
             editor.putBoolean("first_run", false);
             editor.apply();

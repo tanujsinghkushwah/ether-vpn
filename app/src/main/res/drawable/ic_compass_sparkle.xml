@@ -1,0 +1,33 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="180dp"
+    android:height="180dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Outer circle -->
+    <path android:strokeColor="#2AB98AFF" android:strokeWidth="1.5"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M100,40 A60,60 0 1,0 100,160 A60,60 0 1,0 100,40 Z" />
+    <!-- Inner circle -->
+    <path android:strokeColor="#1AB98AFF" android:strokeWidth="1"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M100,65 A35,35 0 1,0 100,135 A35,35 0 1,0 100,65 Z" />
+    <!-- Cross hairs -->
+    <path android:strokeColor="#3AB98AFF" android:strokeWidth="1"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M100,40 V65 M100,135 V160 M40,100 H65 M135,100 H160" />
+    <!-- North arrow (filled violet) -->
+    <path android:fillColor="#B98AFF" android:pathData="M100,72 L107,100 L100,96 L93,100 Z" />
+    <!-- South arrow (dim) -->
+    <path android:fillColor="#5AB98AFF" android:pathData="M100,128 L107,100 L100,104 L93,100 Z" />
+    <!-- Center dot -->
+    <path android:fillColor="#FFFFFF" android:pathData="M97,97 A3,3 0 1,0 97,103 A3,3 0 1,0 97,97 Z" />
+    <!-- Sparkle dots at cardinal points -->
+    <path android:fillColor="#B98AFF" android:pathData="M98,42 A2,2 0 1,0 98,46 A2,2 0 1,0 98,42 Z" />
+    <path android:fillColor="#B98AFF" android:pathData="M98,154 A2,2 0 1,0 98,158 A2,2 0 1,0 98,154 Z" />
+    <path android:fillColor="#B98AFF" android:pathData="M42,98 A2,2 0 1,0 42,102 A2,2 0 1,0 42,98 Z" />
+    <path android:fillColor="#B98AFF" android:pathData="M156,98 A2,2 0 1,0 156,102 A2,2 0 1,0 156,98 Z" />
+    <!-- Star dots -->
+    <path android:fillColor="#80FFFFFF" android:pathData="M30,30 A2,2 0 1,0 30,34 A2,2 0 1,0 30,30 Z" />
+    <path android:fillColor="#60FFFFFF" android:pathData="M168,168 A1.5,1.5 0 1,0 168,171 A1.5,1.5 0 1,0 168,168 Z" />
+    <path android:fillColor="#80FFFFFF" android:pathData="M170,30 A1,1 0 1,0 170,32 A1,1 0 1,0 170,30 Z" />
+</vector>

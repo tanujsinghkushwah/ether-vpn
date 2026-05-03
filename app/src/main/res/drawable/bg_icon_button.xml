@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/ether_surface_high">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/ether_surface_low" />
+            <corners android:radius="@dimen/ether_radius_icon_btn" />
+        </shape>
+    </item>
+</ripple>

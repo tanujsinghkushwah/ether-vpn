@@ -1,0 +1,27 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="180dp"
+    android:height="180dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Network mesh lines -->
+    <path android:strokeColor="#2AB98AFF" android:strokeWidth="1.5"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M100,50 L150,80 L140,130 L100,150 L60,130 L50,80 Z" />
+    <path android:strokeColor="#1AB98AFF" android:strokeWidth="1"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M100,50 L100,150 M50,80 L150,80 M60,130 L150,80 M140,130 L50,80" />
+    <!-- Center shield node -->
+    <path android:fillColor="#B98AFF"
+        android:pathData="M100,82 L112,88 V100 C112,107 106,113 100,115 C94,113 88,107 88,100 V88 Z" />
+    <!-- Outer nodes -->
+    <path android:fillColor="#B98AFF" android:pathData="M96,46 A4,4 0 1,0 96,54 A4,4 0 1,0 96,46 Z" />
+    <path android:fillColor="#B98AFF" android:pathData="M146,76 A4,4 0 1,0 146,84 A4,4 0 1,0 146,76 Z" />
+    <path android:fillColor="#B98AFF" android:pathData="M136,126 A4,4 0 1,0 136,134 A4,4 0 1,0 136,126 Z" />
+    <path android:fillColor="#B98AFF" android:pathData="M96,146 A4,4 0 1,0 96,154 A4,4 0 1,0 96,146 Z" />
+    <path android:fillColor="#B98AFF" android:pathData="M56,126 A4,4 0 1,0 56,134 A4,4 0 1,0 56,126 Z" />
+    <path android:fillColor="#B98AFF" android:pathData="M46,76 A4,4 0 1,0 46,84 A4,4 0 1,0 46,76 Z" />
+    <!-- Star dots -->
+    <path android:fillColor="#80FFFFFF" android:pathData="M35,35 A2,2 0 1,0 35,39 A2,2 0 1,0 35,35 Z" />
+    <path android:fillColor="#60FFFFFF" android:pathData="M165,165 A1.5,1.5 0 1,0 165,168 A1.5,1.5 0 1,0 165,165 Z" />
+    <path android:fillColor="#80FFFFFF" android:pathData="M170,35 A1,1 0 1,0 170,37 A1,1 0 1,0 170,35 Z" />
+</vector>

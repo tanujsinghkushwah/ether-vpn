@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ether StatusChrome — top bar. Use as <include layout="@layout/component_status_chrome" /> -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ether_chrome_height">
+
+        <!-- Left icon button -->
+        <ImageButton
+            android:id="@+id/chromeLeft"
+            android:layout_width="@dimen/ether_icon_btn_size"
+            android:layout_height="@dimen/ether_icon_btn_size"
+            android:background="@drawable/bg_icon_button"
+            android:contentDescription="@string/cd_menu"
+            android:padding="8dp"
+            android:src="@drawable/ic_menu"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/ether_space_16" />
+
+        <!-- Centered title -->
+        <TextView
+            android:id="@+id/chromeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Ether.ChromeTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="ETHER" />
+
+        <!-- Right icon button -->
+        <ImageButton
+            android:id="@+id/chromeRight"
+            android:layout_width="@dimen/ether_icon_btn_size"
+            android:layout_height="@dimen/ether_icon_btn_size"
+            android:background="@drawable/bg_icon_button"
+            android:contentDescription="@string/cd_locations"
+            android:padding="8dp"
+            android:src="@drawable/ic_globe"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="@dimen/ether_space_16" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>
