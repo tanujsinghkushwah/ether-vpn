@@ -156,6 +156,21 @@
     </style>
 
     <!-- ═══════════════════════════════════════════════
+         POPUP MENU
+    ═══════════════════════════════════════════════ -->
+
+    <style name="EtherPopupMenu" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:colorBackground">@color/ether_bg_1</item>
+        <item name="android:textColorPrimary">@color/ether_ink_0</item>
+        <item name="android:textColor">@color/ether_ink_0</item>
+        <item name="popupMenuStyle">@style/EtherPopupMenu.Style</item>
+    </style>
+
+    <style name="EtherPopupMenu.Style" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@color/ether_bg_1</item>
+    </style>
+
+    <!-- ═══════════════════════════════════════════════
          LEGACY (keep for lib compatibility)
     ═══════════════════════════════════════════════ -->
 

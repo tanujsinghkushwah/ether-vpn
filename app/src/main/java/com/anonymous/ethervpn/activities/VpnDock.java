@@ -3,6 +3,7 @@ package com.anonymous.ethervpn.activities;
 import static com.anonymous.ethervpn.utilities.Constants.APP_PREFS_NAME;
 
 import android.app.Notification;
+import android.view.ContextThemeWrapper;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -69,7 +70,8 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
 
         // Right button: popup menu (About / Logout)
         ImageButton navbarRight = findViewById(R.id.navbar_right);
-        PopupMenu popupMenu = new PopupMenu(this, navbarRight);
+        PopupMenu popupMenu = new PopupMenu(
+                new ContextThemeWrapper(this, R.style.EtherPopupMenu), navbarRight);
         popupMenu.getMenuInflater().inflate(R.menu.nav_menu, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(item -> {
             onMenuOptionSelected(item);

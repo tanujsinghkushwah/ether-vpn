@@ -44,13 +44,5 @@
         android:layout_weight="1"
         tools:listitem="@layout/server_list_view" />
 
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/ether_border_low" />
-
-    <!-- Drawer footer -->
-    <include layout="@layout/component_drawer_footer" />
 
 </LinearLayout>
