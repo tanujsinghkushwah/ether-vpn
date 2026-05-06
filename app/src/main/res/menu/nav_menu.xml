@@ -3,12 +3,10 @@
 
     <item
         android:id="@+id/nav_about_us"
-        android:icon="@drawable/baseline_info_24"
-        android:title="About us" />
+        android:title="About" />
 
     <item
         android:id="@+id/nav_logout"
-        android:icon="@drawable/astronaut_icon_round"
-        android:title="Logout" />
+        android:title="Sign out" />
 
 </menu>

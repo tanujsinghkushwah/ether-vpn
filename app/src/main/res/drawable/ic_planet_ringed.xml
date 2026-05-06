@@ -1,0 +1,29 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="180dp"
+    android:height="180dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Outer orbital ring (ellipse) -->
+    <path
+        android:strokeColor="#3EB98AFF"
+        android:strokeWidth="2"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M20,100 A80,28 0 1,0 180,100 A80,28 0 1,0 20,100 Z" />
+    <!-- Planet sphere -->
+    <path
+        android:fillColor="#1AB98AFF"
+        android:pathData="M100,60 A40,40 0 1,0 100,140 A40,40 0 1,0 100,60 Z" />
+    <!-- Glow highlight on planet -->
+    <path
+        android:fillColor="#33FFFFFF"
+        android:pathData="M85,72 A16,16 0 1,0 85,104 A16,16 0 1,0 85,72 Z" />
+    <!-- Small moon -->
+    <path
+        android:fillColor="#B98AFF"
+        android:pathData="M152,80 A7,7 0 1,0 152,94 A7,7 0 1,0 152,80 Z" />
+    <!-- Star dots -->
+    <path android:fillColor="#99FFFFFF" android:pathData="M40,40 A2,2 0 1,0 40,44 A2,2 0 1,0 40,40 Z" />
+    <path android:fillColor="#66FFFFFF" android:pathData="M160,150 A1.5,1.5 0 1,0 160,153 A1.5,1.5 0 1,0 160,150 Z" />
+    <path android:fillColor="#80FFFFFF" android:pathData="M30,155 A1,1 0 1,0 30,157 A1,1 0 1,0 30,155 Z" />
+    <path android:fillColor="#99FFFFFF" android:pathData="M170,50 A1.5,1.5 0 1,0 170,53 A1.5,1.5 0 1,0 170,50 Z" />
+</vector>

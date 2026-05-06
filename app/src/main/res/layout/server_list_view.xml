@@ -1,29 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Drawer server row. IDs iconImg + countryTv preserved for ServerListRVAdapter. -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/serverItemLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:paddingLeft="20dp"
+    android:layout_height="60dp"
     android:clickable="true"
+    android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:id="@+id/serverItemLayout">
+    android:paddingStart="@dimen/ether_space_16"
+    android:paddingEnd="@dimen/ether_space_16">
 
+    <!-- Flag -->
     <ImageView
         android:id="@+id/iconImg"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginRight="20dp"
-        android:src="@drawable/uk_flag" />
+        android:layout_width="@dimen/ether_flag_size"
+        android:layout_height="@dimen/ether_flag_size"
+        android:src="@drawable/flag_uk"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Country name -->
     <TextView
         android:id="@+id/countryTv"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="united kingdom"
-        android:textStyle="normal"
-        android:textAllCaps="true"
-        android:textColor="@color/colorWhite" />
-</LinearLayout>
+        android:layout_marginStart="@dimen/ether_space_12"
+        android:textAppearance="@style/TextAppearance.Ether.BodySmall"
+        android:textColor="@color/ether_text_primary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/drawerRowChevron"
+        app:layout_constraintStart_toEndOf="@id/iconImg"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="United Kingdom" />
+
+    <!-- Chevron -->
+    <ImageView
+        android:id="@+id/drawerRowChevron"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/ic_chevron_right"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

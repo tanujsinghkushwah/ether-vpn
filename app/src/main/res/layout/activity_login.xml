@@ -1,24 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
-    android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@drawable/bg_ether_gradient"
     tools:context=".services.OAuthService">
 
-    <ImageView
-        android:layout_marginBottom="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:background="@drawable/logo_banner_layerlist"/>
+    <!-- Starfield background -->
+    <com.anonymous.ethervpn.views.EtherStarfieldView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="168dp"
-        android:layout_height="68dp"
-        android:layout_gravity="center_horizontal" />
+    <!-- Top chrome -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ether_chrome_height"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/loginBack"
+            android:layout_width="@dimen/ether_icon_btn_size"
+            android:layout_height="@dimen/ether_icon_btn_size"
+            android:background="@drawable/bg_icon_button"
+            android:contentDescription="@string/cd_back"
+            android:padding="8dp"
+            android:src="@drawable/ic_back"
+            android:scaleType="center"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/ether_space_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ether_signin_title"
+            android:textAppearance="@style/TextAppearance.Ether.ChromeTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:layout_width="@dimen/ether_icon_btn_size"
+            android:layout_height="@dimen/ether_icon_btn_size"
+            android:background="@drawable/bg_icon_button"
+            android:contentDescription="@string/cd_shield"
+            android:padding="8dp"
+            android:src="@drawable/ic_shield"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="@dimen/ether_space_16" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Guideline at 35% from top to push content down slightly -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <!-- Center content -->
+    <LinearLayout
+        android:id="@+id/loginContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/ether_space_24"
+        android:layout_marginEnd="@dimen/ether_space_24"
+        app:layout_constraintBottom_toTopOf="@id/loginButtonGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guidelineTop">
+
+        <!-- Brand mark hero -->
+        <FrameLayout
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:background="@drawable/bg_hero_glow"
+            android:layout_marginBottom="@dimen/ether_space_28">
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_launcher_foreground"
+                android:contentDescription="@null" />
+        </FrameLayout>
+
+        <!-- Eyebrow -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Ether.Label"
+            android:text="@string/login_eyebrow"
+            android:layout_marginBottom="@dimen/ether_space_12" />
+
+        <!-- Headline -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Ether.Headline"
+            android:gravity="center"
+            android:text="@string/login_headline"
+            android:layout_marginBottom="@dimen/ether_space_12" />
+
+        <!-- Sub-copy -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Ether.BodySmall"
+            android:gravity="center"
+            android:text="@string/login_subtitle" />
+
+    </LinearLayout>
+
+    <!-- Bottom button group -->
+    <LinearLayout
+        android:id="@+id/loginButtonGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/ether_space_24"
+        android:layout_marginEnd="@dimen/ether_space_24"
+        android:layout_marginBottom="@dimen/ether_space_32"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- Continue with Google -->
+        <Button
+            android:id="@+id/btnGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ether_btn_height"
+            android:text="@string/login_google"
+            android:background="@drawable/bg_button_primary"
+            android:textColor="@color/ether_bg_0"
+            android:textAppearance="@style/TextAppearance.Ether.Body"
+            android:textStyle="bold"
+            android:drawablePadding="12dp"
+            android:layout_marginBottom="@dimen/ether_space_16" />
+
+        <!-- Terms -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Ether.Caption"
+            android:text="@string/login_terms" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

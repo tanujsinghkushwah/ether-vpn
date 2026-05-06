@@ -1,46 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<!-- Ether StatusChrome toolbar — replaces the old AppBarLayout+Toolbar stack. -->
+<!-- IDs navbar_left, navbar_right, and toolbar are preserved for VpnDock.java. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_height="@dimen/ether_chrome_height">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/gray"
-            android:layout_height="?attr/actionBarSize">
-
         <ImageButton
-            android:layout_gravity="left"
             android:id="@+id/navbar_left"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/baseline_format_list_bulleted_24" />
+            android:layout_width="@dimen/ether_icon_btn_size"
+            android:layout_height="@dimen/ether_icon_btn_size"
+            android:background="@drawable/bg_icon_button"
+            android:contentDescription="@string/cd_locations"
+            android:padding="8dp"
+            android:src="@drawable/ic_globe"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/ether_space_16" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/colorWhite"
-            android:text="@string/app_name"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:text="@string/ether_app_title"
+            android:textAppearance="@style/TextAppearance.Ether.ChromeTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:layout_gravity="right"
             android:id="@+id/navbar_right"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/baseline_vpn_lock_24" />
+            android:layout_width="@dimen/ether_icon_btn_size"
+            android:layout_height="@dimen/ether_icon_btn_size"
+            android:background="@drawable/bg_icon_button"
+            android:contentDescription="@string/cd_menu"
+            android:padding="8dp"
+            android:src="@drawable/ic_menu"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="@dimen/ether_space_16" />
 
-        </androidx.appcompat.widget.Toolbar>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.appbar.AppBarLayout>
+
+</FrameLayout>

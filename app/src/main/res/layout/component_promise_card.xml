@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Reusable "promise" row for the About screen. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/ether_space_16"
+    android:paddingEnd="@dimen/ether_space_16"
+    android:paddingTop="@dimen/ether_space_12"
+    android:paddingBottom="@dimen/ether_space_12">
+
+    <ImageView
+        android:id="@+id/promiseIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_check"
+        android:contentDescription="@null" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/ether_space_12">
+
+        <TextView
+            android:id="@+id/promiseTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Ether.BodySmall"
+            android:textColor="@color/ether_text_primary"
+            android:textStyle="bold"
+            tools:text="No-logs policy" />
+
+        <TextView
+            android:id="@+id/promiseDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Ether.Caption"
+            android:layout_marginTop="2dp"
+            tools:text="Zero activity logs. Ever." />
+    </LinearLayout>
+
+</LinearLayout>

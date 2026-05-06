@@ -8,6 +8,14 @@ public class Server {
     private String ovpnUserName;
     private String ovpnUserPassword;
 
+    // v2 metadata — populated client-side; Firebase schema bump deferred
+    private String isoCode = "";
+    private String city = "";
+    private int pingMs = -1;
+    private int load = -1;
+    private boolean premium = false;
+    private boolean favorite = false;
+
     public Server(String country, String flagUrl, String ovpn, String ovpnUserName, String ovpnUserPassword) {
         this.country = country;
         this.flagUrl = flagUrl;
@@ -16,43 +24,36 @@ public class Server {
         this.ovpnUserPassword = ovpnUserPassword;
     }
 
-    public String getCountry() {
-        return country;
-    }
+    public String getCountry() { return country; }
+    public void setCountry(String country) { this.country = country; }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
+    public String getFlagUrl() { return flagUrl; }
+    public void setFlagUrl(String flagUrl) { this.flagUrl = flagUrl; }
 
-    public String getFlagUrl() {
-        return flagUrl;
-    }
+    public String getOvpn() { return ovpn; }
+    public void setOvpn(String ovpn) { this.ovpn = ovpn; }
 
-    public void setFlagUrl(String flagUrl) {
-        this.flagUrl = flagUrl;
-    }
+    public String getOvpnUserName() { return ovpnUserName; }
+    public void setOvpnUserName(String ovpnUserName) { this.ovpnUserName = ovpnUserName; }
 
-    public String getOvpn() {
-        return ovpn;
-    }
+    public String getOvpnUserPassword() { return ovpnUserPassword; }
+    public void setOvpnUserPassword(String ovpnUserPassword) { this.ovpnUserPassword = ovpnUserPassword; }
 
-    public void setOvpn(String ovpn) {
-        this.ovpn = ovpn;
-    }
+    public String getIsoCode() { return isoCode; }
+    public void setIsoCode(String isoCode) { this.isoCode = isoCode; }
 
-    public String getOvpnUserName() {
-        return ovpnUserName;
-    }
+    public String getCity() { return city; }
+    public void setCity(String city) { this.city = city; }
 
-    public void setOvpnUserName(String ovpnUserName) {
-        this.ovpnUserName = ovpnUserName;
-    }
+    public int getPingMs() { return pingMs; }
+    public void setPingMs(int pingMs) { this.pingMs = pingMs; }
 
-    public String getOvpnUserPassword() {
-        return ovpnUserPassword;
-    }
+    public int getLoad() { return load; }
+    public void setLoad(int load) { this.load = load; }
 
-    public void setOvpnUserPassword(String ovpnUserPassword) {
-        this.ovpnUserPassword = ovpnUserPassword;
-    }
+    public boolean isPremium() { return premium; }
+    public void setPremium(boolean premium) { this.premium = premium; }
+
+    public boolean isFavorite() { return favorite; }
+    public void setFavorite(boolean favorite) { this.favorite = favorite; }
 }

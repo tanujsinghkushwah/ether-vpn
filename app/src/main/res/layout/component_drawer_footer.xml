@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Drawer footer: avatar + plan info + settings cog -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:background="@color/ether_bg_0"
+    android:paddingStart="@dimen/ether_space_16"
+    android:paddingEnd="@dimen/ether_space_16">
+
+    <!-- User icon -->
+    <ImageView
+        android:id="@+id/drawerUserIcon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/ic_user"
+        android:background="@drawable/bg_icon_button"
+        android:padding="8dp"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- User name + plan -->
+    <LinearLayout
+        android:id="@+id/drawerUserInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/ether_space_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/drawerSettingsBtn"
+        app:layout_constraintStart_toEndOf="@id/drawerUserIcon"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/drawerUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Ether.BodySmall"
+            android:textColor="@color/ether_text_primary"
+            android:textStyle="bold"
+            tools:text="Anonymous" />
+
+        <TextView
+            android:id="@+id/drawerUserPlan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Ether.Caption"
+            android:layout_marginTop="2dp"
+            tools:text="Free plan" />
+    </LinearLayout>
+
+    <!-- Settings cog -->
+    <ImageButton
+        android:id="@+id/drawerSettingsBtn"
+        android:layout_width="@dimen/ether_icon_btn_size"
+        android:layout_height="@dimen/ether_icon_btn_size"
+        android:background="@drawable/bg_icon_button"
+        android:contentDescription="@string/cd_settings"
+        android:padding="8dp"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

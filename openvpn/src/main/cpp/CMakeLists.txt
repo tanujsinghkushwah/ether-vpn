@@ -20,8 +20,12 @@ SET(OPENVPN3OSSL ON)
 # STATIC or SHARED
 SET(SSLLIBTYPE STATIC)
 SET(OPENSSL_PATH "openssl")
-set(SWIG_EXECUTABLE "${CMAKE_CURRENT_SOURCE_DIR}/swigwin-4.1.1/swig.exe")
-set(SWIG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/swigwin-4.1.1")
+if (WIN32)
+    set(SWIG_EXECUTABLE "${CMAKE_CURRENT_SOURCE_DIR}/swigwin-4.1.1/swig.exe")
+    set(SWIG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/swigwin-4.1.1")
+else ()
+    find_program(SWIG_EXECUTABLE swig PATHS "/opt/homebrew/bin" "/usr/local/bin")
+endif ()
 
 set(CMAKE_CXX_STANDARD 17)
 

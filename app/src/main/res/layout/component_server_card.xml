@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Server card shown at the bottom of the Home screen. -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/serverCard"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ether_server_card_height"
+    android:background="@drawable/bg_card_surface"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingStart="@dimen/ether_space_16"
+    android:paddingEnd="@dimen/ether_space_12">
+
+    <!-- Country flag -->
+    <ImageView
+        android:id="@+id/serverFlag"
+        android:layout_width="@dimen/ether_flag_size"
+        android:layout_height="@dimen/ether_flag_size"
+        android:src="@drawable/flag_uk"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Country + city -->
+    <LinearLayout
+        android:id="@+id/serverNameGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/ether_space_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/serverChevron"
+        app:layout_constraintStart_toEndOf="@id/serverFlag"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/serverCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Ether.Body"
+            android:textStyle="bold"
+            tools:text="United Kingdom" />
+
+        <TextView
+            android:id="@+id/serverCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Ether.Caption"
+            android:layout_marginTop="2dp"
+            tools:text="London · 12 ms" />
+
+    </LinearLayout>
+
+    <!-- Chevron -->
+    <ImageView
+        android:id="@+id/serverChevron"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/ic_chevron_right"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

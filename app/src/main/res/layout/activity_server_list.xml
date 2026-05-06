@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_ether_gradient">
+
+    <com.anonymous.ethervpn.views.EtherStarfieldView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Chrome -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/serverListChrome"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ether_chrome_height"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+            android:id="@+id/serverListBack"
+            android:layout_width="@dimen/ether_icon_btn_size"
+            android:layout_height="@dimen/ether_icon_btn_size"
+            android:background="@drawable/bg_icon_button"
+            android:contentDescription="@string/cd_back"
+            android:padding="8dp"
+            android:src="@drawable/ic_back"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/ether_space_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/server_list_title"
+            android:textAppearance="@style/TextAppearance.Ether.ChromeTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Search bar -->
+    <EditText
+        android:id="@+id/serverSearch"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:background="@drawable/bg_search_input"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="8dp"
+        android:hint="@string/server_search_hint"
+        android:textColorHint="@color/ether_ink_3"
+        android:textColor="@color/ether_ink_0"
+        android:textAppearance="@style/TextAppearance.Ether.Body"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:inputType="text"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
+        app:layout_constraintTop_toBottomOf="@id/serverListChrome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/ether_space_16"
+        android:layout_marginEnd="@dimen/ether_space_16"
+        android:layout_marginTop="@dimen/ether_space_16" />
+
+    <!-- Tab chips -->
+    <HorizontalScrollView
+        android:id="@+id/tabScroll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/serverSearch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp">
+
+        <LinearLayout
+            android:id="@+id/tabRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/ether_space_16"
+            android:paddingEnd="@dimen/ether_space_16">
+
+            <TextView
+                android:id="@+id/tabAll"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="@string/tab_all"
+                android:background="@drawable/bg_tab_chip_selected"
+                android:textAppearance="@style/TextAppearance.Ether.Label"
+                android:textColor="@color/ether_bg_0"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tabFree"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="@string/tab_free"
+                android:background="@drawable/bg_tab_chip"
+                android:textAppearance="@style/TextAppearance.Ether.Label"
+                android:textColor="@color/ether_ink_1"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tabPremium"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="@string/tab_premium"
+                android:background="@drawable/bg_tab_chip"
+                android:textAppearance="@style/TextAppearance.Ether.Label"
+                android:textColor="@color/ether_ink_1"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tabFavorites"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="@string/tab_favorites"
+                android:background="@drawable/bg_tab_chip"
+                android:textAppearance="@style/TextAppearance.Ether.Label"
+                android:textColor="@color/ether_ink_1"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Server list -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/serverListRv2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/ether_space_16"
+        app:layout_constraintTop_toBottomOf="@id/tabScroll"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,21 +13,36 @@ plugins {
 
 android {
     namespace = "de.blinkt.openvpn"
-    compileSdk = 33
-    buildToolsVersion = "33.0.2"
+    compileSdk = 34
+    buildToolsVersion = "34.0.0"
 
     // Also update runcoverity.sh
     ndkVersion = "25.1.8937393"
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         externalNativeBuild {
             cmake {
+                // Required for Android 15+ devices with 16KB memory pages
+                // (e.g. sdk_gphone16k_arm64). Without this, the OpenVPN
+                // executable (libovpnexec.so) is linked with 4KB page
+                // alignment and the dynamic linker refuses to load it,
+                // causing the OpenVPN process to exit immediately with no
+                // stderr output.
+                arguments += listOf(
+                    "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,max-page-size=16384",
+                    "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-z,max-page-size=16384"
+                )
             }
         }
     }
 
+
+    buildFeatures {
+        buildConfig = true
+        aidl = true
+    }
 
     testOptions.unitTests.isIncludeAndroidResources = true
 
@@ -105,6 +120,10 @@ android {
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_1_8
         sourceCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 
     // splits {

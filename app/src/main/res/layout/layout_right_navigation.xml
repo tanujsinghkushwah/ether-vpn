@@ -1,99 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<!-- Ether side drawer — end-gravity, full-height. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="280dp"
     android:layout_height="match_parent"
-    android:background="@color/gray"
-    android:paddingTop="50dp">
+    android:orientation="vertical"
+    android:background="@color/ether_bg_1"
+    android:fitsSystemWindows="true"
+    android:paddingTop="24dp">
 
+    <!-- Drawer header -->
     <TextView
-        android:gravity="center"
-        android:textColor="#ffffff"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="choose your location"
-        android:textAllCaps="true"/>
+        android:layout_marginStart="@dimen/ether_space_16"
+        android:layout_marginBottom="4dp"
+        android:textAppearance="@style/TextAppearance.Ether.Label"
+        android:text="CHOOSE LOCATION" />
 
     <TextView
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:background="#ffffff"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ether_space_16"
+        android:layout_marginBottom="@dimen/ether_space_16"
+        android:textAppearance="@style/TextAppearance.Ether.Title"
+        android:textStyle="bold"
+        android:text="Where to next?" />
 
-    <ScrollView
+    <!-- Divider -->
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical">-->
-<!--            <LinearLayout-->
-<!--                android:id="@+id/navRightUkLayout"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal">-->
-<!--                <ImageView-->
-<!--                    android:layout_marginRight="20dp"-->
-<!--                    android:layout_width="30dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:src="@drawable/uk_flag"/>-->
-<!--                <TextView-->
-<!--                    android:textColor="#ffffff"-->
-<!--                    android:textAllCaps="true"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="united kingdom"-->
-<!--                    />-->
-<!--            </LinearLayout>-->
-<!--            <LinearLayout-->
-<!--                android:id="@+id/navRightFrLayout"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal">-->
-<!--                <ImageView-->
-<!--                    android:layout_marginRight="20dp"-->
-<!--                    android:layout_width="30dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:src="@drawable/fr_flag"/>-->
-<!--                <TextView-->
-<!--                    android:textColor="#ffffff"-->
-<!--                    android:textAllCaps="true"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="France"-->
-<!--                    />-->
-<!--            </LinearLayout>-->
-<!--            <LinearLayout-->
-<!--                android:id="@+id/navRightUsLayout"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal">-->
-<!--                <ImageView-->
-<!--                    android:layout_marginRight="20dp"-->
-<!--                    android:layout_width="30dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:src="@drawable/usa_flag"/>-->
-<!--                <TextView-->
-<!--                    android:textColor="#ffffff"-->
-<!--                    android:textAllCaps="true"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="united states"-->
-<!--                    />-->
-<!--            </LinearLayout>-->
-<!--        </LinearLayout>-->
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/serverListRv"/>
-    </ScrollView>
+        android:layout_height="1dp"
+        android:background="@color/ether_border_low"
+        android:layout_marginStart="@dimen/ether_space_16"
+        android:layout_marginEnd="@dimen/ether_space_16"
+        android:layout_marginBottom="@dimen/ether_space_8" />
+
+    <!-- Server list -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/serverListRv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:listitem="@layout/server_list_view" />
+
+
 </LinearLayout>

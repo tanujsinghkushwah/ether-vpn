@@ -15,4 +15,7 @@ public class Constants {
     public static final String WELCOME_MESSAGE_KEY = "welcome_message";
     public static final String DEFAULT_COUNTRY = "uk-2";
 
+    public static final int REQUEST_SERVER_CHANGE = 200;
+    public static final String EXTRA_SERVER_INDEX = "extra_server_index";
+
 }

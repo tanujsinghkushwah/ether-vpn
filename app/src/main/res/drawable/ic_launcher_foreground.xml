@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Visor mark — the signature launcher icon.
+     Reads as helmet + eye + atom. Safe zone: inner 128 of 192 units. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="192"
+    android:viewportHeight="192">
+
+    <!-- Stars -->
+    <path android:pathData="M25.6,30 A2.4,2.4 0 1,0 30.4,30 A2.4,2.4 0 1,0 25.6,30 Z" android:fillColor="#99ffffff"/>
+    <path android:pathData="M158.4,40 A1.6,1.6 0 1,0 161.6,40 A1.6,1.6 0 1,0 158.4,40 Z" android:fillColor="#99ffffff"/>
+    <path android:pathData="M168,140 A2,2 0 1,0 172,140 A2,2 0 1,0 168,140 Z" android:fillColor="#99ffffff"/>
+    <path android:pathData="M18.2,150 A1.8,1.8 0 1,0 21.8,150 A1.8,1.8 0 1,0 18.2,150 Z" android:fillColor="#99ffffff"/>
+    <path android:pathData="M148.8,20 A1.2,1.2 0 1,0 151.2,20 A1.2,1.2 0 1,0 148.8,20 Z" android:fillColor="#99ffffff"/>
+    <path android:pathData="M38.6,170 A1.4,1.4 0 1,0 41.4,170 A1.4,1.4 0 1,0 38.6,170 Z" android:fillColor="#99ffffff"/>
+
+    <!-- Helmet outer rim: white-to-silver gradient circle -->
+    <path android:pathData="M32,96 A64,64 0 1,0 160,96 A64,64 0 1,0 32,96 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="96" android:startY="32"
+                android:endX="96" android:endY="160"
+                android:startColor="#f7f9ff"
+                android:endColor="#c4cad6"/>
+        </aapt:attr>
+    </path>
+
+    <!-- Visor cutout: dark navy oval -->
+    <path android:pathData="M48,100 A48,38 0 1,0 144,100 A48,38 0 1,0 48,100 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="96" android:startY="62"
+                android:endX="96" android:endY="138"
+                android:startColor="#0a0e1c"
+                android:endColor="#0a1428"/>
+        </aapt:attr>
+    </path>
+
+    <!-- Visor top edge highlight (cyan rim light) -->
+    <path
+        android:pathData="M62,78 A34,6 0 1,0 130,78 A34,6 0 1,0 62,78 Z"
+        android:fillColor="#594ecde4"/>
+
+    <!-- Planet sphere reflected inside visor -->
+    <path android:pathData="M92,108 A14,14 0 1,0 120,108 A14,14 0 1,0 92,108 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="radial"
+                android:centerX="0.35"
+                android:centerY="0.35"
+                android:gradientRadius="0.9"
+                android:startColor="#ff4ecde4"
+                android:endColor="#ff0d7a8f"/>
+        </aapt:attr>
+    </path>
+
+    <!-- Planet ring (ellipse tilted -15°) -->
+    <group
+        android:pivotX="106"
+        android:pivotY="108"
+        android:rotation="-15">
+        <path
+            android:pathData="M84,108 A22,3.5 0 1,0 128,108 A22,3.5 0 1,0 84,108"
+            android:fillColor="#00000000"
+            android:strokeColor="#4ecde4"
+            android:strokeWidth="1.2"
+            android:strokeAlpha="0.7"/>
+    </group>
+
+    <!-- Orbital ring around helmet — faint full ring (tilted -25°) -->
+    <group
+        android:pivotX="96"
+        android:pivotY="96"
+        android:rotation="-25">
+        <path
+            android:pathData="M18,96 A78,14 0 1,0 174,96 A78,14 0 1,0 18,96"
+            android:fillColor="#00000000"
+            android:strokeColor="#4ecde4"
+            android:strokeWidth="1.5"
+            android:strokeAlpha="0.4"/>
+    </group>
+
+    <!-- Orbital bright arc — same tilt, short visible segment -->
+    <group
+        android:pivotX="96"
+        android:pivotY="96"
+        android:rotation="-25">
+        <path
+            android:pathData="M18,96 A78,14 0 0,1 57,84"
+            android:fillColor="#00000000"
+            android:strokeColor="#4ecde4"
+            android:strokeWidth="2.5"
+            android:strokeLineCap="round"
+            android:strokeAlpha="0.85"/>
+    </group>
+
+</vector>

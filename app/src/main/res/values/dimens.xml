@@ -4,8 +4,44 @@
   -->
 
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
+    <!-- ───── Legacy margins ───── -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    </resources>
+    <!-- ───── Ether spacing scale ───── -->
+    <dimen name="ether_space_4">4dp</dimen>
+    <dimen name="ether_space_8">8dp</dimen>
+    <dimen name="ether_space_12">12dp</dimen>
+    <dimen name="ether_space_16">16dp</dimen>
+    <dimen name="ether_space_20">20dp</dimen>
+    <dimen name="ether_space_24">24dp</dimen>
+    <dimen name="ether_space_28">28dp</dimen>
+    <dimen name="ether_space_32">32dp</dimen>
+
+    <!-- ───── Ether corner radii ───── -->
+    <dimen name="ether_radius_chip">100dp</dimen>
+    <dimen name="ether_radius_card">16dp</dimen>
+    <dimen name="ether_radius_input">14dp</dimen>
+    <dimen name="ether_radius_button">16dp</dimen>
+    <dimen name="ether_radius_icon_btn">12dp</dimen>
+
+    <!-- ───── Component sizes ───── -->
+    <dimen name="ether_chrome_height">56dp</dimen>
+    <dimen name="ether_icon_btn_size">40dp</dimen>
+    <dimen name="ether_icon_btn_touch">48dp</dimen>
+    <dimen name="ether_btn_height">56dp</dimen>
+    <dimen name="ether_orb_size">250dp</dimen>
+    <dimen name="ether_flag_size">28dp</dimen>
+    <dimen name="ether_server_card_height">72dp</dimen>
+    <dimen name="ether_load_bar_height">3dp</dimen>
+
+    <!-- ───── Typography ───── -->
+    <dimen name="ether_text_display">36sp</dimen>
+    <dimen name="ether_text_headline">28sp</dimen>
+    <dimen name="ether_text_title">22sp</dimen>
+    <dimen name="ether_text_body">16sp</dimen>
+    <dimen name="ether_text_body_small">14sp</dimen>
+    <dimen name="ether_text_caption">13sp</dimen>
+    <dimen name="ether_text_label">11sp</dimen>
+    <dimen name="ether_text_mono">12sp</dimen>
+</resources>

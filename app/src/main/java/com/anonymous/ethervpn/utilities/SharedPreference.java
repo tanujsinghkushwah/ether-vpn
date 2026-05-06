@@ -15,7 +15,13 @@ import android.content.SharedPreferences;
 import com.anonymous.ethervpn.model.Server;
 import com.anonymous.ethervpn.R;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class SharedPreference {
+
+    private static final String FAVORITES_KEY = "favorite_ovpns";
     private SharedPreferences mPreference;
     private SharedPreferences.Editor mPrefEditor;
     private Context context;
@@ -54,5 +60,16 @@ public class SharedPreference {
         );
 
         return server;
+    }
+
+    public Set<String> getFavorites() {
+        return new HashSet<>(mPreference.getStringSet(FAVORITES_KEY, Collections.emptySet()));
+    }
+
+    public void setFavorite(String ovpn, boolean favorite) {
+        if (ovpn == null) return;
+        Set<String> current = getFavorites();
+        if (favorite) current.add(ovpn); else current.remove(ovpn);
+        mPreference.edit().putStringSet(FAVORITES_KEY, current).apply();
     }
 }

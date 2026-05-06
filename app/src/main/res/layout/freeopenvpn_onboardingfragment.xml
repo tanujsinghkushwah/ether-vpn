@@ -1,62 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Ether onboarding — 3-page ViewPager2 tour. -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:background="@drawable/bg_ether_gradient">
 
-<ImageView android:id="@+id/slider_image"
-        android:layout_width="0dp"
-        android:layout_height="400dp"
-        android:layout_marginTop="32dp"
-        android:padding="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/freeopenvpn_dialog" />
-
-    <TextView
-        android:id="@+id/slider_heading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginEnd="140dp"
-        android:gravity="center"
-        android:text="@string/onboarding_title"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.471"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/slider_image" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginLeft="176dp"
-        android:layout_marginEnd="176dp"
-        android:layout_marginRight="176dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/onboarding_desc"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/slider_heading" />
-
-    <RelativeLayout
+    <!-- Starfield -->
+    <com.anonymous.ethervpn.views.EtherStarfieldView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <Button
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Top chrome -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/onboardingChrome"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ether_chrome_height"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:onClick="skip"
-            android:padding="10dp"
-            android:text="SKIP"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:textColor="@color/black"/>
-    </RelativeLayout>
+            android:text="@string/ether_onboarding_title"
+            android:textAppearance="@style/TextAppearance.Ether.ChromeTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/onboardingClose"
+            android:layout_width="@dimen/ether_icon_btn_size"
+            android:layout_height="@dimen/ether_icon_btn_size"
+            android:background="@drawable/bg_icon_button"
+            android:contentDescription="@string/cd_close"
+            android:padding="8dp"
+            android:src="@drawable/ic_close"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="@dimen/ether_space_16" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ViewPager2 -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/onboardingPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/onboardingBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/onboardingChrome" />
+
+    <!-- Bottom dock: progress segments + CTA -->
+    <LinearLayout
+        android:id="@+id/onboardingBottom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/ether_space_24"
+        android:paddingEnd="@dimen/ether_space_24"
+        android:paddingBottom="@dimen/ether_space_32"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- Progress segment row -->
+        <LinearLayout
+            android:id="@+id/progressSegments"
+            android:layout_width="wrap_content"
+            android:layout_height="4dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/ether_space_24">
+
+            <View
+                android:id="@+id/seg0"
+                android:layout_width="40dp"
+                android:layout_height="4dp"
+                android:background="@drawable/bg_progress_segment_active"
+                android:layout_marginEnd="6dp" />
+
+            <View
+                android:id="@+id/seg1"
+                android:layout_width="40dp"
+                android:layout_height="4dp"
+                android:background="@drawable/bg_progress_segment"
+                android:layout_marginEnd="6dp" />
+
+            <View
+                android:id="@+id/seg2"
+                android:layout_width="40dp"
+                android:layout_height="4dp"
+                android:background="@drawable/bg_progress_segment" />
+
+        </LinearLayout>
+
+        <!-- CTA button -->
+        <Button
+            android:id="@+id/onboardingCta"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ether_btn_height"
+            android:text="@string/cta_next"
+            android:background="@drawable/bg_button_primary"
+            android:textColor="@color/ether_bg_0"
+            android:textAppearance="@style/TextAppearance.Ether.Body"
+            android:textStyle="bold"
+            android:letterSpacing="0.04" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

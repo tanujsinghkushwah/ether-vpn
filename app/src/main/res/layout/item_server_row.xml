@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:paddingStart="@dimen/ether_space_16"
+    android:paddingEnd="@dimen/ether_space_16"
+    android:background="?attr/selectableItemBackground">
+
+    <!-- Flag -->
+    <ImageView
+        android:id="@+id/rowFlag"
+        android:layout_width="32dp"
+        android:layout_height="24dp"
+        android:scaleType="fitCenter"
+        android:contentDescription="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Country + city -->
+    <LinearLayout
+        android:id="@+id/rowTextGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toEndOf="@id/rowFlag"
+        app:layout_constraintEnd_toStartOf="@id/rowRightGroup"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/rowCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Ether.Body"
+                android:textStyle="bold"
+                android:textColor="@color/ether_ink_0" />
+
+            <TextView
+                android:id="@+id/rowPremiumBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/badge_premium"
+                android:textAppearance="@style/TextAppearance.Ether.Caption"
+                android:textColor="@color/ether_accent"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:background="@drawable/bg_chip_unprotected"
+                android:layout_marginStart="8dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:id="@+id/rowCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Ether.Caption"
+                android:textColor="@color/ether_ink_2" />
+
+            <!-- Load bar (shown only if load >= 0) -->
+            <FrameLayout
+                android:id="@+id/rowLoadBarContainer"
+                android:layout_width="48dp"
+                android:layout_height="4dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_load_bar_track"
+                android:visibility="gone">
+
+                <View
+                    android:id="@+id/rowLoadBarFill"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_load_bar_fill" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Right group: ping + star + check -->
+    <LinearLayout
+        android:id="@+id/rowRightGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/rowPing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Ether.Caption"
+            android:textColor="@color/ether_ink_2"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/rowFavBtn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_star"
+            android:scaleType="center"
+            android:contentDescription="@null"
+            android:padding="4dp"
+            android:layout_marginEnd="4dp" />
+
+        <ImageView
+            android:id="@+id/rowSelected"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_check"
+            android:scaleType="center"
+            android:contentDescription="@null"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/ether_bg_2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/rowFlag"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

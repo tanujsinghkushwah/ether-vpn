@@ -1,7 +1,6 @@
 package com.anonymous.ethervpn.services;
 
 import static android.content.ContentValues.TAG;
-
 import static com.anonymous.ethervpn.utilities.Constants.APP_PREFS_NAME;
 
 import android.app.PendingIntent;
@@ -9,7 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -30,12 +29,7 @@ import com.google.android.gms.auth.api.identity.GetSignInIntentRequest;
 import com.google.android.gms.auth.api.identity.Identity;
 import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.identity.SignInCredential;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,74 +39,68 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 public class OAuthService extends AppCompatActivity {
 
-    private SignInButton btSignIn;
+    private Button btnGoogle;
 
     private CheckInternetConnection connection;
-
     private SignInClient signInClient;
-
     private FirebaseAuth firebaseAuth;
-
     private SharedPreferences sharedPreferences;
-
     private SharedPreferences.Editor editor;
-
     private boolean firstRun;
 
     private final ActivityResultLauncher<IntentSenderRequest> signInLauncher = registerForActivityResult(
             new ActivityResultContracts.StartIntentSenderForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    handleSignInResult(result.getData());
-                }
-            }
+            result -> handleSignInResult(result.getData())
     );
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        androidx.core.view.WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_login);
 
         sharedPreferences = getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
         editor = sharedPreferences.edit();
         firstRun = getIntent().getBooleanExtra("first_run", false);
 
-        btSignIn = findViewById(R.id.sign_in_button);
+        btnGoogle = findViewById(R.id.btnGoogle);
         connection = new CheckInternetConnection();
 
-        //initializing auth client
         signInClient = Identity.getSignInClient(this);
+        firebaseAuth = FirebaseAuth.getInstance();
 
-        btSignIn.setOnClickListener((View.OnClickListener) view -> {
-            if(getInternetStatus()){
+        btnGoogle.setOnClickListener(v -> {
+            if (getInternetStatus()) {
                 signIn();
             } else {
-                Toast.makeText(this, "Please check your Internet Connection!!!",
+                Toast.makeText(this, "Please check your Internet Connection",
                         Toast.LENGTH_LONG).show();
             }
         });
 
-        firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-        if (firebaseUser == null) {
-            if(getInternetStatus()) {
-                oneTapSignIn();
-            } else {
-                Toast.makeText(this, "Please check your Internet Connection!!!",
-                        Toast.LENGTH_LONG).show();
-            }
+        // Auto-advance if already signed in
+        if (firebaseUser != null && !firstRun) {
+            navigateToVpnDock();
+            return;
         }
 
-        if (firebaseUser != null && !firstRun) {
-            startActivity(new Intent(OAuthService.this, VpnDock.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        // Attempt One Tap sign-in if connected and not already signed in
+        if (firebaseUser == null && getInternetStatus()) {
+            oneTapSignIn();
         }
+    }
+
+    private void navigateToVpnDock() {
+        editor.putBoolean("isLoggedIn", true);
+        editor.apply();
+        startActivity(new Intent(this, VpnDock.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        finish();
     }
 
     private void handleSignInResult(Intent data) {
         try {
-            // Google Sign In was successful, authenticate with Firebase
             SignInCredential credential = signInClient.getSignInCredentialFromIntent(data);
             String idToken = credential.getGoogleIdToken();
             Log.d("googleAuthToken", "firebaseAuthWithGoogle:" + credential.getId());
@@ -127,39 +115,25 @@ public class OAuthService extends AppCompatActivity {
         GetSignInIntentRequest signInRequest = GetSignInIntentRequest.builder()
                 .setServerClientId(getString(R.string.default_web_client_id))
                 .build();
-
         signInClient.getSignInIntent(signInRequest)
-                .addOnSuccessListener(new OnSuccessListener<PendingIntent>() {
-                    @Override
-                    public void onSuccess(PendingIntent pendingIntent) {
-                        launchSignIn(pendingIntent);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        e.printStackTrace();
-                        FirebaseCrashlytics.getInstance().log("Google Sign-in failed: " + e.getMessage());
-                    }
+                .addOnSuccessListener(this::launchSignIn)
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    FirebaseCrashlytics.getInstance().log("Google Sign-in failed: " + e.getMessage());
                 });
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("firebaseAuthenticated", "firebaseAuth:success");
-                            editor.putBoolean("isLoggedIn", true);
-                            editor.apply();
-                            startActivity(new Intent(OAuthService.this, VpnDock.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                        } else {
-                            Log.w(TAG, "firebaseAuth:failure", task.getException());
-                            FirebaseCrashlytics.getInstance().log("Firebase authentication failed: " + task.getException().getMessage());
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "firebaseAuth:success");
+                        navigateToVpnDock();
+                    } else {
+                        Log.w(TAG, "firebaseAuth:failure", task.getException());
+                        FirebaseCrashlytics.getInstance().log(
+                                "Firebase authentication failed: " + task.getException().getMessage());
                     }
                 });
     }
@@ -171,42 +145,26 @@ public class OAuthService extends AppCompatActivity {
                                 .setSupported(true)
                                 .setServerClientId(getString(R.string.default_web_client_id))
                                 .setFilterByAuthorizedAccounts(true)
-                                .build()
-                )
+                                .build())
                 .build();
-
-        // Display the One Tap UI
         signInClient.beginSignIn(oneTapRequest)
-                .addOnSuccessListener(new OnSuccessListener<BeginSignInResult>() {
-                    @Override
-                    public void onSuccess(BeginSignInResult beginSignInResult) {
-                        launchSignIn(beginSignInResult.getPendingIntent());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        e.printStackTrace();
-                        FirebaseCrashlytics.getInstance().log("Sign-in launch failure: " + e.getMessage());
-                        oneTapSignIn();
-                    }
+                .addOnSuccessListener(result -> launchSignIn(result.getPendingIntent()))
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    FirebaseCrashlytics.getInstance().log("One-tap sign-in failed: " + e.getMessage());
                 });
     }
 
     private void launchSignIn(PendingIntent pendingIntent) {
         try {
-            IntentSenderRequest intentSenderRequest = new IntentSenderRequest.Builder(pendingIntent)
-                    .build();
-            signInLauncher.launch(intentSenderRequest);
+            IntentSenderRequest req = new IntentSenderRequest.Builder(pendingIntent).build();
+            signInLauncher.launch(req);
         } catch (Exception e) {
             e.printStackTrace();
             FirebaseCrashlytics.getInstance().log("Couldn't start Sign In: " + e.getMessage());
         }
     }
 
-    /**
-     * Internet connection status.
-     */
     private boolean getInternetStatus() {
         return connection.netCheck(this);
     }

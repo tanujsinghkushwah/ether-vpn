@@ -1,5 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- ───── Ether background palette (BG.midnight) ───── -->
+    <color name="ether_bg_0">#06080F</color>
+    <color name="ether_bg_1">#0B1020</color>
+    <color name="ether_bg_2">#0E1530</color>
+
+    <!-- ───── Surface layers ───── -->
+    <color name="ether_surface_low">#0AFFFFFF</color>   <!-- rgba(255,255,255,0.04) -->
+    <color name="ether_surface_med">#0FFFFFFF</color>   <!-- rgba(255,255,255,0.06) -->
+    <color name="ether_surface_high">#1AFFFFFF</color>  <!-- rgba(255,255,255,0.10) -->
+
+    <!-- ───── Borders ───── -->
+    <color name="ether_border_low">#0FFFFFFF</color>    <!-- rgba(255,255,255,0.06) -->
+    <color name="ether_border_med">#1AFFFFFF</color>    <!-- rgba(255,255,255,0.10) -->
+
+    <!-- ───── Text ───── -->
+    <color name="ether_text_primary">#E8ECF4</color>
+    <color name="ether_text_secondary">#A8B5C8</color>  <!-- ~0.65 alpha -->
+    <color name="ether_text_tertiary">#5C6B80</color>   <!-- ~0.40 alpha -->
+
+    <!-- ───── Ink aliases (convenience) ───── -->
+    <color name="ether_ink_0">#E8ECF4</color>   <!-- primary text -->
+    <color name="ether_ink_1">#A8B5C8</color>   <!-- secondary text -->
+    <color name="ether_ink_2">#5C6B80</color>   <!-- tertiary text -->
+    <color name="ether_ink_3">#2E3A4A</color>   <!-- placeholder / disabled -->
+
+    <!-- ───── Accent: Violet (oklch 0.70 0.20 280) ───── -->
+    <color name="ether_accent">#B98AFF</color>
+    <color name="ether_accent_dim">#7A56C8</color>      <!-- oklch 0.50 0.15 280 -->
+    <color name="ether_accent_glow">#26B98AFF</color>   <!-- 15% alpha glow -->
+    <color name="ether_accent_surface">#14B98AFF</color><!-- 8% alpha fill -->
+
+    <!-- ───── Status colors ───── -->
+    <color name="ether_status_protected">#4ADE80</color>
+    <color name="ether_status_protected_bg">#144ADE80</color>
+    <color name="ether_status_unprotected">#FF7A7A</color>
+    <color name="ether_status_unprotected_bg">#14FF7A7A</color>
+    <color name="ether_status_securing">#B98AFF</color>
+    <color name="ether_status_securing_bg">#14B98AFF</color>
+
+    <!-- ───── Orb / connected ring color ───── -->
+    <!-- Connected uses emerald: oklch(0.70 0.18 155) -->
+    <color name="ether_orb_connected">#4ADE80</color>
+    <!-- Connecting/idle uses violet accent -->
+    <color name="ether_orb_idle">#B98AFF</color>
+
+    <!-- ───── Legacy (keep for libs that reference them) ───── -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,10 +53,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimary">#2196f3</color>
-    <color name="colorPrimaryDark">#1d34da</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorWhite">#ffffff</color>
+    <color name="colorPrimary">#B98AFF</color>
+    <color name="colorPrimaryDark">#7A56C8</color>
+    <color name="colorAccent">#B98AFF</color>
+    <color name="colorWhite">#FFFFFFFF</color>
     <color name="rightNav">#032e63</color>
     <color name="gray">#323131</color>
 </resources>
