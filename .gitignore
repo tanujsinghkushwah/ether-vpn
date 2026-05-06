@@ -23,3 +23,5 @@ app/ether-vpn-ui-v2/
 # scripts: never commit service account keys
 scripts/credentials/*
 !scripts/credentials/.gitkeep
+
+app/src/main/assets/
