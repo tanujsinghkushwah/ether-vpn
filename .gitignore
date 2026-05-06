@@ -3,6 +3,10 @@
 local.properties
 .DS_Store
 
+# Firebase — contains live API key; distribute out-of-band (CI secrets / team vault)
+app/google-services.json
+GoogleService-Info.plist
+
 # IDE — all IntelliJ/Android Studio project metadata
 .idea/
 
