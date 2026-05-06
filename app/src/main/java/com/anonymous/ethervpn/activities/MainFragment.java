@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,6 @@ import com.anonymous.ethervpn.interfaces.ChangeServer;
 import com.anonymous.ethervpn.model.Server;
 import com.anonymous.ethervpn.services.TimerService;
 import com.anonymous.ethervpn.utilities.CheckInternetConnection;
-import com.anonymous.ethervpn.utilities.Constants;
 import com.anonymous.ethervpn.utilities.FlagResolver;
 import com.anonymous.ethervpn.utilities.SharedPreference;
 import com.anonymous.ethervpn.views.EtherOrbView;
@@ -37,17 +37,11 @@ import com.anonymous.ethervpn.databinding.FragmentMainBinding;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import de.blinkt.openvpn.api.APIVpnProfile;
 import de.blinkt.openvpn.api.IOpenVPNAPIService;
 import de.blinkt.openvpn.api.IOpenVPNStatusCallback;
 import de.blinkt.openvpn.core.VpnStatus;
@@ -114,10 +108,18 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.primaryCta) {
+            String label = binding.primaryCta.getText().toString();
+            if (label.equals(getString(R.string.cta_cancel))) {
+                // User hit Cancel during a connecting attempt — abort cleanly
+                if (mService != null) {
+                    try { mService.disconnect(); } catch (RemoteException ignored) {}
+                }
+                vpnStart = false;
+                status("connect");
+                return;
+            }
             if (vpnStart) {
-                boolean disconnectSwitch = binding.primaryCta.getText()
-                        .equals(getContext().getString(R.string.disconnect));
-                if (disconnectSwitch) {
+                if (label.equals(getString(R.string.disconnect))) {
                     confirmDisconnect();
                 } else {
                     resumeVpn();
@@ -204,38 +206,57 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         status("connect");
     }
 
-    private void startVpn() {
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
-        String assetsPathPrefix = Constants.assetsPathPrefix;
-        StorageReference ovpnRef = storageRef.child(assetsPathPrefix + server.getOvpn());
+    private InputStream openOvpnAsset() throws IOException {
+        String name = server.getOvpn();
         try {
-            File localFile = File.createTempFile("temp", ".ovpn");
-            ovpnRef.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                try {
-                    InputStream conf = new FileInputStream(localFile);
-                    InputStreamReader isr = new InputStreamReader(conf);
-                    BufferedReader br = new BufferedReader(isr);
-                    StringBuilder config = new StringBuilder();
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        config.append(line).append("\n");
-                    }
-                    APIVpnProfile profile = mService.addNewVPNProfile(server.getCountry(), false, config.toString());
-                    mService.startProfile(profile.mUUID);
-                    mService.startVPN(config.toString());
-                    auth_failed = false;
-                } catch (IOException | RemoteException e) {
-                    e.printStackTrace();
-                    logger.log("openvpn server connection failed: " + e.getMessage());
-                }
-            }).addOnFailureListener(exception -> {
-                exception.printStackTrace();
-                logger.log("Failed to download ovpn config: " + exception.getMessage());
-            });
+            return requireActivity().getAssets().open(name);
         } catch (IOException e) {
-            e.printStackTrace();
-            logger.log("openvpn server connection failed: " + e.getMessage());
+            // Fallback: try key-1.ovpn (e.g. "canada.ovpn" → "canada-1.ovpn")
+            String fallback = name.replace(".ovpn", "-1.ovpn");
+            return requireActivity().getAssets().open(fallback);
+        }
+    }
+
+    private void startVpn() {
+        try {
+            InputStream conf = openOvpnAsset();
+            InputStreamReader isr = new InputStreamReader(conf);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder config = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                String trimmed = line.trim();
+                // ics-openvpn requires generic "dev tun" — named tun interfaces don't exist on Android
+                if (trimmed.matches("dev\\s+tun\\d+")) {
+                    config.append("dev tun\n");
+                } else if (trimmed.equals("auth-user-pass")) {
+                    // Inject credentials inline so OpenVPN never shows the password dialog
+                    config.append("<auth-user-pass>\n");
+                    config.append(server.getOvpnUserName()).append("\n");
+                    config.append(server.getOvpnUserPassword()).append("\n");
+                    config.append("</auth-user-pass>\n");
+                } else if (trimmed.equals("fast-io")) {
+                    // fast-io is not supported on Android (TCP_NODELAY equivalent), skip
+                } else if (trimmed.startsWith("data-ciphers ") || trimmed.equals("data-ciphers")) {
+                    // ics-openvpn 0.7.x uses ncp-ciphers; data-ciphers may be unrecognised. Skip.
+                } else {
+                    config.append(line).append("\n");
+                }
+            }
+            String finalConfig = config.toString();
+            Log.d("EtherVPN", "Starting OpenVPN with config len=" + finalConfig.length()
+                    + " server=" + server.getCountry() + " ovpn=" + server.getOvpn());
+            mService.startVPN(finalConfig);
+            auth_failed = false;
+        } catch (IOException e) {
+            Log.e("EtherVPN", "startVpn IOException: " + e.getMessage(), e);
+            logger.log("openvpn server config read failed: " + e.getMessage());
+            status("connect");
+        } catch (RemoteException e) {
+            Log.e("EtherVPN", "startVpn RemoteException (config rejected by ics-openvpn): "
+                    + e.getMessage(), e);
+            logger.log("openvpn config rejected: " + e.getMessage());
+            status("connect");
         }
     }
 
@@ -294,7 +315,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                         getContext().getDrawable(R.drawable.bg_button_destructive));
                 binding.primaryCta.setTextColor(getContext().getColor(R.color.ether_status_unprotected));
                 binding.groupConnecting.setVisibility(View.GONE);
-                binding.statStrip.setVisibility(View.VISIBLE);
                 binding.serverCard.setVisibility(View.VISIBLE);
                 break;
 
@@ -311,7 +331,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                         getContext().getDrawable(R.drawable.bg_button_destructive));
                 binding.primaryCta.setTextColor(getContext().getColor(R.color.ether_status_unprotected));
                 binding.groupConnecting.setVisibility(View.VISIBLE);
-                binding.statStrip.setVisibility(View.GONE);
                 binding.serverCard.setVisibility(View.GONE);
                 break;
 
@@ -328,7 +347,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                         getContext().getDrawable(R.drawable.bg_button_primary));
                 binding.primaryCta.setTextColor(getContext().getColor(R.color.ether_bg_0));
                 binding.groupConnecting.setVisibility(View.GONE);
-                binding.statStrip.setVisibility(View.GONE);
                 binding.serverCard.setVisibility(View.VISIBLE);
                 break;
 
@@ -345,7 +363,6 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                         getContext().getDrawable(R.drawable.bg_button_primary));
                 binding.primaryCta.setTextColor(getContext().getColor(R.color.ether_bg_0));
                 binding.groupConnecting.setVisibility(View.GONE);
-                binding.statStrip.setVisibility(View.GONE);
                 binding.serverCard.setVisibility(View.VISIBLE);
                 break;
         }
@@ -371,9 +388,9 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     private TimerService.TimerServiceCallback mTimerServiceCallback = new TimerService.TimerServiceCallback() {
         @Override
         public void onDurationChanged(String duration) {
-            if (mBound && binding != null) {
-                binding.homeTitle.setText(duration);
-            }
+            Activity activity = getActivity();
+            if (activity == null || !mBound || binding == null) return;
+            activity.runOnUiThread(() -> binding.homeTitle.setText(duration));
         }
     };
 
@@ -415,36 +432,38 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     private IOpenVPNStatusCallback mCallback = new IOpenVPNStatusCallback.Stub() {
         @Override
         public void newStatus(String uuid, String state, String message, String level) throws RemoteException {
-            Message msg = Message.obtain(mHandler, MSG_UPDATE_STATE, state + "|" + message);
-
-            if (state.equals("AUTH_FAILED") || state.equals("CONNECTRETRY")) {
-                auth_failed = true;
-            }
-            if (!auth_failed) {
-                try {
-                    setStatus(state);
-                } catch (Exception e) {
-                    logger.log("openvpn status callback failed: " + e.getMessage());
-                    e.printStackTrace();
+            Activity activity = getActivity();
+            if (activity == null) return;
+            activity.runOnUiThread(() -> {
+                if (state.equals("AUTH_FAILED") || state.equals("CONNECTRETRY")) {
+                    auth_failed = true;
                 }
-                msg.sendToTarget();
-            }
-
-            if (auth_failed) {
-                setStatus("AUTH_FAILED");
-            }
-            if (state.equals("CONNECTED")) {
-                auth_failed = false;
-                if (ActivityCompat.checkSelfPermission(getContext(),
-                        android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
-                            NOTIFICATIONS_PERMISSION_REQUEST_CODE);
+                if (!auth_failed) {
+                    try {
+                        setStatus(state);
+                    } catch (Exception e) {
+                        logger.log("openvpn status callback failed: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                    Message msg = Message.obtain(mHandler, MSG_UPDATE_STATE, state + "|" + message);
+                    msg.sendToTarget();
                 }
-                bindTimerService();
-            } else {
-                unbindTimerService();
-            }
+                if (auth_failed) {
+                    setStatus("AUTH_FAILED");
+                }
+                if (state.equals("CONNECTED")) {
+                    auth_failed = false;
+                    if (ActivityCompat.checkSelfPermission(getContext(),
+                            android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(getActivity(),
+                                new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+                                NOTIFICATIONS_PERMISSION_REQUEST_CODE);
+                    }
+                    bindTimerService();
+                } else {
+                    unbindTimerService();
+                }
+            });
         }
     };
 

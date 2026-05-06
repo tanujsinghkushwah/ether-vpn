@@ -91,10 +91,10 @@
             android:background="@drawable/bg_hero_glow"
             android:layout_marginBottom="@dimen/ether_space_28">
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_ether_mark"
+                android:src="@drawable/ic_launcher_foreground"
                 android:contentDescription="@null" />
         </FrameLayout>
 
@@ -149,17 +149,6 @@
             android:textAppearance="@style/TextAppearance.Ether.Body"
             android:textStyle="bold"
             android:drawablePadding="12dp"
-            android:layout_marginBottom="@dimen/ether_space_12" />
-
-        <!-- Continue anonymously -->
-        <Button
-            android:id="@+id/btnAnonymous"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ether_btn_height"
-            android:text="@string/login_anonymous"
-            android:background="@drawable/bg_button_secondary"
-            android:textColor="@color/ether_text_primary"
-            android:textAppearance="@style/TextAppearance.Ether.Body"
             android:layout_marginBottom="@dimen/ether_space_16" />
 
         <!-- Terms -->

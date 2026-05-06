@@ -5,8 +5,10 @@ plugins {
 }
 
 android {
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
+        buildConfig = true
+        aidl = true
     }
     sourceSets {
         main {

@@ -144,62 +144,6 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <!-- Auto-select banner -->
-    <LinearLayout
-        android:id="@+id/autoSelectBanner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/bg_card_surface"
-        android:gravity="center_vertical"
-        android:paddingStart="@dimen/ether_space_16"
-        android:paddingEnd="@dimen/ether_space_16"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:layout_marginStart="@dimen/ether_space_16"
-        android:layout_marginEnd="@dimen/ether_space_16"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/tabScroll"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_bolt"
-            android:layout_marginEnd="12dp" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/auto_select_title"
-                android:textAppearance="@style/TextAppearance.Ether.Body"
-                android:textStyle="bold"
-                android:textColor="@color/ether_ink_0" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/auto_select_desc"
-                android:textAppearance="@style/TextAppearance.Ether.Caption"
-                android:textColor="@color/ether_ink_2" />
-
-        </LinearLayout>
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/autoSelectSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false" />
-
-    </LinearLayout>
-
     <!-- Server list -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/serverListRv2"
@@ -207,7 +151,7 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/ether_space_16"
-        app:layout_constraintTop_toBottomOf="@id/autoSelectBanner"
+        app:layout_constraintTop_toBottomOf="@id/tabScroll"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

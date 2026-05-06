@@ -33,7 +33,6 @@
     <dimen name="ether_orb_size">250dp</dimen>
     <dimen name="ether_flag_size">28dp</dimen>
     <dimen name="ether_server_card_height">72dp</dimen>
-    <dimen name="ether_stat_strip_height">64dp</dimen>
     <dimen name="ether_load_bar_height">3dp</dimen>
 
     <!-- ───── Typography ───── -->

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/ether_bg_1"
+    android:fitsSystemWindows="true"
     android:paddingTop="24dp">
 
     <!-- Drawer header -->

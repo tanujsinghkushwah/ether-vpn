@@ -21,56 +21,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- ── Top chrome ── -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/homeChrome"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ether_chrome_height"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageButton
-                android:id="@+id/chromeLeft"
-                android:layout_width="@dimen/ether_icon_btn_size"
-                android:layout_height="@dimen/ether_icon_btn_size"
-                android:background="@drawable/bg_icon_button"
-                android:contentDescription="@string/cd_menu"
-                android:padding="8dp"
-                android:src="@drawable/ic_menu"
-                android:scaleType="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="@dimen/ether_space_16" />
-
-            <TextView
-                android:id="@+id/chromeTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ether_app_title"
-                android:textAppearance="@style/TextAppearance.Ether.ChromeTitle"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/chromeRight"
-                android:layout_width="@dimen/ether_icon_btn_size"
-                android:layout_height="@dimen/ether_icon_btn_size"
-                android:background="@drawable/bg_icon_button"
-                android:contentDescription="@string/cd_locations"
-                android:padding="8dp"
-                android:src="@drawable/ic_globe"
-                android:scaleType="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginEnd="@dimen/ether_space_16" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <!-- ── Status chip ── -->
         <LinearLayout
             android:id="@+id/statusChipContainer"
@@ -84,7 +34,7 @@
             android:layout_marginTop="@dimen/ether_space_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/homeChrome">
+            app:layout_constraintTop_toTopOf="parent">
 
             <View
                 android:id="@+id/statusDot"
@@ -173,57 +123,6 @@
                 android:textAppearance="@style/TextAppearance.Ether.BodySmall"
                 android:textColor="@color/ether_text_tertiary"
                 android:text="Verifying server" />
-        </LinearLayout>
-
-        <!-- ── Stat strip (visible only when connected) ── -->
-        <LinearLayout
-            android:id="@+id/statStrip"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/ether_stat_strip_height"
-            android:background="@drawable/bg_card_surface"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:visibility="gone"
-            android:layout_marginStart="@dimen/ether_space_16"
-            android:layout_marginEnd="@dimen/ether_space_16"
-            android:layout_marginTop="@dimen/ether_space_16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/orbView">
-
-            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-                <TextView android:id="@+id/statDown" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Ether.Numeric" android:text="—" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Ether.Label" android:text="DOWN" />
-            </LinearLayout>
-
-            <View android:layout_width="1dp" android:layout_height="24dp"
-                android:background="@color/ether_border_low" />
-
-            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-                <TextView android:id="@+id/statUp" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Ether.Numeric" android:text="—" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Ether.Label" android:text="UP" />
-            </LinearLayout>
-
-            <View android:layout_width="1dp" android:layout_height="24dp"
-                android:background="@color/ether_border_low" />
-
-            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-                <TextView android:id="@+id/statPing" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Ether.Numeric" android:text="—" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Ether.Label" android:text="PING" />
-            </LinearLayout>
-
         </LinearLayout>
 
         <!-- ── Bottom container: server card + CTA ── -->

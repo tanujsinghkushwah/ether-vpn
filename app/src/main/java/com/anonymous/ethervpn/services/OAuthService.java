@@ -40,7 +40,6 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics;
 public class OAuthService extends AppCompatActivity {
 
     private Button btnGoogle;
-    private Button btnAnonymous;
 
     private CheckInternetConnection connection;
     private SignInClient signInClient;
@@ -65,7 +64,6 @@ public class OAuthService extends AppCompatActivity {
         firstRun = getIntent().getBooleanExtra("first_run", false);
 
         btnGoogle = findViewById(R.id.btnGoogle);
-        btnAnonymous = findViewById(R.id.btnAnonymous);
         connection = new CheckInternetConnection();
 
         signInClient = Identity.getSignInClient(this);
@@ -79,8 +77,6 @@ public class OAuthService extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
         });
-
-        btnAnonymous.setOnClickListener(v -> signInAnonymously());
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
@@ -101,22 +97,6 @@ public class OAuthService extends AppCompatActivity {
         editor.apply();
         startActivity(new Intent(this, VpnDock.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         finish();
-    }
-
-    private void signInAnonymously() {
-        firebaseAuth.signInAnonymously()
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "signInAnonymously:success");
-                        navigateToVpnDock();
-                    } else {
-                        Log.w(TAG, "signInAnonymously:failure", task.getException());
-                        FirebaseCrashlytics.getInstance().log("Anonymous sign-in failed: "
-                                + task.getException().getMessage());
-                        Toast.makeText(this, "Anonymous sign-in failed. Try again.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     private void handleSignInResult(Intent data) {

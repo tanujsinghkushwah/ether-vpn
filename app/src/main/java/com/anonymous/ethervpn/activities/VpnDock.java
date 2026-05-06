@@ -1,7 +1,6 @@
 package com.anonymous.ethervpn.activities;
 
 import static com.anonymous.ethervpn.utilities.Constants.APP_PREFS_NAME;
-import static com.anonymous.ethervpn.utilities.Utils.serverComparator;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -12,11 +11,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -36,19 +33,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class VpnDock extends AppCompatActivity implements NavItemClickListener {
 
     private FirebaseAuth firebaseAuth;
-    private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private GoogleSignInClient googleSignInClient;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -72,19 +63,19 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
 
         initializeAll();
 
-        // Left button: popup menu (About / Logout)
+        // Left button: open/close the end-gravity server drawer
         ImageButton navbarLeft = findViewById(R.id.navbar_left);
-        PopupMenu popupMenu = new PopupMenu(this, navbarLeft);
+        navbarLeft.setOnClickListener(v -> toggleDrawer());
+
+        // Right button: popup menu (About / Logout)
+        ImageButton navbarRight = findViewById(R.id.navbar_right);
+        PopupMenu popupMenu = new PopupMenu(this, navbarRight);
         popupMenu.getMenuInflater().inflate(R.menu.nav_menu, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(item -> {
             onMenuOptionSelected(item);
             return true;
         });
-        navbarLeft.setOnClickListener(v -> popupMenu.show());
-
-        // Right button: open/close the end-gravity server drawer
-        ImageButton navbarRight = findViewById(R.id.navbar_right);
-        navbarRight.setOnClickListener(v -> toggleDrawer());
+        navbarRight.setOnClickListener(v -> popupMenu.show());
 
         // Also wire the globe icon inside the fragment's own chrome (chromeRight)
         // That is handled inside MainFragment via openServerList()
@@ -140,44 +131,23 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
     }
 
     private void setServerList() {
-        ArrayList<Server> servers = new ArrayList<>();
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfig rc = FirebaseRemoteConfig.getInstance();
+        String username = rc.getString("username");
+        String password = rc.getString("password");
+        if (username.isEmpty()) username = Constants.vpnUserName;
+        if (password.isEmpty()) password = Constants.vpnPassword;
 
-        String[] countryArray = mFirebaseRemoteConfig.getString("countries")
-                .replaceAll("[{}\"]", "").split(", ");
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
-        AtomicInteger downloadCounter = new AtomicInteger(countryArray.length);
-        String imagesPathPrefix = Constants.imagesPathPrefix;
-
-        for (String country : countryArray) {
-            StorageReference flagRef = storageRef.child(imagesPathPrefix + country + ".png");
-            try {
-                flagRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                    servers.add(new Server(country, uri.toString(),
-                            country + ".ovpn", Constants.vpnUserName, Constants.vpnPassword));
-                    if (downloadCounter.decrementAndGet() == 0) {
-                        Collections.sort(servers, serverComparator);
-                        serverLists = servers;
-                        serverListRVAdapter = new ServerListRVAdapter(serverLists, this);
-                        serverListRv.setAdapter(serverListRVAdapter);
-                    }
-                }).addOnFailureListener(e -> {
-                    e.printStackTrace();
-                    FirebaseCrashlytics.getInstance().log("Failed to download image: " + e.getMessage());
-                    if (downloadCounter.decrementAndGet() == 0) {
-                        Collections.sort(servers, serverComparator);
-                        serverLists = servers;
-                        serverListRVAdapter = new ServerListRVAdapter(serverLists, this);
-                        serverListRv.setAdapter(serverListRVAdapter);
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-                FirebaseCrashlytics.getInstance().log("Failed to fetch country data: " + e.getMessage());
-            }
+        String raw = rc.getString("countries");
+        String[] keys = raw.replaceAll("[{}\"\\s]", "").split(",");
+        serverLists = new ArrayList<>();
+        for (String key : keys) {
+            if (key.isEmpty()) continue;
+            serverLists.add(new Server(
+                    ServerListActivity.displayName(key), null, key + ".ovpn", username, password));
         }
+        ServerListActivity.disambiguateNames(serverLists);
+        serverListRVAdapter = new ServerListRVAdapter(serverLists, this);
+        serverListRv.setAdapter(serverListRVAdapter);
     }
 
     @Override

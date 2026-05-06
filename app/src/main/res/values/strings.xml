@@ -51,7 +51,6 @@
     <string name="login_headline">Sign in to get\nprotected.</string>
     <string name="login_subtitle">Your identity stays yours — we only ask to remember your session.</string>
     <string name="login_google">Continue with Google</string>
-    <string name="login_anonymous">Continue anonymously</string>
     <string name="login_terms">By continuing you agree to our Terms of Service and Privacy Policy.</string>
 
     <!-- About / donation addresses -->

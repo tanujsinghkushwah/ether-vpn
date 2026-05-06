@@ -59,10 +59,10 @@
                 android:background="@drawable/bg_hero_glow">
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_ether_mark"
+                    android:src="@drawable/ic_launcher_foreground"
                     android:contentDescription="@null" />
 
             </FrameLayout>

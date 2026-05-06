@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.anonymous.ethervpn.R;
 import com.anonymous.ethervpn.model.Server;
 import com.anonymous.ethervpn.utilities.FlagResolver;
+import com.anonymous.ethervpn.utilities.SharedPreference;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -118,6 +119,7 @@ public class ServerListV2Adapter extends RecyclerView.Adapter<ServerListV2Adapte
                 ? R.drawable.ic_star_filled : R.drawable.ic_star);
         holder.favBtn.setOnClickListener(v -> {
             server.setFavorite(!server.isFavorite());
+            new SharedPreference(context).setFavorite(server.getOvpn(), server.isFavorite());
             notifyItemChanged(holder.getAdapterPosition());
         });
 

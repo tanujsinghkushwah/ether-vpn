@@ -17,20 +17,22 @@ import com.anonymous.ethervpn.R;
 import com.anonymous.ethervpn.adapter.ServerListV2Adapter;
 import com.anonymous.ethervpn.model.Server;
 import com.anonymous.ethervpn.utilities.Constants;
-import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.anonymous.ethervpn.utilities.SharedPreference;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static com.anonymous.ethervpn.utilities.Constants.APP_PREFS_NAME;
 
 public class ServerListActivity extends AppCompatActivity {
 
-    private static final String PREF_AUTO_SELECT = "pref_auto_select";
     private static final String PREF_SELECTED_INDEX = "pref_selected_server_index";
 
     private ServerListV2Adapter adapter;
@@ -49,6 +51,10 @@ public class ServerListActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
 
         loadServersFromRemoteConfig();
+        disambiguateNames();
+
+        Set<String> favs = new SharedPreference(this).getFavorites();
+        for (Server s : serverList) s.setFavorite(favs.contains(s.getOvpn()));
 
         adapter = new ServerListV2Adapter(this, serverList);
         adapter.setSelectedIndex(prefs.getInt(PREF_SELECTED_INDEX, 0));
@@ -74,12 +80,6 @@ public class ServerListActivity extends AppCompatActivity {
             }
             @Override public void afterTextChanged(Editable s) {}
         });
-
-        // Auto-select toggle
-        SwitchMaterial autoSwitch = findViewById(R.id.autoSelectSwitch);
-        autoSwitch.setChecked(prefs.getBoolean(PREF_AUTO_SELECT, false));
-        autoSwitch.setOnCheckedChangeListener((btn, checked) ->
-                prefs.edit().putBoolean(PREF_AUTO_SELECT, checked).apply());
 
         // Tabs
         tabAll = findViewById(R.id.tabAll);
@@ -121,25 +121,78 @@ public class ServerListActivity extends AppCompatActivity {
 
     private void loadServersFromRemoteConfig() {
         serverList.clear();
+        FirebaseRemoteConfig rc = FirebaseRemoteConfig.getInstance();
+        String username = rc.getString("username");
+        String password = rc.getString("password");
+        if (username.isEmpty()) username = Constants.vpnUserName;
+        if (password.isEmpty()) password = Constants.vpnPassword;
+
+        String raw = rc.getString("countries");
         try {
-            String json = FirebaseRemoteConfig.getInstance().getString("countries");
-            JSONArray array = new JSONArray(json);
+            // Try rich JSON array format first (future schema)
+            JSONArray array = new JSONArray(raw);
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
+                String u = obj.optString("username", "");
+                String p = obj.optString("password", "");
                 Server s = new Server(
                         obj.optString("country", ""),
                         obj.optString("flag", ""),
                         obj.optString("ovpn", ""),
-                        obj.optString("username", ""),
-                        obj.optString("password", "")
-                );
+                        u.isEmpty() ? username : u,
+                        p.isEmpty() ? password : p);
                 s.setIsoCode(obj.optString("iso", ""));
                 s.setCity(obj.optString("city", ""));
                 s.setPremium(obj.optBoolean("premium", false));
                 serverList.add(s);
             }
         } catch (Exception e) {
-            // Remote config not yet populated; list stays empty
+            // Fallback: simple list format — {"usa-1", "uk-2", "canada", ...}
+            String[] keys = raw.replaceAll("[{}\"\\s]", "").split(",");
+            for (String key : keys) {
+                if (key.isEmpty()) continue;
+                serverList.add(new Server(
+                        displayName(key), "", key + ".ovpn", username, password));
+            }
+        }
+    }
+
+    private void disambiguateNames() {
+        disambiguateNames(serverList);
+    }
+
+    static void disambiguateNames(List<Server> list) {
+        Map<String, Integer> counts = new HashMap<>();
+        for (Server s : list) {
+            String name = s.getCountry();
+            counts.put(name, counts.containsKey(name) ? counts.get(name) + 1 : 1);
+        }
+        Map<String, Integer> seen = new HashMap<>();
+        for (Server s : list) {
+            String name = s.getCountry();
+            if (counts.get(name) > 1) {
+                int n = seen.containsKey(name) ? seen.get(name) + 1 : 1;
+                seen.put(name, n);
+                s.setCountry(name + "-" + n);
+            }
+        }
+    }
+
+    static String displayName(String key) {
+        if (key.startsWith("usa"))                 return "United States";
+        if (key.startsWith("uk") || key.startsWith("gb")) return "United Kingdom";
+        switch (key) {
+            case "canada":      return "Canada";
+            case "france":      return "France";
+            case "germany":     return "Germany";
+            case "japan":       return "Japan";
+            case "netherlands": return "Netherlands";
+            case "singapore":   return "Singapore";
+            case "sweden":      return "Sweden";
+            case "switzerland": return "Switzerland";
+            case "australia":   return "Australia";
+            case "brazil":      return "Brazil";
+            default:            return key;
         }
     }
 }
