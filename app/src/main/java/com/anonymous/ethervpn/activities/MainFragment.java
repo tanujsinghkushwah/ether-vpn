@@ -35,9 +35,12 @@ import com.bumptech.glide.Glide;
 import com.anonymous.ethervpn.R;
 import com.anonymous.ethervpn.databinding.FragmentMainBinding;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.anonymous.ethervpn.utilities.OvpnSyncManager;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -206,20 +209,39 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         status("connect");
     }
 
-    private InputStream openOvpnAsset() throws IOException {
-        String name = server.getOvpn();
-        try {
-            return requireActivity().getAssets().open(name);
-        } catch (IOException e) {
-            // Fallback: try key-1.ovpn (e.g. "canada.ovpn" → "canada-1.ovpn")
-            String fallback = name.replace(".ovpn", "-1.ovpn");
-            return requireActivity().getAssets().open(fallback);
-        }
+    private InputStream openOvpnConfig() throws IOException {
+        String key = server.getOvpn().replace(".ovpn", "");
+        File f = OvpnSyncManager.localFile(requireContext(), key);
+        if (f.exists()) return new FileInputStream(f);
+        // Fallback: try key-1.ovpn (e.g. server configured as "canada" → local file "canada-1.ovpn")
+        File fallback = OvpnSyncManager.localFile(requireContext(), key + "-1");
+        if (fallback.exists()) return new FileInputStream(fallback);
+        throw new IOException("ovpn not cached: " + server.getOvpn());
     }
 
     private void startVpn() {
+        String key = server.getOvpn().replace(".ovpn", "");
+        if (!OvpnSyncManager.isCached(requireContext(), key)) {
+            OvpnSyncManager.ensureFile(requireContext(), key, new OvpnSyncManager.SyncCallback() {
+                @Override public void onSuccess() {
+                    if (isAdded()) requireActivity().runOnUiThread(MainFragment.this::launchVpn);
+                }
+                @Override public void onFailure(Exception e) {
+                    if (isAdded()) requireActivity().runOnUiThread(() -> {
+                        logger.log("OVPN fetch failed: " + e.getMessage());
+                        Log.e("EtherVPN", "OVPN fetch failed for " + key, e);
+                        status("connect");
+                    });
+                }
+            });
+            return;
+        }
+        launchVpn();
+    }
+
+    private void launchVpn() {
         try {
-            InputStream conf = openOvpnAsset();
+            InputStream conf = openOvpnConfig();
             InputStreamReader isr = new InputStreamReader(conf);
             BufferedReader br = new BufferedReader(isr);
             StringBuilder config = new StringBuilder();
