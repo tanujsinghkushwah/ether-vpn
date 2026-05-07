@@ -103,14 +103,15 @@ public class ServerListV2Adapter extends RecyclerView.Adapter<ServerListV2Adapte
 
         int flagRes = FlagResolver.resolve(server.getIsoCode().isEmpty()
                 ? server.getCountry() : server.getIsoCode());
+        if (flagRes == 0) flagRes = FlagResolver.resolve(server.getOvpn());
         if (flagRes != 0) {
             holder.flag.setImageResource(flagRes);
         } else if (server.getFlagUrl() != null && !server.getFlagUrl().isEmpty()) {
             Glide.with(context).load(server.getFlagUrl())
-                    .placeholder(R.drawable.flag_uk)
+                    .placeholder(R.drawable.ic_globe)
                     .into(holder.flag);
         } else {
-            holder.flag.setImageResource(R.drawable.flag_uk);
+            holder.flag.setImageResource(R.drawable.ic_globe);
         }
 
         holder.premiumBadge.setVisibility(server.isPremium() ? View.VISIBLE : View.GONE);
