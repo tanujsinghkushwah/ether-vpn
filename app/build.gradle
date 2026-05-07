@@ -47,8 +47,8 @@ android {
         applicationId "com.anonymous.ethervpn"
         minSdk 23
         targetSdk 35
-        versionCode 17
-        versionName '17.0'
+        versionCode 20
+        versionName '20.0'
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -60,6 +60,12 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+        }
+    }
+
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = false
         }
     }
 
@@ -83,7 +89,6 @@ dependencies {
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.fragment:fragment:1.6.2'
     implementation 'com.squareup.retrofit2:retrofit:2.7.0'
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.28'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-database'
     implementation("com.google.firebase:firebase-storage")
