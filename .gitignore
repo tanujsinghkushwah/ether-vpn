@@ -27,3 +27,4 @@ scripts/credentials/*
 app/src/main/assets/
 
 rtdb_import.json
+debug.keystore

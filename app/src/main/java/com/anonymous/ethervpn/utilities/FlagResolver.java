@@ -45,6 +45,7 @@ public class FlagResolver {
         // Common lowercase variants
         MAP.put("uk", R.drawable.flag_uk);
         MAP.put("us", R.drawable.flag_us);
+        MAP.put("usa", R.drawable.flag_us);
         MAP.put("de", R.drawable.flag_de);
         MAP.put("fr", R.drawable.flag_fr);
         MAP.put("jp", R.drawable.flag_jp);
@@ -55,18 +56,53 @@ public class FlagResolver {
         MAP.put("ch", R.drawable.flag_ch);
         MAP.put("au", R.drawable.flag_au);
         MAP.put("br", R.drawable.flag_br);
+        // Full lowercase country names (matches raw OVPN keys before display formatting)
+        MAP.put("germany",     R.drawable.flag_de);
+        MAP.put("france",      R.drawable.flag_fr);
+        MAP.put("canada",      R.drawable.flag_ca);
+        MAP.put("japan",       R.drawable.flag_jp);
+        MAP.put("netherlands", R.drawable.flag_nl);
+        MAP.put("singapore",   R.drawable.flag_sg);
+        MAP.put("sweden",      R.drawable.flag_se);
+        MAP.put("switzerland", R.drawable.flag_ch);
+        MAP.put("australia",   R.drawable.flag_au);
+        MAP.put("brazil",      R.drawable.flag_br);
     }
 
     /** @return drawable resource id, or 0 if no match. */
     public static int resolve(String countryNameOrCode) {
         if (countryNameOrCode == null) return 0;
-        Integer id = MAP.get(countryNameOrCode.trim());
+        String name = countryNameOrCode.trim();
+        Integer id = MAP.get(name);
         if (id != null) return id;
-        // Last-resort: try first two chars as ISO-2
-        if (countryNameOrCode.length() >= 2) {
-            id = MAP.get(countryNameOrCode.substring(0, 2).toUpperCase());
+
+        // Strip trailing numeric suffix (e.g. "United States-1" → "United States",
+        // "germany-1" → "germany"). Disambiguation appends -N to duplicates.
+        String stripped = stripNumberSuffix(name);
+        if (!stripped.equals(name)) {
+            id = MAP.get(stripped);
             if (id != null) return id;
         }
+
+        // Try ISO-2 from the first two letters
+        if (stripped.length() >= 2) {
+            id = MAP.get(stripped.substring(0, 2).toUpperCase());
+            if (id != null) return id;
+        }
+
+        // Try lowercase form (handles raw keys like "germany", "japan")
+        id = MAP.get(stripped.toLowerCase());
+        if (id != null) return id;
+
         return 0;
+    }
+
+    private static String stripNumberSuffix(String s) {
+        int dash = s.lastIndexOf('-');
+        if (dash > 0 && dash < s.length() - 1) {
+            String suffix = s.substring(dash + 1);
+            if (suffix.matches("\\d+")) return s.substring(0, dash);
+        }
+        return s;
     }
 }

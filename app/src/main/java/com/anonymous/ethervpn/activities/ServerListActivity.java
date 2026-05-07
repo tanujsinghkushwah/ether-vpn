@@ -179,9 +179,12 @@ public class ServerListActivity extends AppCompatActivity {
     }
 
     static String displayName(String key) {
-        if (key.startsWith("usa"))                 return "United States";
-        if (key.startsWith("uk") || key.startsWith("gb")) return "United Kingdom";
-        switch (key) {
+        // Strip trailing numeric suffix so "canada-1" and "canada" share a base name
+        // (disambiguateNames will re-apply the suffix when there are duplicates).
+        String base = stripNumberSuffix(key);
+        if (base.startsWith("usa"))                          return "United States";
+        if (base.startsWith("uk") || base.startsWith("gb"))  return "United Kingdom";
+        switch (base) {
             case "canada":      return "Canada";
             case "france":      return "France";
             case "germany":     return "Germany";
@@ -192,7 +195,17 @@ public class ServerListActivity extends AppCompatActivity {
             case "switzerland": return "Switzerland";
             case "australia":   return "Australia";
             case "brazil":      return "Brazil";
-            default:            return key;
+            default:            return base.isEmpty() ? key
+                                       : Character.toUpperCase(base.charAt(0)) + base.substring(1);
         }
+    }
+
+    private static String stripNumberSuffix(String s) {
+        int dash = s.lastIndexOf('-');
+        if (dash > 0 && dash < s.length() - 1) {
+            String suffix = s.substring(dash + 1);
+            if (suffix.matches("\\d+")) return s.substring(0, dash);
+        }
+        return s;
     }
 }

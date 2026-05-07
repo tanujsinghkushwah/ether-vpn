@@ -45,15 +45,17 @@ public class ServerListRVAdapter extends RecyclerView.Adapter<ServerListRVAdapte
         holder.serverCountry.setText(server.getCountry());
 
         int flagResId = FlagResolver.resolve(server.getCountry());
+        if (flagResId == 0) flagResId = FlagResolver.resolve(server.getOvpn());
         if (flagResId != 0) {
             holder.serverIcon.setImageResource(flagResId);
-        } else if (server.getFlagUrl() != null) {
+        } else if (server.getFlagUrl() != null && !server.getFlagUrl().isEmpty()) {
             Glide.with(mContext)
                     .load(server.getFlagUrl())
+                    .placeholder(R.drawable.ic_globe)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.serverIcon);
         } else {
-            holder.serverIcon.setImageResource(R.drawable.flag_uk);
+            holder.serverIcon.setImageResource(R.drawable.ic_globe);
         }
 
         holder.serverItemLayout.setOnClickListener(v -> listener.clickedItem(position));
