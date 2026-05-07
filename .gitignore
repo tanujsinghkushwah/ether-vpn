@@ -25,3 +25,5 @@ scripts/credentials/*
 !scripts/credentials/.gitkeep
 
 app/src/main/assets/
+
+rtdb_import.json

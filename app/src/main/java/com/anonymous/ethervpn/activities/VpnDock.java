@@ -30,11 +30,15 @@ import com.anonymous.ethervpn.model.Server;
 import com.anonymous.ethervpn.services.OAuthService;
 import com.anonymous.ethervpn.R;
 import com.anonymous.ethervpn.utilities.Constants;
+import com.anonymous.ethervpn.utilities.OvpnSyncManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+
+import java.util.List;
 
 import java.util.ArrayList;
 
@@ -63,6 +67,7 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
         googleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN);
 
         initializeAll();
+        syncOvpnFiles();
 
         // Left button: open/close the end-gravity server drawer
         ImageButton navbarLeft = findViewById(R.id.navbar_left);
@@ -99,6 +104,17 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
             nm.createNotificationChannel(chan);
             nm.createNotificationChannel(chanBg);
         }
+    }
+
+    private void syncOvpnFiles() {
+        FirebaseRemoteConfig rc = FirebaseRemoteConfig.getInstance();
+        List<String> keys = OvpnSyncManager.parseCountries(rc.getString("countries"));
+        OvpnSyncManager.sync(this, keys, new OvpnSyncManager.SyncCallback() {
+            @Override public void onSuccess() {}
+            @Override public void onFailure(Exception e) {
+                FirebaseCrashlytics.getInstance().log("Background OVPN sync failed: " + e.getMessage());
+            }
+        });
     }
 
     private void initializeAll() {
