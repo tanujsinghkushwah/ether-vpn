@@ -22,9 +22,9 @@ openvpn/build/
 # UI prototype working directory
 app/ether-vpn-ui-v2/
 
-# scripts: never commit service account keys
-scripts/credentials/*
-!scripts/credentials/.gitkeep
+# Local tooling and generated media — not part of the app source
+scripts/
+media-assets/
 
 app/src/main/assets/
 
