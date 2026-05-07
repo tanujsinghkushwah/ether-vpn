@@ -17,7 +17,7 @@ android {
     buildToolsVersion = "34.0.0"
 
     // Also update runcoverity.sh
-    ndkVersion = "25.1.8937393"
+    ndkVersion = "27.2.12479018"
 
     defaultConfig {
         minSdk = 21

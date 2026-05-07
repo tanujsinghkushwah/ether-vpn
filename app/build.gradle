@@ -40,13 +40,13 @@ android {
             storePassword 'android'
         }
     }
-    compileSdk 34
-    buildToolsVersion "34.0.0"
+    compileSdk 35
+    buildToolsVersion "35.0.0"
 
     defaultConfig {
         applicationId "com.anonymous.ethervpn"
         minSdk 23
-        targetSdk 34
+        targetSdk 35
         versionCode 17
         versionName '17.0'
         multiDexEnabled true
