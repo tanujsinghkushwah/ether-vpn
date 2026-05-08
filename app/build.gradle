@@ -47,8 +47,8 @@ android {
         applicationId "com.anonymous.ethervpn"
         minSdk 23
         targetSdk 35
-        versionCode 20
-        versionName '20.0'
+        versionCode 21
+        versionName '21.0'
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -65,7 +65,12 @@ android {
 
     packagingOptions {
         jniLibs {
-            useLegacyPackaging = false
+            // ics-openvpn launches libovpnexec.so via Runtime.exec(), which
+            // requires the binary to exist on disk. With useLegacyPackaging=false
+            // + extractNativeLibs="false", Play Store delivers an APK whose
+            // lib/arm64/ directory is empty, so the openvpn process exits with
+            // ENOENT and the OpenVPNService crashes with CancellationException.
+            useLegacyPackaging = true
         }
     }
 

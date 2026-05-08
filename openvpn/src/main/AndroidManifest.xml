@@ -30,7 +30,7 @@
         android:name=".core.ICSOpenVPNApplication"
         android:allowBackup="true"
         android:appCategory="productivity"
-        android:extractNativeLibs="false"
+        android:extractNativeLibs="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app"
