@@ -2,7 +2,13 @@
 <defaults>
   <entry>
     <key>countries</key>
-    <value>{"usa", "uk", "canada", "france", "germany", "poland"}</value>
+    <!--
+      Supports three formats — parser picks the right one:
+        * Map (preferred, per-key flag): {"usa-1": true, "usa-2": false, "uk-2": true}
+        * Array of objects: [{"ovpn":"usa-1","enabled":true}, ...]
+        * Legacy set (all enabled): {"usa-1", "uk-2", "canada-1"}
+    -->
+    <value>{"usa-1": true, "usa-2": true, "uk-1": true, "uk-2": true, "canada-1": true, "france-1": true, "germany-1": true}</value>
   </entry>
   <entry>
     <key>username</key>

@@ -17,6 +17,7 @@ import com.anonymous.ethervpn.R;
 import com.anonymous.ethervpn.adapter.ServerListV2Adapter;
 import com.anonymous.ethervpn.model.Server;
 import com.anonymous.ethervpn.utilities.Constants;
+import com.anonymous.ethervpn.utilities.OvpnSyncManager;
 import com.anonymous.ethervpn.utilities.SharedPreference;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
@@ -57,7 +58,9 @@ public class ServerListActivity extends AppCompatActivity {
         for (Server s : serverList) s.setFavorite(favs.contains(s.getOvpn()));
 
         adapter = new ServerListV2Adapter(this, serverList);
-        adapter.setSelectedIndex(prefs.getInt(PREF_SELECTED_INDEX, 0));
+        int savedIndex = prefs.getInt(PREF_SELECTED_INDEX, 0);
+        if (savedIndex < 0 || savedIndex >= serverList.size()) savedIndex = 0;
+        adapter.setSelectedIndex(savedIndex);
         adapter.setOnServerSelectedListener((index, server) -> {
             prefs.edit().putInt(PREF_SELECTED_INDEX, index).apply();
             Intent result = new Intent();
@@ -129,10 +132,11 @@ public class ServerListActivity extends AppCompatActivity {
 
         String raw = rc.getString("countries");
         try {
-            // Try rich JSON array format first (future schema)
+            // Rich JSON array format with per-row metadata + enabled flag.
             JSONArray array = new JSONArray(raw);
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
+                if (!obj.optBoolean("enabled", true)) continue;
                 String u = obj.optString("username", "");
                 String p = obj.optString("password", "");
                 Server s = new Server(
@@ -146,14 +150,14 @@ public class ServerListActivity extends AppCompatActivity {
                 s.setPremium(obj.optBoolean("premium", false));
                 serverList.add(s);
             }
-        } catch (Exception e) {
-            // Fallback: simple list format — {"usa-1", "uk-2", "canada", ...}
-            String[] keys = raw.replaceAll("[{}\"\\s]", "").split(",");
-            for (String key : keys) {
-                if (key.isEmpty()) continue;
-                serverList.add(new Server(
-                        displayName(key), "", key + ".ovpn", username, password));
-            }
+            return;
+        } catch (Exception ignored) {
+            // Fall through to keyed format below.
+        }
+        // Map / legacy set formats — both yield a flat list of enabled keys.
+        for (String key : OvpnSyncManager.parseCountries(raw)) {
+            serverList.add(new Server(
+                    displayName(key), "", key + ".ovpn", username, password));
         }
     }
 
@@ -161,7 +165,7 @@ public class ServerListActivity extends AppCompatActivity {
         disambiguateNames(serverList);
     }
 
-    static void disambiguateNames(List<Server> list) {
+    public static void disambiguateNames(List<Server> list) {
         Map<String, Integer> counts = new HashMap<>();
         for (Server s : list) {
             String name = s.getCountry();
@@ -178,7 +182,7 @@ public class ServerListActivity extends AppCompatActivity {
         }
     }
 
-    static String displayName(String key) {
+    public static String displayName(String key) {
         // Strip trailing numeric suffix so "canada-1" and "canada" share a base name
         // (disambiguateNames will re-apply the suffix when there are duplicates).
         String base = stripNumberSuffix(key);
