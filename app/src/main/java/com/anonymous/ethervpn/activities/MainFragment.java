@@ -36,6 +36,7 @@ import com.anonymous.ethervpn.R;
 import com.anonymous.ethervpn.databinding.FragmentMainBinding;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.anonymous.ethervpn.utilities.OvpnSyncManager;
+import com.anonymous.ethervpn.utilities.Constants;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import java.io.BufferedReader;
@@ -44,6 +45,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import de.blinkt.openvpn.api.IOpenVPNAPIService;
 import de.blinkt.openvpn.api.IOpenVPNStatusCallback;
@@ -84,12 +86,55 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
     private void initializeAll() {
         preference = new SharedPreference(getContext());
-        server = preference.getServer();
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         connection = new CheckInternetConnection();
 
+        server = resolveInitialServer();
+
         updateServerCard(server);
         status("connect");
+    }
+
+    /**
+     * Resolves the initial server from the active country list.
+     *
+     * Always rebuilt from current Remote Config — never trust stale fields in
+     * SharedPreferences:
+     *   - Old installs persisted the raw key ("uk-2") as the country name.
+     *   - Saved username/password may be the legacy hardcoded defaults and fail auth
+     *     against the current Remote Config credentials.
+     * If the saved key isn't in the active list (or is missing), we snap to the
+     * first active key.
+     */
+    private Server resolveInitialServer() {
+        List<String> activeKeys = OvpnSyncManager.parseCountries(
+                mFirebaseRemoteConfig.getString("countries"));
+        if (activeKeys.isEmpty()) return preference.getServer(); // RC not fetched yet
+
+        Server saved = preference.getServer();
+        String savedKey = saved.getOvpn() != null ? saved.getOvpn().replace(".ovpn", "") : "";
+        String chosenKey = (!savedKey.isEmpty() && activeKeys.contains(savedKey))
+                ? savedKey : activeKeys.get(0);
+
+        String username = mFirebaseRemoteConfig.getString("username");
+        String password = mFirebaseRemoteConfig.getString("password");
+        if (username.isEmpty()) username = Constants.vpnUserName;
+        if (password.isEmpty()) password = Constants.vpnPassword;
+
+        // Build the full active list to derive the same disambiguated display name
+        // that the server picker uses (e.g. "United Kingdom-2" when uk-1 + uk-2 coexist).
+        java.util.ArrayList<Server> all = new java.util.ArrayList<>();
+        Server picked = null;
+        for (String k : activeKeys) {
+            Server s = new Server(
+                    ServerListActivity.displayName(k), null, k + ".ovpn", username, password);
+            all.add(s);
+            if (k.equals(chosenKey)) picked = s;
+        }
+        ServerListActivity.disambiguateNames(all);
+        if (picked == null) picked = all.get(0);
+        preference.saveServer(picked);
+        return picked;
     }
 
     @Override
@@ -524,7 +569,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
 
     @Override
     public void onResume() {
-        if (server == null) server = preference.getServer();
+        if (server == null) server = resolveInitialServer();
         super.onResume();
         bindService();
     }

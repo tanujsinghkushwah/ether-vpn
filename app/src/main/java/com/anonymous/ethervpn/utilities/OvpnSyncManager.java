@@ -48,22 +48,52 @@ public class OvpnSyncManager {
         return f.exists() && f.length() > 0;
     }
 
-    /** Parse countries Remote Config value into a list of OVPN keys (no .ovpn extension). */
+    /**
+     * Parse the {@code countries} Remote Config value into a list of enabled OVPN keys
+     * (no .ovpn extension). Disabled countries are filtered out.
+     *
+     * Supported formats:
+     *  - JSON object map (preferred): {"usa-1": true, "usa-2": false, ...}
+     *  - JSON array of objects: [{"ovpn": "usa-1", "enabled": true}, ...]
+     *  - Legacy set format: {"usa-1", "uk-2", "canada-1", ...} — all treated as enabled.
+     */
     public static List<String> parseCountries(String raw) {
         List<String> keys = new ArrayList<>();
+        if (raw == null) return keys;
+        String trimmed = raw.trim();
+
+        // 1) JSON object map: {"usa-1": true, "uk-2": false}
         try {
-            JSONArray array = new JSONArray(raw);
+            JSONObject map = new JSONObject(trimmed);
+            java.util.Iterator<String> it = map.keys();
+            while (it.hasNext()) {
+                String key = it.next();
+                if (key == null || key.isEmpty()) continue;
+                if (map.optBoolean(key, true)) {
+                    keys.add(key.replace(".ovpn", ""));
+                }
+            }
+            return keys;
+        } catch (Exception ignored) {}
+
+        // 2) JSON array of objects: [{"ovpn": "usa-1", "enabled": true}, ...]
+        try {
+            JSONArray array = new JSONArray(trimmed);
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
                 String ovpn = obj.optString("ovpn", "");
-                if (!ovpn.isEmpty()) keys.add(ovpn.replace(".ovpn", ""));
+                if (ovpn.isEmpty()) continue;
+                if (obj.optBoolean("enabled", true)) {
+                    keys.add(ovpn.replace(".ovpn", ""));
+                }
             }
-        } catch (Exception e) {
-            // Simple set format: {"usa-1", "uk-2", "canada-1", ...}
-            String[] parts = raw.replaceAll("[{}\"\\s]", "").split(",");
-            for (String p : parts) {
-                if (!p.isEmpty()) keys.add(p);
-            }
+            return keys;
+        } catch (Exception ignored) {}
+
+        // 3) Legacy set format: {"usa-1", "uk-2", "canada-1", ...}
+        String[] parts = trimmed.replaceAll("[{}\"\\s]", "").split(",");
+        for (String p : parts) {
+            if (!p.isEmpty()) keys.add(p);
         }
         return keys;
     }

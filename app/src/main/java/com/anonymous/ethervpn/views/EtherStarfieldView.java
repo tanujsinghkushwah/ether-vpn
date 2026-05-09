@@ -44,7 +44,9 @@ public class EtherStarfieldView extends View {
 
     private void init() {
         generateStars();
-        paint.setColor(0xFFFFFFFF);
+        // Cool off-white tint differentiates dots from pure-white headlines/body copy
+        // so they don't visually merge with text on the onboarding/login starfields.
+        paint.setColor(0xFFB8C5DA);
     }
 
     private void generateStars() {
@@ -57,7 +59,8 @@ public class EtherStarfieldView extends View {
             s = (s * 9301 + 49297) % 233280;
             float r = 0.4f + (s / 233280f) * 1.4f;
             s = (s * 9301 + 49297) % 233280;
-            float o = 0.25f + (s / 233280f) * 0.7f;
+            // Lower opacity ceiling so stars stay ambient and don't blend with white headlines.
+            float o = 0.12f + (s / 233280f) * 0.4f;
             s = (s * 9301 + 49297) % 233280;
             boolean twinkle = (s / 233280f) > 0.85f;
             stars.add(new Star(x, y, r, o, twinkle, i));

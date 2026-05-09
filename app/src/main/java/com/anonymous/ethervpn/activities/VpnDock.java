@@ -156,7 +156,7 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
         if (password.isEmpty()) password = Constants.vpnPassword;
 
         String raw = rc.getString("countries");
-        String[] keys = raw.replaceAll("[{}\"\\s]", "").split(",");
+        List<String> keys = OvpnSyncManager.parseCountries(raw);
         serverLists = new ArrayList<>();
         for (String key : keys) {
             if (key.isEmpty()) continue;
