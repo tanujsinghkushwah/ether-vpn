@@ -6,8 +6,11 @@ An Android VPN client developed using the [ics-openvpn](https://github.com/schwa
 
 ## Demo
 
+<div align="center">
+
 https://github.com/user-attachments/assets/bce5d1c9-2a0a-4f27-a93b-140b631d30ba
 
+</div>
 
 ## Architecture Overview
 
@@ -30,6 +33,7 @@ https://github.com/user-attachments/assets/bce5d1c9-2a0a-4f27-a93b-140b631d30ba
 ## 🚀 Setup for a New Developer
 
 ### 1. Clone with submodules
+
 ```bash
 git clone --recurse-submodules <repo-url>
 # or if already cloned:
@@ -37,6 +41,7 @@ git submodule update --init --recursive
 ```
 
 ### 2. Firebase configuration
+
 - In the Firebase Console, create or open the project.
 - Download `google-services.json` and place it at `app/google-services.json` (gitignored — never commit this).
 - Enable **Google Sign-In** under Authentication → Sign-in method.
@@ -46,6 +51,7 @@ git submodule update --init --recursive
 OVPN files are **not** in the repo or APK. They live in Firebase Realtime Database under the `/ovpn` node. Each node key is the server identifier (no `.ovpn` extension), and its value is the full `.ovpn` file content as a string.
 
 **RTDB schema:**
+
 ```
 /ovpn_cache_version: 1          ← integer; bump this to force all clients to re-sync
 /ovpn/usa-1:    "<file content>"
@@ -58,6 +64,7 @@ OVPN files are **not** in the repo or APK. They live in Firebase Realtime Databa
 ```
 
 **To upload configs**, build a JSON file and import it via Firebase Console → Realtime Database → ⋮ → Import JSON:
+
 ```json
 {
   "ovpn_cache_version": 1,
@@ -69,6 +76,7 @@ OVPN files are **not** in the repo or APK. They live in Firebase Realtime Databa
 ```
 
 Or run the helper script locally (reads files from a folder, outputs import-ready JSON):
+
 ```bash
 python3 -c "
 import json, os, sys
@@ -82,6 +90,7 @@ print(json.dumps(data))
 ```
 
 **RTDB security rules** (set in Firebase Console → Realtime Database → Rules):
+
 ```json
 {
   "rules": {
@@ -90,9 +99,11 @@ print(json.dumps(data))
   }
 }
 ```
+
 Reads are gated on Firebase Auth — the app authenticates users via Google Sign-In before any RTDB read occurs.
 
 **Update `RTDB_URL`** in [OvpnSyncManager.java](app/src/main/java/com/anonymous/ethervpn/utilities/OvpnSyncManager.java) to match your database's region URL (visible in Firebase Console → Realtime Database):
+
 ```java
 private static final String RTDB_URL = "https://<your-project>-default-rtdb.<region>.firebasedatabase.app";
 ```
@@ -112,6 +123,7 @@ Keys in `countries` must exactly match node names under `/ovpn` in RTDB.
 ### 5. CMake / SWIG (ics-openvpn native build)
 
 Add to `openvpn/src/main/cpp/CMakeLists.txt` if not present:
+
 ```cmake
 set(SWIG_EXECUTABLE "${CMAKE_CURRENT_SOURCE_DIR}/swigwin-4.1.1/swig.exe")
 set(SWIG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/swigwin-4.1.1")
@@ -172,10 +184,13 @@ No APK release needed. To push new OVPN configs to all users:
 ## 📱 Screenshots
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/a14b5489-3ca7-4838-8c72-35513ac55174" width="200" height="450" alt="Main Screen"/>
-  <img src="https://github.com/user-attachments/assets/8bc96eff-1501-403d-9be6-511aa738e2b3" width="200" height="450" alt="Server Selection"/>
-  <img src="https://github.com/user-attachments/assets/ed97e2ea-d537-4236-8353-90b5deb02121" width="200" height="450" alt="Connection Status"/>
-  <img src="https://github.com/user-attachments/assets/2bed3fb1-28e3-4c20-a0bb-079ce94e18ed" width="200" height="450" alt="Location Drawer"/>
+  <img src="https://github.com/user-attachments/assets/a14b5489-3ca7-4838-8c72-35513ac55174" width="22%" alt="Main Screen"/>
+  &nbsp;&nbsp;
+  <img src="https://github.com/user-attachments/assets/8bc96eff-1501-403d-9be6-511aa738e2b3" width="22%" alt="Server Selection"/>
+  &nbsp;&nbsp;
+  <img src="https://github.com/user-attachments/assets/ed97e2ea-d537-4236-8353-90b5deb02121" width="22%" alt="Connection Status"/>
+  &nbsp;&nbsp;
+  <img src="https://github.com/user-attachments/assets/2bed3fb1-28e3-4c20-a0bb-079ce94e18ed" width="22%" alt="Location Drawer"/>
 </div>
 
 ## 🚧 Future Development Roadmap
