@@ -1,3 +1,11 @@
+
+
+https://github.com/user-attachments/assets/ea9abd7f-0143-49af-8d56-597f38db73fe
+
+
+
+
+
 # Ether VPN
 
 An Android VPN client developed using the [ics-openvpn](https://github.com/schwabe/ics-openvpn) library.
@@ -6,7 +14,8 @@ An Android VPN client developed using the [ics-openvpn](https://github.com/schwa
 
 ## Demo
 
-https://github.com/tj4752/ether-vpn/assets/32940477/dc84bbfe-3b74-49e0-a28a-9c818059ffe1
+https://github.com/user-attachments/assets/bce5d1c9-2a0a-4f27-a93b-140b631d30ba
+
 
 ## Architecture Overview
 
@@ -171,9 +180,10 @@ No APK release needed. To push new OVPN configs to all users:
 ## 📱 Screenshots
 
 <div align="center">
-  <img src="https://github.com/tj4752/ether-vpn/assets/32940477/68342c85-996b-4fe5-9415-6699bea9bf56" width="200" height="450" alt="Main Screen"/>
-  <img src="https://github.com/tj4752/ether-vpn/assets/32940477/fe16471b-08df-49e5-85a7-8f82e19425e8" width="200" height="450" alt="Server Selection"/>
-  <img src="https://github.com/tj4752/ether-vpn/assets/32940477/b76f6481-92f6-429e-b1d2-222d23ee5001" width="200" height="450" alt="Connection Status"/>
+  <img src="https://github.com/user-attachments/assets/a14b5489-3ca7-4838-8c72-35513ac55174" width="200" height="450" alt="Main Screen"/>
+  <img src="https://github.com/user-attachments/assets/8bc96eff-1501-403d-9be6-511aa738e2b3" width="200" height="450" alt="Server Selection"/>
+  <img src="https://github.com/user-attachments/assets/ed97e2ea-d537-4236-8353-90b5deb02121" width="200" height="450" alt="Connection Status"/>
+  <img src="https://github.com/user-attachments/assets/2bed3fb1-28e3-4c20-a0bb-079ce94e18ed" width="200" height="450" alt="Location Drawer"/>
 </div>
 
 ## 🚧 Future Development Roadmap
