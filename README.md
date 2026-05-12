@@ -1,11 +1,3 @@
-
-
-https://github.com/user-attachments/assets/ea9abd7f-0143-49af-8d56-597f38db73fe
-
-
-
-
-
 # Ether VPN
 
 An Android VPN client developed using the [ics-openvpn](https://github.com/schwabe/ics-openvpn) library.
