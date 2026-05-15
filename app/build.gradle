@@ -4,6 +4,10 @@ plugins {
     id 'com.google.firebase.crashlytics'
 }
 
+def localProps = new Properties()
+def localPropsFile = rootProject.file('local.properties')
+if (localPropsFile.exists()) localProps.load(new FileInputStream(localPropsFile))
+
 android {
     buildFeatures {
         dataBinding = true
@@ -52,6 +56,9 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+            admobAppId: localProps.getProperty('admob.app.id', 'ca-app-pub-3940256099942544~3347511713')
+        ]
     }
 
     buildTypes {

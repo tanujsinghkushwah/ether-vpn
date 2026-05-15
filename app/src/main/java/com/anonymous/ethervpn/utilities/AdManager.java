@@ -19,8 +19,9 @@ import androidx.annotation.NonNull;
 public final class AdManager {
 
     private static final String TAG = "AdManager";
-    // Swap to production unit ID before release
-    private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
+    private static final String RC_AD_UNIT_KEY = "ADMOB_AD_UNIT_ID";
+    // Fallback to Google's public test ID if RC has no value yet
+    private static final String TEST_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
 
     private static InterstitialAd sAd = null;
 
@@ -30,8 +31,10 @@ public final class AdManager {
         if (!isAdsEnabled()) return;
         if (sAd != null) return; // already loaded
 
+        String adUnitId = FirebaseRemoteConfig.getInstance().getString(RC_AD_UNIT_KEY);
+        if (adUnitId.isEmpty()) adUnitId = TEST_AD_UNIT_ID;
         AdRequest request = new AdRequest.Builder().build();
-        InterstitialAd.load(ctx.getApplicationContext(), AD_UNIT_ID, request,
+        InterstitialAd.load(ctx.getApplicationContext(), adUnitId, request,
                 new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd ad) {

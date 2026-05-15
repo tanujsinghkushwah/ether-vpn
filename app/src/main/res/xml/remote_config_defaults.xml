@@ -22,4 +22,8 @@
     <key>ENABLE_ADS</key>
     <value>false</value>
   </entry>
+  <entry>
+    <key>ADMOB_AD_UNIT_ID</key>
+    <value>ca-app-pub-3940256099942544/1033173712</value>
+  </entry>
 </defaults>
