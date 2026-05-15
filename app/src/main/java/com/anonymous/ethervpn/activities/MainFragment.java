@@ -35,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.anonymous.ethervpn.R;
 import com.anonymous.ethervpn.databinding.FragmentMainBinding;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.anonymous.ethervpn.utilities.AdManager;
 import com.anonymous.ethervpn.utilities.OvpnSyncManager;
 import com.anonymous.ethervpn.utilities.Constants;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
@@ -187,7 +188,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(getActivity().getString(R.string.connection_close_confirm));
         builder.setPositiveButton(getActivity().getString(R.string.yes),
-                (dialog, id) -> stopVpn());
+                (dialog, id) -> AdManager.showThen(getActivity(), this::stopVpn));
         builder.setNegativeButton(getActivity().getString(R.string.no), null);
         builder.create().show();
     }
@@ -338,6 +339,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             case "CONNECTED":
                 vpnStart = true;
                 status("connected");
+                AdManager.preload(requireContext().getApplicationContext());
                 break;
             case "WAIT":
             case "AUTH":

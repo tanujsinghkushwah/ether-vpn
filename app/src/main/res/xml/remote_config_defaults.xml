@@ -18,4 +18,8 @@
     <key>password</key>
     <value>s4m5axb</value>
   </entry>
+  <entry>
+    <key>ENABLE_ADS</key>
+    <value>false</value>
+  </entry>
 </defaults>

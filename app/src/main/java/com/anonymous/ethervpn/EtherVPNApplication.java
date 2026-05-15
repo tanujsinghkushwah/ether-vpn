@@ -8,10 +8,13 @@ package com.anonymous.ethervpn;
 import android.app.Application;
 import android.os.StrictMode;
 
+import com.google.android.gms.ads.MobileAds;
+
 public class EtherVPNApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        MobileAds.initialize(this, initializationStatus -> { /* no-op */ });
         if (BuildConfig.BUILD_TYPE.equals("debug"))
             enableStrictModes();
 
