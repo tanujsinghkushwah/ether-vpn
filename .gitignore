@@ -23,7 +23,6 @@ openvpn/build/
 app/ether-vpn-ui-v2/
 
 # Local tooling and generated media — not part of the app source
-scripts/
 media-assets/
 
 app/src/main/assets/
@@ -31,4 +30,5 @@ app/src/main/assets/
 rtdb_import.json
 debug.keystore
 app/ui/*
+database.rules.json
 

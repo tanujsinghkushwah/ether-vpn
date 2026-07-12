@@ -117,10 +117,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
         String chosenKey = (!savedKey.isEmpty() && activeKeys.contains(savedKey))
                 ? savedKey : activeKeys.get(0);
 
-        String username = mFirebaseRemoteConfig.getString("username");
-        String password = mFirebaseRemoteConfig.getString("password");
-        if (username.isEmpty()) username = Constants.vpnUserName;
-        if (password.isEmpty()) password = Constants.vpnPassword;
+        String username = OvpnSyncManager.getUsername(requireContext());
+        String password = OvpnSyncManager.getPassword(requireContext());
 
         // Build the full active list to derive the same disambiguated display name
         // that the server picker uses (e.g. "United Kingdom-2" when uk-1 + uk-2 coexist).
@@ -299,9 +297,13 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
                     config.append("dev tun\n");
                 } else if (trimmed.equals("auth-user-pass")) {
                     // Inject credentials inline so OpenVPN never shows the password dialog
+                    String liveUser = OvpnSyncManager.getUsername(requireContext());
+                    String livePass = OvpnSyncManager.getPassword(requireContext());
+                    if (liveUser == null || liveUser.isEmpty()) liveUser = server.getOvpnUserName();
+                    if (livePass == null || livePass.isEmpty()) livePass = server.getOvpnUserPassword();
                     config.append("<auth-user-pass>\n");
-                    config.append(server.getOvpnUserName()).append("\n");
-                    config.append(server.getOvpnUserPassword()).append("\n");
+                    config.append(liveUser).append("\n");
+                    config.append(livePass).append("\n");
                     config.append("</auth-user-pass>\n");
                 } else if (trimmed.equals("fast-io")) {
                     // fast-io is not supported on Android (TCP_NODELAY equivalent), skip
@@ -441,8 +443,10 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     private void updateServerCard(Server s) {
         if (s == null || binding == null) return;
         binding.serverCountry.setText(s.getCountry());
-        // Try bundled vector flag first, fall back to Glide URL
-        int flagResId = FlagResolver.resolve(s.getCountry());
+        // Preferred: resolve flag directly from the RTDB key (immune to disambiguated suffixes
+        // like "United States-2"). Fall back to display-name lookup, then to a Glide URL.
+        int flagResId = FlagResolver.resolveKey(s.getOvpn());
+        if (flagResId == 0) flagResId = FlagResolver.resolve(s.getCountry());
         if (flagResId != 0) {
             binding.serverFlag.setImageResource(flagResId);
         } else if (s.getFlagUrl() != null) {
@@ -466,6 +470,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     @Override
     public void newServer(Server server) {
         this.server = server;
+        preference.saveServer(server);
         updateServerCard(server);
         if (vpnStart) stopVpn();
         try {

@@ -1,0 +1,22 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": false,
+    "ovpn": {
+      ".read": true,
+      ".write": false
+    },
+    "ovpn_cache_version": {
+      ".read": true,
+      ".write": false
+    },
+    "username": {
+      ".read": true,
+      ".write": false
+    },
+    "password": {
+      ".read": true,
+      ".write": false
+    }
+  }
+}

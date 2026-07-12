@@ -1,6 +1,9 @@
 package com.anonymous.ethervpn.model;
 
-public class Server {
+import java.io.Serializable;
+
+public class Server implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private String country;
     private String flagUrl;

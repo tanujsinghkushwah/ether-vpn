@@ -6,8 +6,10 @@ import android.content.SharedPreferences;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,6 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,9 +31,54 @@ public class OvpnSyncManager {
 
     private static final String RTDB_URL = "https://ether-cc1ac-default-rtdb.asia-southeast1.firebasedatabase.app";
     private static final ConcurrentHashMap<String, Task<DataSnapshot>> inFlight = new ConcurrentHashMap<>();
+    private static ValueEventListener credentialsListener;
 
     private static DatabaseReference rtdb() {
         return FirebaseDatabase.getInstance(RTDB_URL).getReference();
+    }
+
+    public static void listenForCredentials(Context ctx) {
+        if (credentialsListener != null) return;
+        credentialsListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                SharedPreferences prefs = ctx.getSharedPreferences(Constants.APP_PREFS_NAME, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                if (snapshot.hasChild("username") && snapshot.child("username").getValue() instanceof String) {
+                    editor.putString("rtdb_username", (String) snapshot.child("username").getValue());
+                }
+                if (snapshot.hasChild("password") && snapshot.child("password").getValue() instanceof String) {
+                    editor.putString("rtdb_password", (String) snapshot.child("password").getValue());
+                }
+                editor.apply();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {}
+        };
+        rtdb().addValueEventListener(credentialsListener);
+    }
+
+    public static String getUsername(Context ctx) {
+        SharedPreferences prefs = ctx.getSharedPreferences(Constants.APP_PREFS_NAME, Context.MODE_PRIVATE);
+        String cached = prefs.getString("rtdb_username", null);
+        if (cached != null && !cached.isEmpty()) return cached;
+        try {
+            String rcUser = com.google.firebase.remoteconfig.FirebaseRemoteConfig.getInstance().getString("username");
+            if (!rcUser.isEmpty()) return rcUser;
+        } catch (Exception ignored) {}
+        return Constants.vpnUserName;
+    }
+
+    public static String getPassword(Context ctx) {
+        SharedPreferences prefs = ctx.getSharedPreferences(Constants.APP_PREFS_NAME, Context.MODE_PRIVATE);
+        String cached = prefs.getString("rtdb_password", null);
+        if (cached != null && !cached.isEmpty()) return cached;
+        try {
+            String rcPass = com.google.firebase.remoteconfig.FirebaseRemoteConfig.getInstance().getString("password");
+            if (!rcPass.isEmpty()) return rcPass;
+        } catch (Exception ignored) {}
+        return Constants.vpnPassword;
     }
 
     public static File ovpnDir(Context ctx) {
@@ -73,6 +121,7 @@ public class OvpnSyncManager {
                     keys.add(key.replace(".ovpn", ""));
                 }
             }
+            Collections.sort(keys);
             return keys;
         } catch (Exception ignored) {}
 
@@ -87,6 +136,7 @@ public class OvpnSyncManager {
                     keys.add(ovpn.replace(".ovpn", ""));
                 }
             }
+            Collections.sort(keys);
             return keys;
         } catch (Exception ignored) {}
 
@@ -95,6 +145,7 @@ public class OvpnSyncManager {
         for (String p : parts) {
             if (!p.isEmpty()) keys.add(p);
         }
+        Collections.sort(keys);
         return keys;
     }
 
@@ -105,6 +156,7 @@ public class OvpnSyncManager {
      * Safe to call on every VpnDock launch — a no-op when all files are present.
      */
     public static void sync(Context ctx, List<String> keys, SyncCallback cb) {
+        listenForCredentials(ctx);
         DatabaseReference dbRef = rtdb();
         dbRef.child("ovpn_cache_version").get().addOnCompleteListener(versionTask -> {
             if (versionTask.isSuccessful() && versionTask.getResult().getValue() != null) {

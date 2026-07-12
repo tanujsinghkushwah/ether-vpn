@@ -1,0 +1,57 @@
+name: Sync VPNBook Servers & Credentials
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run in dry-run mode (do not upload to Firebase)'
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    # Run every 6 hours automatically to check for new VPNBook credentials and servers
+    - cron: '0 */6 * * *'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node.js (for firebase-tools CLI fallback)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests firebase-admin
+
+      - name: Run Server & Credential Synchronization
+        env:
+          # Inject project & DB URLs from repository Variables/Secrets, falling back to defaults
+          FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID || 'ether-cc1ac' }}
+          FIREBASE_DATABASE_URL: ${{ vars.FIREBASE_DATABASE_URL || 'https://ether-cc1ac-default-rtdb.asia-southeast1.firebasedatabase.app' }}
+          
+          # Inject authentication credentials (supports raw JSON string secret, file path, or CLI token)
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          
+          # Optional manual override variables for username and password
+          VPN_USERNAME: ${{ secrets.VPN_USERNAME }}
+          VPN_PASSWORD: ${{ secrets.VPN_PASSWORD }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            python3 scripts/sync_vpnbook_servers.py --dry-run
+          else
+            python3 scripts/sync_vpnbook_servers.py
+          fi

@@ -16,6 +16,7 @@ import com.anonymous.ethervpn.activities.VpnDock;
 import com.anonymous.ethervpn.services.OAuthService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.remoteconfig.ConfigUpdate;
 import com.google.firebase.remoteconfig.ConfigUpdateListener;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         fetchRemoteConfig();
 
         Intent intent;
-        if (isLoggedIn) {
+        if (isLoggedIn && FirebaseAuth.getInstance().getCurrentUser() != null) {
             intent = new Intent(this, VpnDock.class);
             intent.putExtra("first_run", firstRun);
         } else {
