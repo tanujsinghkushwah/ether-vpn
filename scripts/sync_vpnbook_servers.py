@@ -161,14 +161,14 @@ def scrape_credentials(html_text=None):
             resp.raise_for_status()
             html_text = resp.text
         except requests.RequestException as exc:
-            log.warning("Could not fetch page for credentials (%s) – using fallbacks.", exc)
-            return ("vpnbook", "vbnftp8")
+            log.warning("Could not fetch page for credentials (%s) – using env var fallbacks.", exc)
+            return (os.environ.get("VPN_USERNAME", ""), os.environ.get("VPN_PASSWORD", ""))
 
     user_m = re.search(r'>Username</label>.*?<code[^>]*>([^<]+)</code>', html_text, re.DOTALL | re.IGNORECASE)
     pass_m = re.search(r'>Password</label>.*?<code[^>]*>([^<]+)</code>', html_text, re.DOTALL | re.IGNORECASE)
 
-    username = user_m.group(1).strip() if user_m else "vpnbook"
-    password = pass_m.group(1).strip() if pass_m else "vbnftp8"
+    username = user_m.group(1).strip() if user_m else os.environ.get("VPN_USERNAME", "")
+    password = pass_m.group(1).strip() if pass_m else os.environ.get("VPN_PASSWORD", "")
     log.info("Scraped VPN credentials → username: '%s', password: '%s'", username, password)
     return username, password
 
@@ -222,7 +222,7 @@ def download_ovpn_config(server_id, hostname, ip):
 # Step 4 – Build RTDB payload
 # ---------------------------------------------------------------------------
 
-def build_rtdb_payload(current_version, server_configs, username="vpnbook", password="vbnftp8"):
+def build_rtdb_payload(current_version, server_configs, username="", password=""):
     return {
         "ovpn_cache_version": current_version + 1,
         "ovpn": server_configs,
