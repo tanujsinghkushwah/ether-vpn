@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -73,6 +74,7 @@ public class OvpnSyncManager {
                     keys.add(key.replace(".ovpn", ""));
                 }
             }
+            Collections.sort(keys);
             return keys;
         } catch (Exception ignored) {}
 
@@ -87,6 +89,7 @@ public class OvpnSyncManager {
                     keys.add(ovpn.replace(".ovpn", ""));
                 }
             }
+            Collections.sort(keys);
             return keys;
         } catch (Exception ignored) {}
 
@@ -95,6 +98,7 @@ public class OvpnSyncManager {
         for (String p : parts) {
             if (!p.isEmpty()) keys.add(p);
         }
+        Collections.sort(keys);
         return keys;
     }
 

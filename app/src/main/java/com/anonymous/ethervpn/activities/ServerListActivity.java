@@ -17,6 +17,7 @@ import com.anonymous.ethervpn.R;
 import com.anonymous.ethervpn.adapter.ServerListV2Adapter;
 import com.anonymous.ethervpn.model.Server;
 import com.anonymous.ethervpn.utilities.Constants;
+import com.anonymous.ethervpn.utilities.OvpnKeyFormatter;
 import com.anonymous.ethervpn.utilities.OvpnSyncManager;
 import com.anonymous.ethervpn.utilities.SharedPreference;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
@@ -63,8 +64,14 @@ public class ServerListActivity extends AppCompatActivity {
         adapter.setSelectedIndex(savedIndex);
         adapter.setOnServerSelectedListener((index, server) -> {
             prefs.edit().putInt(PREF_SELECTED_INDEX, index).apply();
+            new SharedPreference(this).saveServer(server);
             Intent result = new Intent();
             result.putExtra(Constants.EXTRA_SERVER_INDEX, index);
+            result.putExtra("EXTRA_SERVER", server);
+            result.putExtra("EXTRA_SERVER_OVPN", server.getOvpn());
+            result.putExtra("EXTRA_SERVER_COUNTRY", server.getCountry());
+            result.putExtra("EXTRA_SERVER_USER", server.getOvpnUserName());
+            result.putExtra("EXTRA_SERVER_PASSWORD", server.getOvpnUserPassword());
             setResult(RESULT_OK, result);
             finish();
         });
@@ -182,34 +189,14 @@ public class ServerListActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Converts a raw RTDB ovpn key (e.g. "usa-1", "uk-2") to a user-facing display name.
+     *
+     * <p>Delegates to {@link OvpnKeyFormatter#displayName(String)} — the single source of
+     * truth for slug-to-name mapping. Kept public-static so that existing callers in
+     * {@code VpnDock} and {@code MainFragment} continue to compile without changes.
+     */
     public static String displayName(String key) {
-        // Strip trailing numeric suffix so "canada-1" and "canada" share a base name
-        // (disambiguateNames will re-apply the suffix when there are duplicates).
-        String base = stripNumberSuffix(key);
-        if (base.startsWith("usa"))                          return "United States";
-        if (base.startsWith("uk") || base.startsWith("gb"))  return "United Kingdom";
-        switch (base) {
-            case "canada":      return "Canada";
-            case "france":      return "France";
-            case "germany":     return "Germany";
-            case "japan":       return "Japan";
-            case "netherlands": return "Netherlands";
-            case "singapore":   return "Singapore";
-            case "sweden":      return "Sweden";
-            case "switzerland": return "Switzerland";
-            case "australia":   return "Australia";
-            case "brazil":      return "Brazil";
-            default:            return base.isEmpty() ? key
-                                       : Character.toUpperCase(base.charAt(0)) + base.substring(1);
-        }
-    }
-
-    private static String stripNumberSuffix(String s) {
-        int dash = s.lastIndexOf('-');
-        if (dash > 0 && dash < s.length() - 1) {
-            String suffix = s.substring(dash + 1);
-            if (suffix.matches("\\d+")) return s.substring(0, dash);
-        }
-        return s;
+        return OvpnKeyFormatter.displayName(key);
     }
 }

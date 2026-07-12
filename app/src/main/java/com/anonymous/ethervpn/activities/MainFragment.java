@@ -441,8 +441,10 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     private void updateServerCard(Server s) {
         if (s == null || binding == null) return;
         binding.serverCountry.setText(s.getCountry());
-        // Try bundled vector flag first, fall back to Glide URL
-        int flagResId = FlagResolver.resolve(s.getCountry());
+        // Preferred: resolve flag directly from the RTDB key (immune to disambiguated suffixes
+        // like "United States-2"). Fall back to display-name lookup, then to a Glide URL.
+        int flagResId = FlagResolver.resolveKey(s.getOvpn());
+        if (flagResId == 0) flagResId = FlagResolver.resolve(s.getCountry());
         if (flagResId != 0) {
             binding.serverFlag.setImageResource(flagResId);
         } else if (s.getFlagUrl() != null) {
@@ -466,6 +468,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     @Override
     public void newServer(Server server) {
         this.server = server;
+        preference.saveServer(server);
         updateServerCard(server);
         if (vpnStart) stopVpn();
         try {

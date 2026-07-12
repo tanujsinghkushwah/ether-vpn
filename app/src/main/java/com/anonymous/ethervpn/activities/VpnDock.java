@@ -31,6 +31,7 @@ import com.anonymous.ethervpn.services.OAuthService;
 import com.anonymous.ethervpn.R;
 import com.anonymous.ethervpn.utilities.Constants;
 import com.anonymous.ethervpn.utilities.OvpnSyncManager;
+import com.anonymous.ethervpn.utilities.SharedPreference;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -171,16 +172,55 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
     @Override
     public void clickedItem(int index) {
         closeDrawer();
-        changeServer.newServer(serverLists.get(index));
+        if (index >= 0 && serverLists != null && index < serverLists.size()) {
+            Server selected = serverLists.get(index);
+            new SharedPreference(this).saveServer(selected);
+            changeServer.newServer(selected);
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUEST_SERVER_CHANGE && resultCode == RESULT_OK && data != null) {
-            int index = data.getIntExtra(Constants.EXTRA_SERVER_INDEX, -1);
-            if (index >= 0 && serverLists != null && index < serverLists.size()) {
-                changeServer.newServer(serverLists.get(index));
+            setServerList(); // Refresh local list and adapter to ensure consistent ordering
+            Server selected = null;
+            try {
+                selected = (Server) data.getSerializableExtra("EXTRA_SERVER");
+            } catch (Exception ignored) {}
+
+            if (selected == null) {
+                String ovpnKey = data.getStringExtra("EXTRA_SERVER_OVPN");
+                if (ovpnKey != null && serverLists != null) {
+                    for (Server s : serverLists) {
+                        if (ovpnKey.equals(s.getOvpn())) {
+                            selected = s;
+                            break;
+                        }
+                    }
+                }
+                if (selected == null && ovpnKey != null) {
+                    String country = data.getStringExtra("EXTRA_SERVER_COUNTRY");
+                    String user = data.getStringExtra("EXTRA_SERVER_USER");
+                    String pass = data.getStringExtra("EXTRA_SERVER_PASSWORD");
+                    selected = new Server(
+                            country != null ? country : ServerListActivity.displayName(ovpnKey),
+                            null, ovpnKey,
+                            user != null ? user : Constants.vpnUserName,
+                            pass != null ? pass : Constants.vpnPassword);
+                }
+            }
+
+            if (selected == null) {
+                int index = data.getIntExtra(Constants.EXTRA_SERVER_INDEX, -1);
+                if (index >= 0 && serverLists != null && index < serverLists.size()) {
+                    selected = serverLists.get(index);
+                }
+            }
+
+            if (selected != null) {
+                new SharedPreference(this).saveServer(selected);
+                changeServer.newServer(selected);
             }
         }
     }
@@ -192,14 +232,12 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
             return true;
         } else if (id == R.id.nav_logout) {
             googleSignInClient.signOut().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    firebaseAuth.signOut();
-                    editor.putBoolean("isLoggedIn", false);
-                    editor.apply();
-                    startActivity(new Intent(VpnDock.this, OAuthService.class)
-                            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                    finish();
-                }
+                firebaseAuth.signOut();
+                editor.putBoolean("isLoggedIn", false);
+                editor.apply();
+                startActivity(new Intent(VpnDock.this, OAuthService.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                finish();
             });
             return true;
         }

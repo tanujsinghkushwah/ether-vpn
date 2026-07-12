@@ -31,4 +31,5 @@ app/src/main/assets/
 rtdb_import.json
 debug.keystore
 app/ui/*
+database.rules.json
 
