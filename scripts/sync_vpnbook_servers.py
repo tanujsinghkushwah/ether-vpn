@@ -348,15 +348,54 @@ def upload_to_rtdb(payload, sa_json_path=None, project_id=None):
             return False
 
 
-def update_remote_config(username, password, sa_json_path=None, project_id=None):
+def update_template_parameters(template, username, password, server_keys=None):
+    if "parameters" not in template:
+        template["parameters"] = {}
+
+    template["parameters"]["username"] = {
+        "defaultValue": {"value": username},
+        "description": "vpn server username",
+        "valueType": "STRING"
+    }
+    template["parameters"]["password"] = {
+        "defaultValue": {"value": password},
+        "description": "vpn server password",
+        "valueType": "STRING"
+    }
+
+    if server_keys is not None:
+        existing_countries = {}
+        if "countries" in template["parameters"]:
+            try:
+                val_str = template["parameters"]["countries"].get("defaultValue", {}).get("value", "{}")
+                existing_countries = json.loads(val_str) if isinstance(val_str, str) else val_str
+            except Exception:
+                existing_countries = {}
+        if not isinstance(existing_countries, dict):
+            existing_countries = {}
+
+        for key in server_keys:
+            if key not in existing_countries:
+                existing_countries[key] = True
+
+        template["parameters"]["countries"] = {
+            "defaultValue": {"value": json.dumps(existing_countries, indent=2)},
+            "description": template.get("parameters", {}).get("countries", {}).get("description", "JSON map of country keys to boolean status"),
+            "valueType": template.get("parameters", {}).get("countries", {}).get("valueType", "JSON")
+        }
+    return template
+
+
+def update_remote_config(username, password, server_keys=None, sa_json_path=None, project_id=None):
     """
-    Updates the 'username' and 'password' parameters in Firebase Remote Config.
+    Updates the 'username', 'password', and 'countries' parameters in Firebase Remote Config.
     Attempts:
       1. REST API via google-auth / service-account credentials
       2. Fallback: firebase-tools CLI (npx firebase remoteconfig:get / deploy)
     """
     project_id = project_id or DEFAULT_PROJECT_ID
-    log.info("Updating Firebase Remote Config (%s) → username: '%s', password: '%s' …", project_id, username, password)
+    log.info("Updating Firebase Remote Config (%s) → username: '%s', password: '%s', server_keys: %d …",
+             project_id, username, password, len(server_keys or []))
 
     # Attempt 1: REST API via google-auth / service account
     try:
@@ -383,19 +422,7 @@ def update_remote_config(username, password, sa_json_path=None, project_id=None)
             etag = resp.headers.get("ETag", "*")
             template = json.loads(resp.read().decode("utf-8"))
 
-        if "parameters" not in template:
-            template["parameters"] = {}
-
-        template["parameters"]["username"] = {
-            "defaultValue": {"value": username},
-            "description": "vpn server username",
-            "valueType": "STRING"
-        }
-        template["parameters"]["password"] = {
-            "defaultValue": {"value": password},
-            "description": "vpn server password",
-            "valueType": "STRING"
-        }
+        update_template_parameters(template, username, password, server_keys)
 
         body_bytes = json.dumps(template).encode("utf-8")
         req_put = urllib.request.Request(
@@ -433,19 +460,7 @@ def update_remote_config(username, password, sa_json_path=None, project_id=None)
                 return False
 
             template = json.loads(rc_file.read_text("utf-8"))
-            if "parameters" not in template:
-                template["parameters"] = {}
-
-            template["parameters"]["username"] = {
-                "defaultValue": {"value": username},
-                "description": "vpn server username",
-                "valueType": "STRING"
-            }
-            template["parameters"]["password"] = {
-                "defaultValue": {"value": password},
-                "description": "vpn server password",
-                "valueType": "STRING"
-            }
+            update_template_parameters(template, username, password, server_keys)
 
             rc_file.write_text(json.dumps(template, indent=2), "utf-8")
             fb_json.write_text(json.dumps({"remoteconfig": {"template": "remote_config.json"}}), "utf-8")
@@ -604,7 +619,7 @@ def main():
     success_rtdb = upload_to_rtdb(payload, args.sa_json, project_id=args.project_id)
     success_rc = True
     if args.sync_rc:
-        success_rc = update_remote_config(username, password, sa_json_path=args.sa_json, project_id=args.project_id)
+        success_rc = update_remote_config(username, password, server_keys=list(server_configs.keys()), sa_json_path=args.sa_json, project_id=args.project_id)
 
     sys.exit(0 if (success_rtdb and success_rc) else 1)
 
