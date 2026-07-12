@@ -9,6 +9,14 @@
     "ovpn_cache_version": {
       ".read": true,
       ".write": false
+    },
+    "username": {
+      ".read": true,
+      ".write": false
+    },
+    "password": {
+      ".read": true,
+      ".write": false
     }
   }
 }

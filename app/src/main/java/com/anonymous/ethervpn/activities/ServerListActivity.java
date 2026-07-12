@@ -131,12 +131,10 @@ public class ServerListActivity extends AppCompatActivity {
 
     private void loadServersFromRemoteConfig() {
         serverList.clear();
-        FirebaseRemoteConfig rc = FirebaseRemoteConfig.getInstance();
-        String username = rc.getString("username");
-        String password = rc.getString("password");
-        if (username.isEmpty()) username = Constants.vpnUserName;
-        if (password.isEmpty()) password = Constants.vpnPassword;
+        String username = OvpnSyncManager.getUsername(this);
+        String password = OvpnSyncManager.getPassword(this);
 
+        FirebaseRemoteConfig rc = FirebaseRemoteConfig.getInstance();
         String raw = rc.getString("countries");
         try {
             // Rich JSON array format with per-row metadata + enabled flag.

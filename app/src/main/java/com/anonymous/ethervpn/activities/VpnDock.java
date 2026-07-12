@@ -150,12 +150,10 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
     }
 
     private void setServerList() {
-        FirebaseRemoteConfig rc = FirebaseRemoteConfig.getInstance();
-        String username = rc.getString("username");
-        String password = rc.getString("password");
-        if (username.isEmpty()) username = Constants.vpnUserName;
-        if (password.isEmpty()) password = Constants.vpnPassword;
+        String username = OvpnSyncManager.getUsername(this);
+        String password = OvpnSyncManager.getPassword(this);
 
+        FirebaseRemoteConfig rc = FirebaseRemoteConfig.getInstance();
         String raw = rc.getString("countries");
         List<String> keys = OvpnSyncManager.parseCountries(raw);
         serverLists = new ArrayList<>();
@@ -206,8 +204,8 @@ public class VpnDock extends AppCompatActivity implements NavItemClickListener {
                     selected = new Server(
                             country != null ? country : ServerListActivity.displayName(ovpnKey),
                             null, ovpnKey,
-                            user != null ? user : Constants.vpnUserName,
-                            pass != null ? pass : Constants.vpnPassword);
+                            user != null ? user : OvpnSyncManager.getUsername(this),
+                            pass != null ? pass : OvpnSyncManager.getPassword(this));
                 }
             }
 
