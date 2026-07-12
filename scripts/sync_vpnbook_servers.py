@@ -70,10 +70,10 @@ COUNTRY_CODE_MAP = {
     "PL": "poland",
 }
 
-DEFAULT_PROJECT_ID = os.environ.get("FIREBASE_PROJECT_ID", "ether-cc1ac")
+DEFAULT_PROJECT_ID = os.environ.get("FIREBASE_PROJECT_ID", "")
 FIREBASE_DATABASE_URL = os.environ.get(
     "FIREBASE_DATABASE_URL",
-    f"https://{DEFAULT_PROJECT_ID}-default-rtdb.asia-southeast1.firebasedatabase.app"
+    f"https://{DEFAULT_PROJECT_ID}-default-rtdb.asia-southeast1.firebasedatabase.app" if DEFAULT_PROJECT_ID else ""
 )
 
 REQUEST_TIMEOUT = 30

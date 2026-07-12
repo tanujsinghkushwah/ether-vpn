@@ -37,9 +37,9 @@ jobs:
 
       - name: Run Server & Credential Synchronization
         env:
-          # Inject project & DB URLs from repository Variables/Secrets, falling back to defaults
-          FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID || 'ether-cc1ac' }}
-          FIREBASE_DATABASE_URL: ${{ vars.FIREBASE_DATABASE_URL || 'https://ether-cc1ac-default-rtdb.asia-southeast1.firebasedatabase.app' }}
+          # Inject project & DB URLs from repository Variables/Secrets
+          FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
+          FIREBASE_DATABASE_URL: ${{ vars.FIREBASE_DATABASE_URL }}
           
           # Inject authentication credentials (supports raw JSON string secret, file path, or CLI token)
           FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
