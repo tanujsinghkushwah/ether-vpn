@@ -32,3 +32,8 @@ debug.keystore
 app/ui/*
 database.rules.json
 
+# Firebase Admin SDK & Service Account credentials — never commit private keys!
+*firebase-adminsdk*.json
+*service-account*.json
+serviceAccountKey.json
+

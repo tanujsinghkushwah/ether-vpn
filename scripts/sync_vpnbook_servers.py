@@ -288,15 +288,31 @@ def init_firebase(sa_json_path=None):
     return db
 
 
-def get_current_version(root_ref):
+def get_current_rtdb_data(sa_json_path=None, project_id=None):
+    project_id = project_id or DEFAULT_PROJECT_ID
+    # Attempt 1: SDK
     try:
-        val = root_ref.child("ovpn_cache_version").get()
-        if isinstance(val, int):
-            log.info("Current RTDB ovpn_cache_version = %d", val)
-            return val
+        db = init_firebase(sa_json_path)
+        data = db.reference("/").get()
+        if isinstance(data, dict):
+            return data
     except Exception as exc:
-        log.warning("Could not read current version: %s", exc)
-    return 0
+        log.warning("Firebase SDK read attempt failed (%s). Trying firebase-tools CLI …", exc)
+
+    # Attempt 2: CLI
+    try:
+        import subprocess
+        res = subprocess.run(
+            ["npx", "-y", "firebase-tools@latest", "database:get", "/", *get_firebase_tools_args(project_id)],
+            capture_output=True, text=True
+        )
+        if res.returncode == 0 and res.stdout.strip():
+            data = json.loads(res.stdout.strip())
+            if isinstance(data, dict):
+                return data
+    except Exception as cli_exc:
+        log.warning("CLI RTDB read failed: %s", cli_exc)
+    return None
 
 
 def upload_to_rtdb(payload, sa_json_path=None, project_id=None):
@@ -528,17 +544,19 @@ def main():
     if failed:
         log.warning("⚠️  %d server(s) failed to download: %s", len(failed), failed)
 
-    # ── 3. Get current version ───────────────────────────────────────────
+    # ── 3. Get current version & data ────────────────────────────────────
     current_version = args.version
-    if current_version is None:
-        if not args.dry_run:
-            try:
-                db = init_firebase(args.sa_json)
-                current_version = get_current_version(db.reference("/"))
-            except Exception:
-                log.warning("Could not contact Firebase – defaulting version to 0.")
+    current_data = None
+    if not args.dry_run:
+        current_data = get_current_rtdb_data(args.sa_json, project_id=args.project_id)
+        if current_version is None:
+            if isinstance(current_data, dict) and isinstance(current_data.get("ovpn_cache_version"), int):
+                current_version = current_data["ovpn_cache_version"]
+                log.info("Current RTDB ovpn_cache_version = %d", current_version)
+            else:
                 current_version = 0
-        else:
+    else:
+        if current_version is None:
             current_version = 0
 
     # ── 4. Build payload ─────────────────────────────────────────────────
@@ -556,7 +574,7 @@ def main():
             json.dump(payload, fh, ensure_ascii=False, indent=2)
         log.info("Saved JSON payload to %s", out_path)
 
-    # ── 6. Upload to Firebase ────────────────────────────────────────────
+    # ── 6. Check for changes & Upload to Firebase ────────────────────────
     if args.dry_run:
         log.info("--dry-run mode: skipping Firebase upload.")
         summary = {
@@ -567,6 +585,21 @@ def main():
         }
         print(json.dumps(summary, indent=2))
         sys.exit(0)
+
+    if isinstance(current_data, dict):
+        rtdb_ovpn = current_data.get("ovpn") or {}
+        rtdb_user = current_data.get("username") or ""
+        rtdb_pass = current_data.get("password") or ""
+        if (rtdb_user == username and
+            rtdb_pass == password and
+            rtdb_ovpn == server_configs):
+            log.info("⏭️  No changes detected! Scraped credentials and all %d server configs match existing RTDB data exactly.", len(server_configs))
+            log.info("⏭️  Skipping upload and version increment to prevent redundant client re-downloads.")
+            sys.exit(0)
+        else:
+            log.info("🔄 Changes detected (user/pass changed: %s, servers changed: %s). Proceeding with upload …",
+                     (rtdb_user != username or rtdb_pass != password),
+                     (rtdb_ovpn != server_configs))
 
     success_rtdb = upload_to_rtdb(payload, args.sa_json, project_id=args.project_id)
     success_rc = True
