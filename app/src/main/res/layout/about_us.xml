@@ -266,6 +266,21 @@
 
         </LinearLayout>
 
+        <!-- About Us Banner -->
+        <TextView
+            android:id="@+id/aboutUsBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ether_space_16"
+            android:layout_marginEnd="@dimen/ether_space_16"
+            android:layout_marginBottom="@dimen/ether_space_32"
+            android:background="@drawable/bg_card_surface"
+            android:padding="@dimen/ether_space_16"
+            android:textAppearance="@style/TextAppearance.Ether.Label"
+            android:textColor="@color/ether_ink_1"
+            android:lineSpacingExtra="4dp"
+            android:visibility="gone" />
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

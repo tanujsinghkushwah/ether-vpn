@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -15,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.anonymous.ethervpn.R;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 public class AboutUs extends AppCompatActivity {
 
@@ -38,6 +40,13 @@ public class AboutUs extends AppCompatActivity {
         setupCopyButton(R.id.btnCopyBtc, getString(R.string.about_btc_address));
         setupCopyButton(R.id.btnCopyEth, getString(R.string.about_eth_address));
         setupCopyButton(R.id.btnCopyTao, getString(R.string.about_tao_address));
+
+        TextView bannerText = findViewById(R.id.aboutUsBanner);
+        String bannerString = FirebaseRemoteConfig.getInstance().getString("ABOUT_US_BANNER");
+        if (bannerString != null && !bannerString.trim().isEmpty()) {
+            bannerText.setText(bannerString);
+            bannerText.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setupCopyButton(int btnId, String address) {
