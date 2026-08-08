@@ -44,15 +44,15 @@ android {
             storePassword 'android'
         }
     }
-    compileSdk 35
+    compileSdk 36
     buildToolsVersion "35.0.0"
 
     defaultConfig {
         applicationId "com.anonymous.ethervpn"
         minSdk 23
-        targetSdk 35
-        versionCode 26
-        versionName '26.0'
+        targetSdk 36
+        versionCode 27
+        versionName '27'
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -107,7 +107,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'com.google.gms:google-services:4.3.10'
-    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation 'com.google.android.recaptcha:recaptcha:18.5.1'
     implementation 'com.google.firebase:firebase-analytics'
     implementation("com.google.firebase:firebase-config")
     implementation 'com.google.firebase:firebase-crashlytics'

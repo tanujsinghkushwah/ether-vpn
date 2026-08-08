@@ -8,12 +8,12 @@ plugins {
     id("com.android.library")
     id("checkstyle")
 
-    id("kotlin-android")
+
 }
 
 android {
     namespace = "de.blinkt.openvpn"
-    compileSdk = 34
+    compileSdk = 36
     buildToolsVersion = "34.0.0"
 
     // Also update runcoverity.sh
@@ -21,7 +21,6 @@ android {
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 34
         externalNativeBuild {
             cmake {
                 // Required for Android 15+ devices with 16KB memory pages
@@ -118,12 +117,8 @@ android {
     }
 
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_1_8
         sourceCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     // splits {
@@ -147,11 +142,11 @@ else if (file("/usr/local/bin/swig").exists())
     swigcmd = "/usr/local/bin/swig"
 
 
-fun registerGenTask(variantName: String, variantDirName: String): File {
-    val baseDir = File(buildDir, "generated/source/ovpn3swig/${variantDirName}")
+fun registerGenTask(): File {
+    val baseDir = File(layout.buildDirectory.asFile.get(), "generated/source/ovpn3swig/main")
     val genDir = File(baseDir, "net/openvpn/ovpn3")
 
-    tasks.register<Exec>("generateOpenVPN3Swig${variantName}")
+    tasks.register<Exec>("generateOpenVPN3Swig")
     {
 
         doFirst {
@@ -169,18 +164,17 @@ fun registerGenTask(variantName: String, variantDirName: String): File {
     return baseDir
 }
 
-android.libraryVariants.all {
-    val variant = this
-    val sourceDir = registerGenTask(variant.name, variant.baseName.replace("-", "/"))
-    val task = tasks.named("generateOpenVPN3Swig${variant.name}").get()
-    variant.registerJavaGeneratingTask(task, sourceDir)
+val sourceDir = registerGenTask()
+android.sourceSets.getByName("main").java.srcDir(sourceDir)
+tasks.matching { it.name.matches(Regex("compile.*(Kotlin|JavaWithJavac)")) || it.name.matches(Regex("extract.*Annotations")) }.configureEach {
+    dependsOn("generateOpenVPN3Swig")
 }
 
 
 dependencies {
     // https://maven.google.com/web/index.html
     // https://developer.android.com/jetpack/androidx/releases/core
-    val preferenceVersion = "1.2.0"
+    val preferenceVersion = "1.2.1"
     val coreVersion = "1.9.0"
     val materialVersion = "1.7.0"
     val fragment_version = "1.5.5"
