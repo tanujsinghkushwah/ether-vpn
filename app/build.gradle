@@ -51,8 +51,8 @@ android {
         applicationId "com.anonymous.ethervpn"
         minSdk 23
         targetSdk 36
-        versionCode 27
-        versionName '27'
+        versionCode 28
+        versionName '28'
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -114,6 +114,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.android.gms:play-services-ads:23.6.0'
     implementation 'androidx.databinding:databinding-runtime:4.1.3'
+    
+    // Explicitly add 16 KB page size compatible versions of WorkManager and Room
+    // (fixes SQLite crashes on Android 15 16 KB devices from transitive dependencies)
+    implementation 'androidx.work:work-runtime:2.9.1'
+    implementation 'androidx.room:room-runtime:2.6.1'
+    
     implementation project(path: ':openvpn')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
