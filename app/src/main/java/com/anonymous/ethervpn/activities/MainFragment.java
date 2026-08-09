@@ -235,11 +235,16 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ICS_OPENVPN_PERMISSION) {
-            try {
-                mService.registerStatusCallback(mCallback);
-            } catch (RemoteException e) {
-                logger.log("openvpn status callback failed: " + e.getMessage());
-                e.printStackTrace();
+            if (resultCode == Activity.RESULT_OK) {
+                try {
+                    mService.registerStatusCallback(mCallback);
+                } catch (RemoteException e) {
+                    logger.log("openvpn status callback failed: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            } else {
+                status("connect");
+                vpnStart = false;
             }
         }
     }
@@ -547,6 +552,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Chan
             try {
                 Intent i = mService.prepare(getActivity().getPackageName());
                 if (i != null) {
+                    i.putExtra("android.intent.extra.PACKAGE_NAME", getActivity().getPackageName());
                     startActivityForResult(i, ICS_OPENVPN_PERMISSION);
                 } else {
                     onActivityResult(ICS_OPENVPN_PERMISSION, Activity.RESULT_OK, null);
