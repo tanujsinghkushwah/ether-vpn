@@ -29,3 +29,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Fix for R8 Full Mode stripping constructors in AGP 8.0+
+-keep class com.google.firebase.**Registrar { <init>(); }
+-keep class * implements com.google.firebase.components.ComponentRegistrar { <init>(); }
+-keep class androidx.work.impl.WorkDatabase_Impl { <init>(); }
