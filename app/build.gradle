@@ -49,7 +49,7 @@ android {
 
     defaultConfig {
         applicationId "com.anonymous.ethervpn"
-        minSdk 23
+        minSdk 24
         targetSdk 36
         versionCode 31
         versionName '31'
