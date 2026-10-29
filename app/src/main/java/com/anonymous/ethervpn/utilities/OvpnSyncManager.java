@@ -31,32 +31,47 @@ public class OvpnSyncManager {
 
     private static final String RTDB_URL = "https://ether-cc1ac-default-rtdb.asia-southeast1.firebasedatabase.app";
     private static final ConcurrentHashMap<String, Task<DataSnapshot>> inFlight = new ConcurrentHashMap<>();
-    private static ValueEventListener credentialsListener;
+    // Separate per-field listeners so the root ("/") .read rule can be set to false
+    // without breaking credential sync (each child node retains its own .read: true rule).
+    private static ValueEventListener usernameListener;
+    private static ValueEventListener passwordListener;
 
     private static DatabaseReference rtdb() {
         return FirebaseDatabase.getInstance(RTDB_URL).getReference();
     }
 
     public static void listenForCredentials(Context ctx) {
-        if (credentialsListener != null) return;
-        credentialsListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                SharedPreferences prefs = ctx.getSharedPreferences(Constants.APP_PREFS_NAME, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                if (snapshot.hasChild("username") && snapshot.child("username").getValue() instanceof String) {
-                    editor.putString("rtdb_username", (String) snapshot.child("username").getValue());
+        if (usernameListener == null) {
+            usernameListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot.getValue() instanceof String) {
+                        ctx.getSharedPreferences(Constants.APP_PREFS_NAME, Context.MODE_PRIVATE)
+                                .edit()
+                                .putString("rtdb_username", (String) snapshot.getValue())
+                                .apply();
+                    }
                 }
-                if (snapshot.hasChild("password") && snapshot.child("password").getValue() instanceof String) {
-                    editor.putString("rtdb_password", (String) snapshot.child("password").getValue());
-                }
-                editor.apply();
-            }
+                @Override public void onCancelled(DatabaseError error) {}
+            };
+            rtdb().child("username").addValueEventListener(usernameListener);
+        }
 
-            @Override
-            public void onCancelled(DatabaseError error) {}
-        };
-        rtdb().addValueEventListener(credentialsListener);
+        if (passwordListener == null) {
+            passwordListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot.getValue() instanceof String) {
+                        ctx.getSharedPreferences(Constants.APP_PREFS_NAME, Context.MODE_PRIVATE)
+                                .edit()
+                                .putString("rtdb_password", (String) snapshot.getValue())
+                                .apply();
+                    }
+                }
+                @Override public void onCancelled(DatabaseError error) {}
+            };
+            rtdb().child("password").addValueEventListener(passwordListener);
+        }
     }
 
     public static String getUsername(Context ctx) {
